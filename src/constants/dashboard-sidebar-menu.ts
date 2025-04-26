@@ -12,13 +12,13 @@ export const sidebarMenu = {
   navMain: [
     {
       title: "Analytics",
-      url: "/",
+      url: "/tests",
       icon: ChartNoAxesCombined,
       isActive: true,
     },
     {
       title: "Products",
-      url: "/tests",
+      url: "/products",
       icon: Blocks,
     },
     {
