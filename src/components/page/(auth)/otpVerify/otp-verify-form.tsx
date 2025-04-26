@@ -10,21 +10,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../../ui/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import toast from "react-hot-toast";
 import { useSearchParams, useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { myFetch } from "@/utils/myFetch";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../ui/form";
-import { myFetch } from "@/utils/myFetch";
+} from "@/components/ui/form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 const FormSchema = z.object({
   oneTimeCode: z.string().min(5, {
