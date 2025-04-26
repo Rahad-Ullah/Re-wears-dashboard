@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info } from "lucide-react";
+import { Info, Lock, LockOpen, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
 
 // table column definition
@@ -111,16 +111,35 @@ const productTableColumns: ColumnDef<IProduct>[] = [
   {
     id: "actions",
     enableHiding: false,
-    header: () => <div>Action</div>,
+    header: () => <div className="px-8">Actions</div>,
     cell: ({ row }) => {
       const item = row.original;
       return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center justify-evenly gap-1">
           <Link href={`/products/products-details/${item?._id}`} passHref>
             <Button variant={"ghost"} size={"icon"} className="text-primary">
               <Info />
             </Button>
           </Link>
+
+          {!item.isRejected && (
+            <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
+              <LockOpen />
+            </Button>
+          )}
+          {item.isRejected && (
+            <Button variant={"ghost"} size={"icon"} className="text-red-500">
+              <Lock />
+            </Button>
+          )}
+
+          <Button variant={"ghost"} size={"icon"} className="text-body">
+            <Pencil />
+          </Button>
+
+          <Button variant={"ghost"} size={"icon"} className="text-red-500">
+            <Trash />
+          </Button>
         </div>
       );
     },

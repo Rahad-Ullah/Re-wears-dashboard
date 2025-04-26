@@ -10,4 +10,6 @@ export interface IProduct {
   material: string;
   photos: string[];
   price: number;
+  isRejected: boolean;
+  report: string;
 }

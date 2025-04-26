@@ -26,7 +26,7 @@ const DashboardBreadcrumb = () => {
           {filteredSegments?.length > 2 && <BackButton />}
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbPage className="md:text-base lg:text-lg font-medium">
+          <BreadcrumbPage className="md:text-lg lg:text-xl font-semibold">
             {capitalizeSentence(lastSegment)}
           </BreadcrumbPage>
         </BreadcrumbItem>
