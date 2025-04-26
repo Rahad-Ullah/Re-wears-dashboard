@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Mammoth",
-  description: "CRM for Health Care",
+  title: "Re-Wears | Dashboard",
+  description: "Multivendor e-commerce platform for second-hand clothing",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased bg-gradient-to-tl from-[#CEE9FF] to-[#E1E3EB] min-h-screen`}
+        className={`${poppins.className} antialiased bg-gradient-to-tl from-[#e9e9e2] to-[#ebe9e0] min-h-screen`}
       >
         <Providers>{children}</Providers>
       </body>

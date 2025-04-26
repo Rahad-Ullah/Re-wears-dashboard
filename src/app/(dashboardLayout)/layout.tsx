@@ -2,20 +2,11 @@ import DashboardBreadcrumb from "@/components/layout/dashboard/navbar/dashboard-
 import NavUserWrapper from "@/components/layout/dashboard/navbar/nav-user-wrapper";
 import { AppSidebar } from "@/components/layout/dashboard/sidebar/app-sidebar";
 import SearchBar from "@/components/shared/SearchBar";
-import { Button } from "@/components/ui/button";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-
-import { Bell } from "lucide-react";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Dashboard | Mammoth",
-  description: "CRM for Health Care",
-};
 
 export default function DashboardLayout({
   children,
@@ -37,9 +28,9 @@ export default function DashboardLayout({
           <div className="flex justify-center items-center gap-4 md:gap-6">
             <SearchBar />
             {/* notification */}
-            <Button size={"icon"} className="rounded-full">
+            {/* <Button size={"icon"} className="rounded-full">
               <Bell />
-            </Button>
+            </Button> */}
             {/* user dropdown */}
             <NavUserWrapper />
           </div>
