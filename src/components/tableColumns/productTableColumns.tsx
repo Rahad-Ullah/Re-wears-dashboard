@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
 import { Info, Lock, LockOpen, Pencil, Trash } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 // table column definition
@@ -19,6 +20,24 @@ const productTableColumns: ColumnDef<IProduct>[] = [
           >
             #{item?._id}
           </Button>
+        </Link>
+      );
+    },
+  },
+  {
+    accessorKey: "photo",
+    header: "",
+    cell: ({ row }) => {
+      const item = row.original as IProduct;
+      return (
+        <Link href={`/products/products-details/${item?._id}`}>
+          <Image
+            src={item.photos[0] || ""}
+            alt={item?.title}
+            width={50}
+            height={50}
+            className="object-cover w-12 h-12 rounded-md"
+          />
         </Link>
       );
     },
@@ -122,14 +141,13 @@ const productTableColumns: ColumnDef<IProduct>[] = [
             </Button>
           </Link>
 
-          {!item.isRejected && (
-            <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
-              <LockOpen />
-            </Button>
-          )}
-          {item.isRejected && (
+          {item.status === "Blocked" ? (
             <Button variant={"ghost"} size={"icon"} className="text-red-500">
               <Lock />
+            </Button>
+          ) : (
+            <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
+              <LockOpen />
             </Button>
           )}
 

@@ -13,7 +13,7 @@ export const demoProductsData = [
       "https://www.thejacketmaker.co.uk/cdn/shop/files/Mens-Legacy-Black-Leather-Biker-Jacket_1_905b5523-3a11-4dc5-9865-ad6ddf81d310.jpg?v=1739199155",
     ],
     price: 120,
-    isRejected: false,
+    status: "Active",
     report: "",
   },
   {
@@ -30,7 +30,7 @@ export const demoProductsData = [
       "https://www.running-point.com/dw/image/v2/BBDP_PRD/on/demandware.static/-/Sites-master-catalog/default/dw552fd375/images/004/163/17274000_0_4.jpg?q=80&sw=2000",
     ],
     price: 45,
-    isRejected: false,
+    status: "Blocked",
     report: "",
   },
   {
@@ -47,7 +47,7 @@ export const demoProductsData = [
       "https://titanwatches.com.bd/cdn/shop/files/1584SL04_6_0f5f06b0-2bec-499f-92b3-834366b3b50d.jpg?v=1730804291&width=2000",
     ],
     price: 75,
-    isRejected: false,
+    status: "Active",
     report: "",
   },
   {
@@ -64,7 +64,7 @@ export const demoProductsData = [
       "https://media.e-valy.com/cms/products/images/d309f64a-feee-4b30-8a9c-86d23330a04b",
     ],
     price: 25,
-    isRejected: false,
+    status: "Reported",
     report: "",
   },
   {
@@ -81,7 +81,7 @@ export const demoProductsData = [
       "https://img.drz.lazcdn.com/3rd/q/aHR0cHM6Ly9wc3BrLmxvbmdwZWFuLmNvbS8xNjk2ODM3OTE4MjA2Lzk1NzYzODI3MzU4MTI3ODYwLmpwZz9pbWFnZU1vZ3IyL3RodW1ibmFpbC8xMDAweDEwMDAh_960x960q80.png_.webp",
     ],
     price: 60,
-    isRejected: false,
+    status: "Blocked",
     report: "",
   },
   {
@@ -98,7 +98,7 @@ export const demoProductsData = [
       "https://media.e-valy.com/cms/products/images/3ab05b7d-5fa8-4652-ae63-413011727048",
     ],
     price: 30,
-    isRejected: false,
+    status: "Reported",
     report: "",
   },
   {
@@ -113,7 +113,7 @@ export const demoProductsData = [
     material: "Wool",
     photos: ["https://m.media-amazon.com/images/I/71qNZJySzdL._AC_UY1000_.jpg"],
     price: 90,
-    isRejected: false,
+    status: "Active",
     report: "",
   },
   {
@@ -130,7 +130,7 @@ export const demoProductsData = [
       "https://barneysoriginals.com/wp-content/uploads/2020/09/2AJ1324.jpg",
     ],
     price: 20,
-    isRejected: false,
+    status: "Blocked",
     report: "",
   },
   {
@@ -147,7 +147,7 @@ export const demoProductsData = [
       "https://www.dhresource.com/webp/m/0x0/f2/albu/g10/M00/2B/F9/rBVaVl4K--2AD2DZAAMKJBCpp-Y560.jpg",
     ],
     price: 50,
-    isRejected: false,
+    status: "Active",
     report: "",
   },
   {
@@ -164,7 +164,7 @@ export const demoProductsData = [
       "https://static-01.daraz.com.bd/p/95f9b7f267fbb1c041563a07bc679c75.jpg",
     ],
     price: 40,
-    isRejected: false,
+    status: "Blocked",
     report: "",
   },
   {
@@ -181,7 +181,7 @@ export const demoProductsData = [
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/266af2347a461b1d5baaa8bc4ac9986a.jpg?imageView2/2/w/500/q/60/format/webp",
     ],
     price: 25,
-    isRejected: false,
+    status: "Active",
     report: "",
   },
   {
@@ -198,7 +198,7 @@ export const demoProductsData = [
       "https://i4.cloudfable.net/styles/550x550/19.224/Black/water-polo-dad-fathers-day-father-sport-men-hoodie-20231121231908-vdsuwygk.jpg",
     ],
     price: 35,
-    isRejected: false,
+    status: "Active",
     report: "",
   },
 ];

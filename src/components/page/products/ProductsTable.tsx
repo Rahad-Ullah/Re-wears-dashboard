@@ -28,8 +28,11 @@ import DashboardTable from "@/components/shared/table";
 import TablePagination from "@/components/shared/table-pagination";
 import productTableColumns from "@/components/tableColumns/productTableColumns";
 import { IProduct } from "@/types/product";
-import { productCategories } from "@/constants/productCategories";
-import { productConditions } from "@/constants/productConditions";
+import {
+  productCategories,
+  productConditions,
+  productStatuses,
+} from "@/constants/product";
 import { Input } from "@/components/ui/input";
 
 const ProductsTable = ({ products = [], meta, filters }) => {
@@ -148,6 +151,41 @@ const ProductsTable = ({ products = [], meta, filters }) => {
                 onClick={() =>
                   updateMultiSearchParams({
                     condition: item,
+                    page: null,
+                  })
+                }
+              >
+                {capitalizeSentence(item as string)}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* status Filter Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="capitalize shadow text-[#929292]"
+            >
+              {filters?.status ? `${filters?.status}` : "Status"}
+              <ChevronDown className="text-primary" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              onClick={() =>
+                updateMultiSearchParams({ status: null, page: null })
+              }
+            >
+              All Statuses
+            </DropdownMenuItem>
+            {productStatuses.map((item, idx) => (
+              <DropdownMenuItem
+                key={idx}
+                onClick={() =>
+                  updateMultiSearchParams({
+                    status: item,
                     page: null,
                   })
                 }
