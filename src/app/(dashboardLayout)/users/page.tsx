@@ -1,6 +1,5 @@
 import UsersTable from "@/components/page/users/UsersTable";
-import { usersData } from "@/demoData/users";
-
+import { demoUsersData } from "@/demoData/users";
 const UsersPage = async ({ searchParams }) => {
   const { role } = await searchParams;
   // Build query parameters for the backend request
@@ -18,8 +17,8 @@ const UsersPage = async ({ searchParams }) => {
   return (
     <>
       <UsersTable
-        users={usersData?.data as never[]}
-        meta={usersData?.pagination as never}
+        users={demoUsersData as never[]}
+        meta={{ page: 1, totalPage: 1, total: 12 } as never}
         filters={{ role }}
       />
     </>

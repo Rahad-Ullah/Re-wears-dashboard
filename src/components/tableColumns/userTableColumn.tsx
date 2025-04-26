@@ -2,61 +2,13 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { revalidate } from "@/helpers/revalidateHelper";
 import { IUser } from "@/types/user";
-import { myFetch } from "@/utils/myFetch";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info, Lock, LockOpen } from "lucide-react";
+import { Info, Lock, LockOpen, Trash } from "lucide-react";
 import Link from "next/link";
-import toast from "react-hot-toast";
-
-// handle user lock
-const handleUserLock = async (id: string) => {
-  try {
-    const res = await myFetch(`/user/lock/${id}`, {
-      method: "PUT",
-    });
-    if (res?.success) {
-      revalidate("users");
-    } else {
-      toast.error(res?.message || "Failed to update");
-    }
-  } catch (error) {
-    toast.error("Failed to update");
-    console.error(error);
-  }
-};
 
 // table column definition
 const columns: ColumnDef<IUser>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected()
-            ? true
-            : table.getIsSomePageRowsSelected()
-            ? "indeterminate"
-            : false
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="border-[#5C5C5C]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="border-[#A1A1A1]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "id",
     header: "Sl. No",
@@ -68,7 +20,7 @@ const columns: ColumnDef<IUser>[] = [
             variant={"ghost"}
             className="capitalize w-full justify-start hover:bg-transparent"
           >
-            {item.id}
+            # {item._id}
           </Button>
         </Link>
       );
@@ -76,7 +28,7 @@ const columns: ColumnDef<IUser>[] = [
   },
   {
     accessorKey: "name",
-    header: " User Name",
+    header: "Name",
     cell: ({ row }) => {
       const item = row.original as IUser;
       return (
@@ -85,24 +37,24 @@ const columns: ColumnDef<IUser>[] = [
             variant={"ghost"}
             className="capitalize w-full justify-start hover:bg-transparent"
           >
-            {item?.name}
+            {item?.firstName} {item?.lastName}
           </Button>
         </Link>
       );
     },
   },
   {
-    accessorKey: "phone",
-    header: "Phone No",
+    accessorKey: "gender",
+    header: "Gender",
     cell: ({ row }) => {
       const item = row.original as IUser;
       return (
         <Link href={`/dashboard/users/user-details/${item._id}`}>
           <Button
             variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
+            className="w-full justify-start hover:bg-transparent"
           >
-            {item.phone}
+            {item.gender}
           </Button>
         </Link>
       );
@@ -126,8 +78,8 @@ const columns: ColumnDef<IUser>[] = [
     },
   },
   {
-    accessorKey: "address",
-    header: () => <div>Address</div>,
+    accessorKey: "location",
+    header: () => <div>Location</div>,
     cell: ({ row }) => {
       const item = row.original as IUser;
       return (
@@ -136,7 +88,7 @@ const columns: ColumnDef<IUser>[] = [
             variant={"ghost"}
             className="capitalize w-full justify-start hover:bg-transparent"
           >
-            {item?.address}
+            {item?.location}
           </Button>
         </Link>
       );
@@ -155,14 +107,10 @@ const columns: ColumnDef<IUser>[] = [
             style={{
               backgroundColor:
                 role === "Admin"
-                  ? "#F17600"
-                  : role === "Representative"
-                  ? "#C42985"
-                  : role === "Pathologist"
-                  ? "#319517"
-                  : role === "Histologist"
-                  ? "#85CA53"
-                  : "",
+                  ? "#9d987b"
+                  : role === "Buyer"
+                  ? "#009933"
+                  : "#ff6600",
             }}
           >
             {row.getValue("role")}
@@ -174,37 +122,30 @@ const columns: ColumnDef<IUser>[] = [
   {
     id: "actions",
     enableHiding: false,
-    header: () => <div>Action</div>,
+    header: () => <div className="px-8">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
 
       return (
-        <div className="flex items-center gap-1">
-          {!item.isLocked && (
-            <Button
-              onClick={() => handleUserLock(item?._id)}
-              variant={"ghost"}
-              size={"icon"}
-              className="text-zinc-400"
-            >
-              <LockOpen />
-            </Button>
-          )}
-          {item.isLocked && (
-            <Button
-              onClick={() => handleUserLock(item?._id)}
-              variant={"ghost"}
-              size={"icon"}
-              className="text-red-500"
-            >
-              <Lock />
-            </Button>
-          )}
+        <div className="flex items-center justify-evenly gap-1">
           <Link href={`/dashboard/users/user-details/${item._id}`} passHref>
             <Button variant={"ghost"} size={"icon"} className="text-primary">
               <Info />
             </Button>
           </Link>
+          {!item.isBlocked && (
+            <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
+              <LockOpen />
+            </Button>
+          )}
+          {item.isBlocked && (
+            <Button variant={"ghost"} size={"icon"} className="text-red-500">
+              <Lock />
+            </Button>
+          )}
+          <Button variant={"ghost"} size={"icon"} className="text-red-500">
+            <Trash />
+          </Button>
         </div>
       );
     },

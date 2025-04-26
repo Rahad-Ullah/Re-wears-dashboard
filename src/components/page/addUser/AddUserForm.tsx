@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { addUserFormSchema } from "@/schemas/formSchemas/addUserForm";
-import { userRoles } from "@/constants/user-roles";
+import { userRoles } from "@/constants/user";
 import {
   Popover,
   PopoverContent,
