@@ -22,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { capitalizeSentence } from "@/utils/capitalizeSentence";
-import patientTablecolumns from "@/components/tableColumns/patientTableColumn";
 import { useUpdateMultiSearchParams } from "@/hooks/useUpdateMultiSearchParams";
 import DashboardTable from "@/components/shared/table";
 import TablePagination from "@/components/shared/table-pagination";
@@ -199,7 +198,7 @@ const ProductsTable = ({ products = [], meta, filters }) => {
 
       {/* table and pagination*/}
       <section>
-        <DashboardTable table={table} columns={patientTablecolumns} />
+        <DashboardTable table={table} columns={productTableColumns} />
         <TablePagination table={table} meta={meta} />
       </section>
     </div>

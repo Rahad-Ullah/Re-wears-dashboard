@@ -20,7 +20,7 @@ const columns: ColumnDef<IUser>[] = [
             variant={"ghost"}
             className="capitalize w-full justify-start hover:bg-transparent"
           >
-            # {item._id}
+            #{item._id}
           </Button>
         </Link>
       );

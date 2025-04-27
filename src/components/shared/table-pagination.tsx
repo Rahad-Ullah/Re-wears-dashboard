@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import {
   Pagination,
@@ -15,10 +16,10 @@ const TablePagination = ({ table, meta }) => {
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-4 pt-4">
-      <div className="md:absolute text-sm text-muted-foreground">
+      {/* <div className="md:absolute text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div>
+      </div> */}
       <div className="flex justify-center flex-1">
         <Pagination className="text-[#A7A7A7]">
           <PaginationContent className="">
