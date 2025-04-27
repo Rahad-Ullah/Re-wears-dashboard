@@ -14,7 +14,6 @@ export const demoProductsData = [
     ],
     price: 120,
     status: "Active",
-    report: "",
   },
   {
     _id: "02",
@@ -22,7 +21,7 @@ export const demoProductsData = [
     description: "Comfortable and durable running shoes for women.",
     category: "Footwear",
     brand: "Nike",
-    size: "7",
+    size: "M",
     condition: "Good",
     colors: ["Pink", "White"],
     material: "Mesh",
@@ -31,7 +30,6 @@ export const demoProductsData = [
     ],
     price: 45,
     status: "Blocked",
-    report: "",
   },
   {
     _id: "03",
@@ -48,7 +46,6 @@ export const demoProductsData = [
     ],
     price: 75,
     status: "Active",
-    report: "",
   },
   {
     _id: "04",
@@ -65,7 +62,6 @@ export const demoProductsData = [
     ],
     price: 25,
     status: "Reported",
-    report: "",
   },
   {
     _id: "05",
@@ -73,7 +69,7 @@ export const demoProductsData = [
     description: "Elegant handbag with multiple compartments.",
     category: "Accessories",
     brand: "Michael Kors",
-    size: "Medium",
+    size: "M",
     condition: "Good",
     colors: ["Beige"],
     material: "Synthetic Leather",
@@ -82,7 +78,6 @@ export const demoProductsData = [
     ],
     price: 60,
     status: "Blocked",
-    report: "",
   },
   {
     _id: "06",
@@ -90,7 +85,7 @@ export const demoProductsData = [
     description: "Casual sneakers for everyday use.",
     category: "Footwear",
     brand: "Adidas",
-    size: "10",
+    size: "XL",
     condition: "Fair",
     colors: ["Blue", "White"],
     material: "Canvas",
@@ -99,7 +94,6 @@ export const demoProductsData = [
     ],
     price: 30,
     status: "Reported",
-    report: "",
   },
   {
     _id: "07",
@@ -114,7 +108,6 @@ export const demoProductsData = [
     photos: ["https://m.media-amazon.com/images/I/71qNZJySzdL._AC_UY1000_.jpg"],
     price: 90,
     status: "Active",
-    report: "",
   },
   {
     _id: "08",
@@ -122,7 +115,7 @@ export const demoProductsData = [
     description: "High-quality leather belt with a silver buckle.",
     category: "Accessories",
     brand: "Tommy Hilfiger",
-    size: "32",
+    size: "M",
     condition: "Like New",
     colors: ["Black"],
     material: "Leather",
@@ -131,7 +124,6 @@ export const demoProductsData = [
     ],
     price: 20,
     status: "Blocked",
-    report: "",
   },
   {
     _id: "09",
@@ -139,7 +131,7 @@ export const demoProductsData = [
     description: "Elegant evening dress perfect for formal occasions.",
     category: "Clothing",
     brand: "Forever 21",
-    size: "M",
+    size: "L",
     condition: "Good",
     colors: ["Red"],
     material: "Polyester",
@@ -148,7 +140,6 @@ export const demoProductsData = [
     ],
     price: 50,
     status: "Active",
-    report: "",
   },
   {
     _id: "10",
@@ -165,7 +156,6 @@ export const demoProductsData = [
     ],
     price: 40,
     status: "Blocked",
-    report: "",
   },
   {
     _id: "11",
@@ -173,7 +163,7 @@ export const demoProductsData = [
     description: "Comfortable sandals for casual outings.",
     category: "Footwear",
     brand: "Clarks",
-    size: "6",
+    size: "S",
     condition: "Good",
     colors: ["Brown"],
     material: "Leather",
@@ -182,7 +172,6 @@ export const demoProductsData = [
     ],
     price: 25,
     status: "Active",
-    report: "",
   },
   {
     _id: "12",
@@ -199,6 +188,5 @@ export const demoProductsData = [
     ],
     price: 35,
     status: "Active",
-    report: "",
   },
 ];

@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import userTableColumns from "@/components/tableColumns/userTableColumn";
 import { capitalizeSentence } from "@/utils/capitalizeSentence";
-import Link from "next/link";
 import { userGenders, userRoles } from "@/constants/user";
 import { IUser } from "@/types/user";
 import { useUpdateMultiSearchParams } from "@/hooks/useUpdateMultiSearchParams";
@@ -167,13 +166,6 @@ const UsersTable = ({ users = [], filters, meta }) => {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {/* Add new user button */}
-        <Link href="/dashboard/users/add-new-user">
-          <Button>
-            <Plus /> Add New User
-          </Button>
-        </Link>
       </section>
 
       {/* table and pagination*/}

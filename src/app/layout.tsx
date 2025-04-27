@@ -11,7 +11,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Re-Wears | Dashboard",
-  description: "Multivendor e-commerce platform for second-hand clothing",
+  description: "Multi-vendor e-commerce platform for second-hand clothing",
 };
 
 export default function RootLayout({

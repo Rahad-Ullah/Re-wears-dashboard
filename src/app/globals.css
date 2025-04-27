@@ -156,6 +156,7 @@
     @apply text-black-100 text-sm font-normal;
   }
 
+                                                                /* hide scrollbar */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -176,4 +177,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Hide arrows for input type number on Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

@@ -12,7 +12,7 @@ export const sidebarMenu = {
   navMain: [
     {
       title: "Analytics",
-      url: "/tests",
+      url: "/",
       icon: ChartNoAxesCombined,
       isActive: true,
     },
@@ -28,7 +28,7 @@ export const sidebarMenu = {
     },
     {
       title: "Moderation",
-      url: "/patients",
+      url: "/moderation",
       icon: Shield,
     },
     {
@@ -38,22 +38,22 @@ export const sidebarMenu = {
     },
     {
       title: "Support",
-      url: "/bills",
+      url: "/support",
       icon: Handshake,
     },
   ],
   settings: [
     {
       name: "Settings",
-      url: "/facilities",
+      url: "/settings",
       icon: Settings,
     },
   ],
 };
 
 export const userData = {
-  name: "Md. Asadujjaman",
-  email: "me@example.com",
+  name: "Rahad Ullah",
+  email: "rahadullah10@gmail.com",
   role: "Admin",
   avatar:
     "https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",

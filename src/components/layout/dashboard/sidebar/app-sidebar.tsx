@@ -25,13 +25,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <Link href={"/dashboard/tests"} className="flex justify-center mt-6 h-20">
+        <Link
+          href={"/dashboard/tests"}
+          className="flex justify-center mt-6 h-20"
+        >
           <Image
             src={"/logo.svg"}
             alt="logo"
-            width={120}
+            width={80}
             height={90}
             priority
+            className="w-auto px-4 h-auto"
           />
         </Link>
       </SidebarHeader>
