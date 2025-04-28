@@ -1,0 +1,157 @@
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table";
+import { Pencil, Trash } from "lucide-react";
+import Modal from "../modals/Modal";
+import { Textarea } from "../ui/textarea";
+import { INotificationTemplate } from "@/types/notification";
+import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { templateCategory } from "@/constants/notification";
+
+// table column definition
+const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
+  {
+    accessorKey: "id",
+    header: "Sl. No",
+    cell: ({ row }) => {
+      const item = row.original as INotificationTemplate;
+      return (
+        <Button
+          variant={"ghost"}
+          className="capitalize w-full justify-start hover:bg-transparent"
+        >
+          #{item._id}
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const item = row.original as INotificationTemplate;
+      return (
+        <Button
+          variant={"ghost"}
+          className="capitalize w-full justify-start hover:bg-transparent"
+        >
+          {item?.name}
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => {
+      const item = row.original as INotificationTemplate;
+      return (
+        <Button
+          variant={"ghost"}
+          className="w-full justify-start hover:bg-transparent"
+        >
+          {item?.category}
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "lastupdated",
+    header: () => <div>Last Updated</div>,
+    cell: ({ row }) => {
+      const item = row.original as INotificationTemplate;
+      return (
+        <Button
+          variant={"ghost"}
+          className="capitalize w-full justify-start hover:bg-transparent"
+        >
+          {item?.lastupdated?.split("T")[0]}
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: () => <div>Status</div>,
+    cell: ({ row }) => {
+      const item = row.original as INotificationTemplate;
+      const status = item?.status;
+      return (
+        <Badge
+          className={`capitalize font-medium shadow-none rounded-full py-1.5 w-full flex justify-center ${
+            status === "Active"
+              ? "bg-green-50 text-green-600 border-green-400"
+              : "bg-yellow-50 text-yellow-600 border-yellow-400"
+          }`}
+        >
+          {item?.status}
+        </Badge>
+      );
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    header: () => <div className="px-8">Action</div>,
+    cell: ({ row }) => {
+      const item = row.original as INotificationTemplate;
+      return (
+        <div className="flex items-center justify-evenly gap-1">
+          <Modal
+            dialogTrigger={
+              <Button variant={"ghost"} size={"icon"}>
+                <Pencil />
+              </Button>
+            }
+            className="max-w-lg"
+          >
+            <div className="grid gap-3">
+              <h1 className="text-lg font-semibold">Update Template</h1>
+              <Input placeholder="Enter name" defaultValue={item?.name} />
+
+              <Select defaultValue={item?.category}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {templateCategory?.map((item, idx) => (
+                    <SelectItem key={idx} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Textarea
+                rows={4}
+                placeholder="Write message..."
+                defaultValue={item?.message}
+              />
+
+              <div className="flex items-center gap-4 justify-end">
+                <Button variant={"outline"} className="">
+                  Save as draft
+                </Button>
+                <Button className="">Update</Button>
+              </div>
+            </div>
+          </Modal>
+          <Button variant={"ghost"} size={"icon"} className="text-red-500">
+            <Trash />
+          </Button>
+        </div>
+      );
+    },
+  },
+];
+
+export default templateTableColumns;
