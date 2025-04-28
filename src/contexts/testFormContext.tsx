@@ -2,58 +2,17 @@
 
 import { createContext, useContext, useState } from "react";
 
-interface IDiease {
-  name: string;
-  disorders: {
-    name: string;
-  }[];
-}
-interface IDiagnosis {
-  content: string;
-  type: string;
-}
-interface IClinicalSymptom {
-  title: string;
-  disorders: {
-    name: string;
-    sides: string[];
-  }[];
-}
-
-interface IBiopsySample {
-  sample_area: string;
-  sample_side: string;
-  specimen_id: string;
-}
-
 // Define the initial form data structure
 const initialFormData = {
-  patient_info: {
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    address: "",
-    aptNumber: "",
-    gender: "",
-    dateOfBirth: "",
-    insuranceCompany: "",
-    memberId: "",
-    reasonsForVisit: [] as string[],
-    sensorySymptoms: [] as string[],
-    ethnicity: "",
-    orderingPhysician: "",
-  },
-  report_info: {
-    dieases: [] as IDiease[],
-    medical_terms: [] as IDiagnosis[],
-    clinical_symptoms: [] as IClinicalSymptom[],
-    facility_location: "",
-    ordering_provider: "",
-    icd: [] as string[],
-    cpt: [] as string[],
-  },
-  biopsy_info: [] as IBiopsySample[],
+  firstname: "",
+  lastname: "",
+  email: "",
+  phone: "",
+  address: "",
+  gender: "",
+  dateOfBirth: "",
+  reasonsForVisit: [] as string[],
+  sensorySymptoms: [] as string[],
 };
 
 // Define the form context type

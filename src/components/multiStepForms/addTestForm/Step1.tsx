@@ -18,34 +18,42 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTestFormContext } from "@/contexts/testFormContext";
-import { addTestFormSchema } from "@/schemas/formSchemas/addTestForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import React from "react";
 import TagInput from "@/components/shared/tag-input";
-import { ethnicityData } from "@/constants/ethnicityData";
 
-const Step1 = ({ nextStep, doctors, insurances }) => {
+const Step1 = ({ nextStep }) => {
   const formContext = useTestFormContext();
 
   // get the form data from from context
   const { formData, setFormData } = formContext;
 
   // 1. Define your form schema.
-  const formSchema = addTestFormSchema();
+  const formSchema = z.object({
+    firstname: z.string().min(1, "First name is required"),
+    lastname: z.string().min(1, "Last name is required"),
+    email: z.string().email("Invalid email address"),
+    phone: z.string().min(10, "Phone number must be at least 10 digits"),
+    address: z.string().min(1, "Address is required"),
+    gender: z.enum(["Male", "Female"]),
+    dateOfBirth: z.string().min(1, "Date of birth is required"),
+    reasonsForVisit: z.array(z.string()),
+    sensorySymptoms: z.array(z.string()),
+  });
 
   // 2. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: formData?.patient_info,
   });
 
   // 3. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setFormData({ ...formData, patient_info: values });
+    setFormData(values);
     nextStep();
+    console.log(formData);
   }
 
   return (
@@ -131,21 +139,6 @@ const Step1 = ({ nextStep, doctors, insurances }) => {
               )}
             />
 
-            {/* APT Field */}
-            <FormField
-              control={form.control}
-              name="aptNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>APT Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="12345" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* Gender */}
             <FormField
               control={form.control}
@@ -187,50 +180,6 @@ const Step1 = ({ nextStep, doctors, insurances }) => {
               )}
             />
 
-            {/* Insurance Field */}
-            <FormField
-              control={form.control}
-              name="insuranceCompany"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Insurance Company</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a insurance company" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {insurances?.map((insurance, idx: number) => (
-                        <SelectItem key={idx} value={insurance?.name}>
-                          {insurance?.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Member Id Field */}
-            <FormField
-              control={form.control}
-              name="memberId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Member ID</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="1234567890" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* Reasons for Visit Input */}
             <FormField
               control={form.control}
@@ -264,64 +213,6 @@ const Step1 = ({ nextStep, doctors, insurances }) => {
                       onChange={field.onChange} // Pass onChange to update the form state
                     />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Ethnicity */}
-            <FormField
-              control={form.control}
-              name="ethnicity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ethnicity</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a ethnicity" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {ethnicityData?.map((item, idx) => (
-                        <SelectItem key={idx} value={item}>
-                          {item}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Ordering Physician */}
-            <FormField
-              control={form.control}
-              name="orderingPhysician"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ordering Physician</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a physician" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {doctors.map((doctor, idx) => (
-                        <SelectItem key={idx} value={doctor?._id}>
-                          {doctor?.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
