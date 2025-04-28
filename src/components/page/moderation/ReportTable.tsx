@@ -28,7 +28,6 @@ import DashboardTable from "@/components/shared/table";
 import TablePagination from "@/components/shared/table-pagination";
 import reportTableColumns from "@/components/tableColumns/reportTableColumns";
 import { reportStauses } from "@/constants/report";
-import { IReport } from "@/types/report";
 
 // Extract unique status from data
 const statuses = Array.from(new Set(reportStauses.map((item) => item)));
@@ -43,12 +42,8 @@ const ReportTable = ({ items = [], filters, meta }) => {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const reportedProducts = items.filter(
-    (item: IReport) => item.type === "Product"
-  );
-
   const table = useReactTable<IUser>({
-    data: reportedProducts || [],
+    data: items || [],
     columns: reportTableColumns as ColumnDef<IUser>[],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

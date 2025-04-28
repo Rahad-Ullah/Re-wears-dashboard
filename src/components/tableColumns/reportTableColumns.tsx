@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { IReport } from "@/types/report";
 import { ColumnDef } from "@tanstack/react-table";
 import { Check, Eye } from "lucide-react";
-import Link from "next/link";
 
 // table column definition
 const reportTableColumns: ColumnDef<IReport>[] = [
@@ -114,17 +113,13 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     header: () => <div className="px-8">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
+      console.log(item);
 
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Link
-            href={`/dashboard/users/user-details/${item.reportId}`}
-            passHref
-          >
-            <Button variant={"ghost"} size={"icon"} className="text-primary">
+          <Button variant={"ghost"} size={"icon"} className="text-primary">
               <Eye />
             </Button>
-          </Link>
           <Button variant={"ghost"} size={"icon"} className="text-green-500">
             <Check />
           </Button>

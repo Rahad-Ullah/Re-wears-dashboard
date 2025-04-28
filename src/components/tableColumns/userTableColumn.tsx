@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info, Lock, LockOpen, Trash } from "lucide-react";
+import { Eye, Lock, LockOpen, Trash } from "lucide-react";
 import Link from "next/link";
 
 // table column definition
@@ -128,11 +128,9 @@ const columns: ColumnDef<IUser>[] = [
 
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Link href={`/dashboard/users/user-details/${item._id}`} passHref>
-            <Button variant={"ghost"} size={"icon"} className="text-primary">
-              <Info />
-            </Button>
-          </Link>
+          <Button variant={"ghost"} size={"icon"} className="text-primary">
+            <Eye />
+          </Button>
           {!item.isBlocked && (
             <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
               <LockOpen />

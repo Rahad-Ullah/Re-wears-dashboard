@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info, Lock, LockOpen, Pencil, Trash } from "lucide-react";
+import { Lock, LockOpen, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -135,12 +135,6 @@ const productTableColumns: ColumnDef<IProduct>[] = [
       const item = row.original;
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Link href={`/products/products-details/${item?._id}`} passHref>
-            <Button variant={"ghost"} size={"icon"} className="text-primary">
-              <Info />
-            </Button>
-          </Link>
-
           {item.status === "Blocked" ? (
             <Button variant={"ghost"} size={"icon"} className="text-red-500">
               <Lock />

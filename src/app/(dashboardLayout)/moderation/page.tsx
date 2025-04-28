@@ -5,6 +5,14 @@ import { demoReportsData } from "@/demoData/reports";
 import { CircleAlert, MessageCircleWarning, UserX } from "lucide-react";
 
 const ModerationPage = () => {
+  const reportedProducts = demoReportsData.filter(
+    (item) => item.type === "Product"
+  );
+  const reportedUsers = demoReportsData.filter((item) => item.type === "User");
+  const reportedMessages = demoReportsData.filter(
+    (item) => item.type === "Message"
+  );
+
   return (
     <Card className="p-5 h-full">
       <Tabs defaultValue={"products"}>
@@ -19,15 +27,28 @@ const ModerationPage = () => {
             <MessageCircleWarning /> Reported Messages
           </TabsTrigger>
         </TabsList>
+
         <TabsContent value="products">
           <ReportTable
-            items={demoReportsData as never[]}
+            items={reportedProducts as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
-        <TabsContent value="users">Pending content</TabsContent>
-        <TabsContent value="messages">Approved content</TabsContent>
+        <TabsContent value="users">
+          <ReportTable
+            items={reportedUsers as never[]}
+            filters={{}}
+            meta={{ page: 1, totalPage: 1, total: 1 }}
+          />
+        </TabsContent>
+        <TabsContent value="messages">
+          <ReportTable
+            items={reportedMessages as never[]}
+            filters={{}}
+            meta={{ page: 1, totalPage: 1, total: 1 }}
+          />
+        </TabsContent>
       </Tabs>
     </Card>
   );
