@@ -17,7 +17,7 @@ const Modal = ({ dialogTrigger, dialogTitle, children, className }: ModalProps) 
   return (
     <Dialog>
       <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
-      <DialogContent className={className}>
+      <DialogContent className={`${className} rounded-xl`}>
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>

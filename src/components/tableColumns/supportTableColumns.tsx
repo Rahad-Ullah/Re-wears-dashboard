@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { ISupportTicket } from "@/types/support";
+import Modal from "../modals/Modal";
 
 // table column definition
 const supportTableColumns: ColumnDef<ISupportTicket>[] = [
@@ -118,12 +119,32 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     id: "actions",
     enableHiding: false,
     header: () => <div className="text-center">Action</div>,
-    cell: () => {
+    cell: ({ row }) => {
+      const item = row?.original as ISupportTicket;
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Button variant={"ghost"} size={"icon"}>
-            <Eye />
-          </Button>
+          <Modal
+            dialogTrigger={
+              <Button variant={"ghost"} size={"icon"}>
+                <Eye />
+              </Button>
+            }
+            className="max-w-xl"
+          >
+            <div className="text-stone-600 grid gap-2">
+              <h1 className="text-xl font-semibold">{item?.subject}</h1>
+              <h2 className="font-medium">
+                <strong>User:</strong> {item?.user}
+              </h2>
+              <p className="font-medium">
+                <strong>Message:</strong> <br /> {item?.message}
+              </p>
+              <div className="flex items-center gap-4 justify-end mt-2">
+                <Button variant={"outline"}>Mark as pending</Button>
+                <Button>Mark as resolved</Button>
+              </div>
+            </div>
+          </Modal>
         </div>
       );
     },

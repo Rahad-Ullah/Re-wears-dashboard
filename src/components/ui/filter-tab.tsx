@@ -7,7 +7,8 @@ const FilterTabItem = ({ children, filter }) => {
   const filterKey = Object.keys(filter)[0];
   const searchParams = useSearchParams();
   const param = searchParams.get(filterKey); // get params value
-  const isActive = param === filter[filterKey];
+  const isActive =
+    (!filter[filterKey] && !param) || param === filter[filterKey];
 
   return (
     <Button
