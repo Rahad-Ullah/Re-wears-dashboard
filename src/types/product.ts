@@ -4,7 +4,7 @@ export interface IProduct {
   description: string;
   category: string;
   brand: string;
-  size: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "3XL" | "4XL";
+  size: string;
   condition: "Like New" | "Very Good" | "Good" | "Fair";
   colors: string[];
   material: string;

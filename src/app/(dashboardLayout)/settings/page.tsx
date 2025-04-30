@@ -1,11 +1,13 @@
-import TemplateTable from "@/components/page/messaging/TemplateTable";
 import BrandTable from "@/components/page/settings/BrandTable";
 import CategoryTable from "@/components/page/settings/CategoryTable";
+import ColorTable from "@/components/page/settings/ColorTable";
+import SizeTable from "@/components/page/settings/SizeTable";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { demoBrandsData } from "@/demoData/brands";
 import { demoCategoriesData } from "@/demoData/categories";
-import { demoTemplateData } from "@/demoData/notification";
+import { demoColorsData } from "@/demoData/colors";
+import { demoSizesData } from "@/demoData/sizes";
 import { Expand, Gem, Palette, Tag } from "lucide-react";
 
 const SettingPage = async ({ searchParams }) => {
@@ -44,15 +46,15 @@ const SettingPage = async ({ searchParams }) => {
           />
         </TabsContent>
         <TabsContent value="sizes">
-          <TemplateTable
-            items={demoTemplateData as never[]}
+          <SizeTable
+            items={demoSizesData as never[]}
             filters={{ status, category }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="colors">
-          <TemplateTable
-            items={demoTemplateData as never[]}
+          <ColorTable
+            items={demoColorsData as never[]}
             filters={{ status, category }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
