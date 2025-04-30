@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Pencil, Trash } from "lucide-react";
 import Modal from "../modals/Modal";
-import { ICategory } from "@/types/category";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import DeleteModal from "../modals/DeleteModal";
+import { IBrand } from "@/types/brand";
 
 // handle delete item
 const handleDelete = async () => {
@@ -15,12 +15,12 @@ const handleDelete = async () => {
 };
 
 // table column definition
-const categoryTableColumns: ColumnDef<ICategory>[] = [
+const brandTableColumns: ColumnDef<IBrand>[] = [
   {
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      const item = row.original as ICategory;
+      const item = row.original as IBrand;
       return (
         <Button
           variant={"ghost"}
@@ -32,32 +32,14 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
     },
   },
   {
-    accessorKey: "icon",
-    header: () => <span>Icon</span>,
-    cell: ({ row }) => {
-      const item = row.original as ICategory;
-      return (
-        <Button
-          variant={"ghost"}
-          className="text-3xl w-full justify-start hover:bg-transparent px-1"
-        >
-          {item?.icon}
-        </Button>
-      );
-    },
-  },
-  {
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
-      const item = row.original as ICategory;
+      const item = row.original as IBrand;
       return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
+        <span className="capitalize font-medium w-full justify-start hover:bg-transparent">
           {item?.name}
-        </Button>
+        </span>
       );
     },
   },
@@ -65,7 +47,7 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
     accessorKey: "totalAssignedItems",
     header: "Assinged Products",
     cell: ({ row }) => {
-      const item = row.original as ICategory;
+      const item = row.original as IBrand;
       return (
         <Button
           variant={"ghost"}
@@ -80,7 +62,7 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
     accessorKey: "created",
     header: () => <div>Created</div>,
     cell: ({ row }) => {
-      const item = row.original as ICategory;
+      const item = row.original as IBrand;
       return (
         <Button
           variant={"ghost"}
@@ -95,7 +77,7 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
     accessorKey: "updated",
     header: () => <div>Last Updated</div>,
     cell: ({ row }) => {
-      const item = row.original as ICategory;
+      const item = row.original as IBrand;
       return (
         <Button
           variant={"ghost"}
@@ -111,7 +93,7 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
     enableHiding: false,
     header: () => <div className="text-center">Actions</div>,
     cell: ({ row }) => {
-      const item = row.original as ICategory;
+      const item = row.original as IBrand;
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
@@ -124,11 +106,9 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
             className="max-w-lg"
           >
             <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Edit Category</h1>
+              <h1 className="text-lg font-semibold">Edit Brand</h1>
               <Label>Name</Label>
               <Input placeholder="Enter name" defaultValue={item?.name} />
-              <Label>Icon (Emoji)</Label>
-              <Input placeholder="Enter icon emoji" defaultValue={item?.icon} />
               <Button className="ml-auto px-6">Save</Button>
             </div>
           </Modal>
@@ -149,4 +129,4 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
   },
 ];
 
-export default categoryTableColumns;
+export default brandTableColumns;
