@@ -7,6 +7,7 @@ import Buying from "./termsAndPolicy/helpCenter/Buying";
 import Shipping from "./termsAndPolicy/helpCenter/Shipping";
 import Payments from "./termsAndPolicy/helpCenter/Payments";
 import SafetyAndReporting from "./termsAndPolicy/helpCenter/SafetyAndReporting";
+import MyAccountAndSettings from "./termsAndPolicy/helpCenter/MyAccountAndSettings";
 
 const TermsAndPolicy = async ({ searchParams }) => {
   const { nestedTab } = await searchParams;
@@ -35,6 +36,9 @@ const TermsAndPolicy = async ({ searchParams }) => {
       </TabsContent>
       <TabsContent value="safety-and-reporting">
         <SafetyAndReporting />
+      </TabsContent>
+      <TabsContent value="my-account-and-settings">
+        <MyAccountAndSettings />
       </TabsContent>
     </Tabs>
   );
