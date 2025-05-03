@@ -3,6 +3,7 @@ import TermsAndPolicyTabs from "./termsAndPolicy/TermsAndPolicyTabs";
 import TermsAndCondition from "./termsAndPolicy/TermsAndCondition";
 import PrivacyPolicy from "./termsAndPolicy/PrivacyPolicy";
 import Selling from "./termsAndPolicy/helpCenter/Selling";
+import Buying from "./termsAndPolicy/helpCenter/Buying";
 
 const TermsAndPolicy = async ({ searchParams }) => {
   const { nestedTab } = await searchParams;
@@ -19,6 +20,9 @@ const TermsAndPolicy = async ({ searchParams }) => {
       </TabsContent>
       <TabsContent value="selling">
         <Selling />
+      </TabsContent>
+      <TabsContent value="buying">
+        <Buying />
       </TabsContent>
     </Tabs>
   );
