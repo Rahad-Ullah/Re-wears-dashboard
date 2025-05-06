@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown, ChevronDown } from "lucide-react";
 
 const CategoryChart = () => {
   // Mock data for categories
@@ -48,12 +48,19 @@ const CategoryChart = () => {
   return (
     <div className="bg-white p-6 rounded-lg border transition duration-200 hover:shadow-md">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-semibold text-gray-800">Trending Categories</h2>
-        <button
-          className={`px-3 py-1 text-sm font-medium rounded-md bg-purple-100 text-purple-700`}
-        >
-          Trending Only
-        </button>
+        <h2 className="text-lg font-semibold text-gray-800">
+          Trending Categories
+        </h2>
+        <div className="relative">
+          <select className="bg-white border rounded-md pr-8 pl-3 py-1 text-sm text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-primary">
+            <option value="day">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <ChevronDown className="h-4 w-4" />
+          </div>
+        </div>
       </div>
 
       <div className="min-h-[300px] overflow-y-auto">
@@ -83,7 +90,7 @@ const CategoryChart = () => {
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
                     <div
                       className={`h-2.5 rounded-full transition-all duration-300 ${
-                        category.trending ? "bg-purple-600" : "bg-gray-400"
+                        category.trending ? "bg-primary" : "bg-gray-400"
                       }`}
                       style={{ width: `${category.percentage}%` }}
                     ></div>

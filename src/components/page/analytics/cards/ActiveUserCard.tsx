@@ -64,7 +64,7 @@ const ActiveUsersCard: React.FC = () => {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
-              className="bg-blue-600 h-2.5 rounded-full"
+              className="bg-primary h-2.5 rounded-full"
               style={{ width: `${loggedInPercentage}%` }}
             ></div>
           </div>
@@ -79,7 +79,7 @@ const ActiveUsersCard: React.FC = () => {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
-              className="bg-purple-600 h-2.5 rounded-full"
+              className="bg-primary h-2.5 rounded-full"
               style={{ width: `${listedPercentage}%` }}
             ></div>
           </div>
@@ -94,7 +94,7 @@ const ActiveUsersCard: React.FC = () => {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
-              className="bg-amber-500 h-2.5 rounded-full"
+              className="bg-primary h-2.5 rounded-full"
               style={{ width: `${soldPercentage}%` }}
             ></div>
           </div>
