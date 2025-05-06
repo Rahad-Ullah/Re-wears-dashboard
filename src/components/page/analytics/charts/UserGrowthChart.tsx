@@ -80,7 +80,7 @@ const UserGrowthChart: React.FC = () => {
             >
               <div className="w-full flex items-end justify-center h-[calc(100%-24px)]">
                 <div
-                  className={`w-1/2 bg-blue-500 hover:bg-blue-700 rounded-t cursor-pointer transition-all duration-500 ease-in-out group relative`}
+                  className={`w-1/2 bg-primary hover:bg-[#757157] rounded-t cursor-pointer transition-all duration-500 ease-in-out group relative`}
                   style={{ height: `${calculateBarHeight(item.newUsers)}%` }}
                 >
                   <div className="w-28 opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white border text-xs rounded px-2 py-1 transition duration-200">
@@ -97,7 +97,7 @@ const UserGrowthChart: React.FC = () => {
       {/* chart footer */}
       <div className="mt-4 flex justify-between items-center">
         <div className="flex items-center">
-          <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+          <div className="w-3 h-3 bg-primary rounded-full mr-2"></div>
           <span className="text-sm text-gray-600">New Users</span>
         </div>
         <div className="text-sm text-gray-600">

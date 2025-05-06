@@ -109,7 +109,7 @@ const ActiveUsersCard: React.FC = () => {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
-              className="bg-teal-500 h-2.5 rounded-full"
+              className="bg-primary h-2.5 rounded-full"
               style={{ width: `${boughtPercentage}%` }}
             ></div>
           </div>

@@ -70,7 +70,7 @@ const SalesVolumeChart: React.FC = () => {
               >
                 <div className="relative w-full flex items-end justify-center h-full">
                   <div
-                    className="w-2/3 bg-emerald-500 rounded-t transition-all duration-300 ease-in-out group relative cursor-pointer hover:bg-emerald-600"
+                    className="w-2/3 bg-primary rounded-t transition-all duration-300 ease-in-out group relative cursor-pointer hover:bg-[#757157]"
                     style={{ height: `${(item.revenue / maxRevenue) * 100}%` }}
                   >
                     <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10">
