@@ -1,4 +1,5 @@
 import ActiveUsersCard from "@/components/page/analytics/cards/ActiveUserCard";
+import ReportsCard from "@/components/page/analytics/cards/ReportsCard";
 import StatCard from "@/components/page/analytics/cards/StatCard";
 import CategoryChart from "@/components/page/analytics/charts/CategoryChart";
 import SalesVolumeChart from "@/components/page/analytics/charts/SalesVolumeChart";
@@ -54,9 +55,9 @@ const AnalyticsPage = () => {
         <SalesVolumeChart />
       </div>
 
-      {/* <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <ReportsCard />
-      </div> */}
+      </div>
     </Card>
   );
 };
