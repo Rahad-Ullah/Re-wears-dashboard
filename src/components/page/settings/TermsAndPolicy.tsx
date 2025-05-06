@@ -13,7 +13,11 @@ const TermsAndPolicy = async ({ searchParams }) => {
   const { nestedTab } = await searchParams;
 
   return (
-    <Tabs value={nestedTab} className="flex gap-6 h-full">
+    <Tabs
+      value={nestedTab}
+      defaultValue="terms-and-condition"
+      className="flex gap-6 h-full"
+    >
       <TermsAndPolicyTabs />
 
       <TabsContent value="terms-and-condition">

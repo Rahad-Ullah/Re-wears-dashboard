@@ -17,7 +17,6 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export function LoginForm({
   className,
@@ -43,7 +42,7 @@ export function LoginForm({
       //! perform your api call here..
 
       toast.success("Login successful", { id: "login" });
-      router.push(redirect || "/dashboard/tests");
+      router.push(redirect || "/");
     } catch (error: unknown) {
       console.log("Error fetching data:", error);
     }
@@ -102,13 +101,13 @@ export function LoginForm({
                 {/* remember checkbox */}
                 <div className="flex flex-col md:flex-row justify-between gap-2 items-center">
                   <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" className="size-5" />
+                    {/* <Checkbox id="terms" className="size-5" />
                     <label
                       htmlFor="terms"
                       className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Remember Password
-                    </label>
+                    </label> */}
                   </div>
                   <Link
                     href="forgot-password"

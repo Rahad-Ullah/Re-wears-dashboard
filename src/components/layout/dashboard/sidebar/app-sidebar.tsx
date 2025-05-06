@@ -25,10 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
-        <Link
-          href={"/dashboard/tests"}
-          className="flex justify-center mt-6 h-20"
-        >
+        <Link href={"/"} className="flex justify-center mt-6 h-20">
           <Image
             src={"/logo.svg"}
             alt="logo"
@@ -46,9 +43,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton onClick={() => logout()}>
+            <SidebarMenuButton onClick={() => logout()} className="hover:text-red-500">
               <LogOut />
-              Log Out
+              Log out
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

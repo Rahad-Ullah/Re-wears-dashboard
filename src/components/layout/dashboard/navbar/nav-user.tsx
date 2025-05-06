@@ -87,7 +87,7 @@ export function NavUser({
               </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => logout()}>
+            <DropdownMenuItem onClick={() => logout()} className="text-red-500">
               <LogOut />
               Log out
             </DropdownMenuItem>
