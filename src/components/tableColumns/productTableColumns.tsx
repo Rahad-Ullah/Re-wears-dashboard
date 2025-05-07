@@ -3,7 +3,6 @@ import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
 import { Lock, LockOpen, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import Modal from "../modals/Modal";
 import DeleteModal from "../modals/DeleteModal";
 import EditProductForm from "../forms/product/EditProduct";
@@ -21,15 +20,8 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            #{item?._id}
-          </Button>
-        </Link>
-      );
+          <p className="px-2">#{item?._id}</p>
+      )
     },
   },
   {
@@ -38,7 +30,6 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
           <Image
             src={item.photos[0] || ""}
             alt={item?.title}
@@ -46,7 +37,6 @@ const productTableColumns: ColumnDef<IProduct>[] = [
             height={50}
             className="object-cover w-12 h-12 rounded-md"
           />
-        </Link>
       );
     },
   },
@@ -56,14 +46,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            {item.title}
-          </Button>
-        </Link>
+        <p className="px-2">{item?.title}</p>
       );
     },
   },
@@ -73,14 +56,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            {item.brand}
-          </Button>
-        </Link>
+        <p className="px-2">{item?.brand}</p>
       );
     },
   },
@@ -90,14 +66,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
-          <Button
-            variant={"ghost"}
-            className="w-full justify-start hover:bg-transparent"
-          >
-            {item.category}
-          </Button>
-        </Link>
+        <p className="px-2">{item?.category}</p>
       );
     },
   },
@@ -107,14 +76,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
-          <Button
-            variant={"ghost"}
-            className="w-full justify-start hover:bg-transparent"
-          >
-            {item.condition}
-          </Button>
-        </Link>
+        <p className="px-2">{item?.condition}</p>
       );
     },
   },
@@ -124,14 +86,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Link href={`/products/products-details/${item?._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            $ {item.price}
-          </Button>
-        </Link>
+        <p className="px-2">${item?.price}</p>
       );
     },
   },

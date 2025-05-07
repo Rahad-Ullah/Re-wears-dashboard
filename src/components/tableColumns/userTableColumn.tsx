@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Lock, LockOpen, Trash } from "lucide-react";
-import Link from "next/link";
+import DeleteModal from "../modals/DeleteModal";
+
+// handle delete
+const handleDelete = async () => {
+  // perform api here...
+};
 
 // table column definition
 const columns: ColumnDef<IUser>[] = [
@@ -14,16 +19,7 @@ const columns: ColumnDef<IUser>[] = [
     header: "Sl. No",
     cell: ({ row }) => {
       const item = row.original as IUser;
-      return (
-        <Link href={`/dashboard/users/user-details/${item._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            #{item._id}
-          </Button>
-        </Link>
-      );
+      return <p className="px-2">{item?._id}</p>;
     },
   },
   {
@@ -32,14 +28,9 @@ const columns: ColumnDef<IUser>[] = [
     cell: ({ row }) => {
       const item = row.original as IUser;
       return (
-        <Link href={`/dashboard/users/user-details/${item._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            {item?.firstName} {item?.lastName}
-          </Button>
-        </Link>
+        <p className="px-2">
+          {item?.firstName} {item?.lastName}
+        </p>
       );
     },
   },
@@ -48,16 +39,7 @@ const columns: ColumnDef<IUser>[] = [
     header: "Gender",
     cell: ({ row }) => {
       const item = row.original as IUser;
-      return (
-        <Link href={`/dashboard/users/user-details/${item._id}`}>
-          <Button
-            variant={"ghost"}
-            className="w-full justify-start hover:bg-transparent"
-          >
-            {item.gender}
-          </Button>
-        </Link>
-      );
+      return <p className="px-2">{item?.gender}</p>;
     },
   },
   {
@@ -65,16 +47,7 @@ const columns: ColumnDef<IUser>[] = [
     header: "Email",
     cell: ({ row }) => {
       const item = row.original as IUser;
-      return (
-        <Link href={`/dashboard/users/user-details/${item._id}`}>
-          <Button
-            variant={"ghost"}
-            className="w-full justify-start hover:bg-transparent"
-          >
-            {item.email}
-          </Button>
-        </Link>
-      );
+      return <p className="px-2">{item?.email}</p>;
     },
   },
   {
@@ -82,40 +55,26 @@ const columns: ColumnDef<IUser>[] = [
     header: () => <div>Location</div>,
     cell: ({ row }) => {
       const item = row.original as IUser;
-      return (
-        <Link href={`/dashboard/users/user-details/${item._id}`}>
-          <Button
-            variant={"ghost"}
-            className="capitalize w-full justify-start hover:bg-transparent"
-          >
-            {item?.location}
-          </Button>
-        </Link>
-      );
+      return <p className="px-2">{item?.location}</p>;
     },
   },
   {
     accessorKey: "role",
     header: () => <div>Role</div>,
     cell: ({ row }) => {
-      const role = row.getValue("role");
       const item = row.original as IUser;
       return (
-        <Link href={`/dashboard/users/user-details/${item._id}`}>
-          <Badge
-            className={`capitalize font-medium text-white rounded-full hover:bg-primary py-1.5 w-full flex justify-center`}
-            style={{
-              backgroundColor:
-                role === "Admin"
-                  ? "#9d987b"
-                  : role === "Buyer"
-                  ? "#009933"
-                  : "#ff6600",
-            }}
-          >
-            {row.getValue("role")}
-          </Badge>
-        </Link>
+        <Badge
+          className={`capitalize font-medium text-white shadow-none rounded-full py-1.5 w-full flex justify-center ${
+            item?.role === "Admin"
+              ? "bg-purple-50 text-purple-500 border-purple-400"
+              : item?.role === "Buyer"
+              ? "bg-green-50 text-green-600 border-green-400"
+              : "bg-orange-50 text-orange-500 border-orange-400"
+          }`}
+        >
+          {item?.role}
+        </Badge>
       );
     },
   },
@@ -141,9 +100,15 @@ const columns: ColumnDef<IUser>[] = [
               <Lock />
             </Button>
           )}
-          <Button variant={"ghost"} size={"icon"} className="text-red-500">
-            <Trash />
-          </Button>
+          <DeleteModal
+            triggerBtn={
+              <Button variant={"ghost"} size={"icon"} className="text-red-500">
+                <Trash />
+              </Button>
+            }
+            itemId={item?._id}
+            action={handleDelete}
+          />
         </div>
       );
     },

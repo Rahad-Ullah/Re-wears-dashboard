@@ -14,7 +14,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider className="">
+    <SidebarProvider className="no-scrollbar">
       {/* dashboard sidebar */}
       <AppSidebar className="p-4 pr-0" />
       <SidebarInset className="bg-transparent p-4 gap-4">
