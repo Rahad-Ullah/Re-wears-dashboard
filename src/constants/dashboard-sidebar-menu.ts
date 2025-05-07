@@ -51,7 +51,7 @@ export const sidebarMenu = {
   ],
 };
 
-export const userData = {
+export const profileData = {
   name: "Rahad Ullah",
   email: "rahadullah10@gmail.com",
   role: "Admin",

@@ -22,36 +22,32 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { editUserFormSchema } from "@/schemas/formSchemas/editUserForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import toast from "react-hot-toast";
+import { editProfileFormSchema } from "@/schemas/formSchemas/profile/editProfile";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { userGenders } from "@/constants/user";
 
 const EditProfileModal = ({ user }) => {
   const [file, setFile] = useState<File | string | null>(user.image);
 
-  // 1. Define your form schema.
-  const formSchema = editUserFormSchema();
-
   // 2. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstname: user?.firstname,
-      lastname: user?.lastname,
-      email: user?.email,
-      phone: user?.phone,
-      company_name: user?.company_name,
-      address: user?.address || "",
-      npi_number: user?.npi_number?.toString() || "",
-      apt_number: user?.apt_number?.toString() || "",
-      facility_location: user?.facility_location || "",
-    },
+  const form = useForm<z.infer<typeof editProfileFormSchema>>({
+    resolver: zodResolver(editProfileFormSchema),
+    defaultValues: user,
   });
 
   // 3. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof editProfileFormSchema>) {
     toast.loading("Updating...", {
       id: "update-profile",
     });
@@ -78,7 +74,7 @@ const EditProfileModal = ({ user }) => {
           <Pencil />
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-w-[80vw] h-[90vh] overflow-scroll grid gap-6">
+      <DialogContent className="w-11/12 lg:w-[80vw] max-h-[95vh] overflow-y-scroll no-scrollbar grid gap-6 rounded-xl">
         <DialogHeader>
           <DialogTitle className="text-primary font-medium text-xl">
             Edit Profile
@@ -102,22 +98,11 @@ const EditProfileModal = ({ user }) => {
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Last Name Field */}
-              <FormField
-                control={form.control}
-                name="lastname"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Doe" {...field} />
+                      <Input
+                        placeholder="John"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,7 +117,11 @@ const EditProfileModal = ({ user }) => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="me@example.com" {...field} />
+                      <Input
+                        placeholder="me@example.com"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -147,37 +136,99 @@ const EditProfileModal = ({ user }) => {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="1234567890" {...field} />
+                      <Input
+                        placeholder="1234567890"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Address Field */}
+              {/* Location Field */}
               <FormField
                 control={form.control}
-                name="address"
+                name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="123 Road City State " {...field} />
+                      <Input
+                        placeholder="123 Road City State "
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Company Field */}
+              {/* Gender */}
               <FormField
                 control={form.control}
-                name="company_name"
+                name="gender"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name</FormLabel>
+                    <FormLabel>Gender</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ?? ""}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a gender" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {userGenders?.map((item, idx) => (
+                          <SelectItem key={idx} value={item}>
+                            {item}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* birthday Field */}
+              <FormField
+                control={form.control}
+                name="birthday"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Birthday</FormLabel>
                     <FormControl>
-                      <Input placeholder="Example Limited" {...field} />
+                      <Input
+                        type="date"
+                        placeholder="Enter your birthday"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Bio Field */}
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        rows={3}
+                        placeholder="Write something about you..."
+                        {...field}
+                        value={field.value ?? ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
