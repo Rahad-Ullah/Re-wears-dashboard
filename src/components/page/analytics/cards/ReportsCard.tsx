@@ -66,8 +66,8 @@ const ReportsCard: React.FC = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="sales">Sales Report</SelectItem>
-                <SelectItem value="users">User Activity</SelectItem>
-                <SelectItem value="products">Product Performance</SelectItem>
+                <SelectItem value="users">User Growth</SelectItem>
+                <SelectItem value="products">Product Listings</SelectItem>
                 <SelectItem value="categories">Category Analysis</SelectItem>
               </SelectContent>
             </Select>
@@ -115,7 +115,7 @@ const ReportsCard: React.FC = () => {
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem className="size-6" value="csv" id="csv" />
-              <Label htmlFor="csv">CSV</Label>
+              <Label htmlFor="csv">aCSV</Label>
             </div>
           </RadioGroup>
         </div>

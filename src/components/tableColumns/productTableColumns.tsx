@@ -4,6 +4,14 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Lock, LockOpen, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Modal from "../modals/Modal";
+import DeleteModal from "../modals/DeleteModal";
+import EditProductForm from "../forms/product/EditProduct";
+
+// handleDelete
+const handleDelete = async () => {
+  // backend api perform
+};
 
 // table column definition
 const productTableColumns: ColumnDef<IProduct>[] = [
@@ -145,13 +153,30 @@ const productTableColumns: ColumnDef<IProduct>[] = [
             </Button>
           )}
 
-          <Button variant={"ghost"} size={"icon"} className="text-body">
-            <Pencil />
-          </Button>
+          {/* edit item */}
+          <Modal
+            dialogTrigger={
+              <Button variant={"ghost"} size={"icon"} className="text-body">
+                <Pencil />
+              </Button>
+            }
+            dialogTitle={<p>Edit Product</p>}
+            className="max-w-lg"
+          >
+            <EditProductForm />
+          </Modal>
 
-          <Button variant={"ghost"} size={"icon"} className="text-red-500">
-            <Trash />
-          </Button>
+          {/* delete */}
+          <DeleteModal
+            triggerBtn={
+              <Button variant={"ghost"} size={"icon"} className="text-red-500">
+                <Trash />
+              </Button>
+            }
+            itemId={item?._id}
+            action={handleDelete}
+            actionBtnText="Delete"
+          ></DeleteModal>
         </div>
       );
     },
