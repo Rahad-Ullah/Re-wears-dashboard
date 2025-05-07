@@ -163,7 +163,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
             dialogTitle={<p>Edit Product</p>}
             className="max-w-lg"
           >
-            <EditProductForm />
+            <EditProductForm product={item} />
           </Modal>
 
           {/* delete */}

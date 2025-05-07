@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -25,18 +24,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const EditProductForm = () => {
+const EditProductForm = ({ product }) => {
+  console.log(product);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof editProductFormSchema>>({
     resolver: zodResolver(editProductFormSchema),
-    defaultValues: {
-      title: "",
-      brand: "",
-      category: "",
-      condition: "",
-      price: "",
-      image: "",
-    },
+    // defaultValues: { ...product },
   });
 
   // 2. Define a submit handler.
@@ -93,7 +87,7 @@ const EditProductForm = () => {
                   {demoCategoriesData?.map((item, idx) => (
                     <SelectItem
                       key={idx}
-                      value={item?._id.toString()}
+                      value={item?.name}
                       className="flex gap-2"
                     >
                       {item?.icon} {item?.name}
@@ -164,12 +158,7 @@ const EditProductForm = () => {
         />
 
         <div className="flex justify-end gap-2 mt-2">
-          <DialogClose>
-            <Button type="button" variant={"outline"}>
-              Close
-            </Button>
-          </DialogClose>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Update</Button>
         </div>
       </form>
     </Form>
