@@ -16,6 +16,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import { templateCategory } from "@/constants/notification";
+import DeleteModal from "../modals/DeleteModal";
+
+// handle delete
+const handleDelete = async () => {
+  // perform delete api here...
+};
 
 // table column definition
 const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
@@ -24,14 +30,7 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: "Sl. No",
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
-          #{item._id}
-        </Button>
-      );
+      return <p className="px-2">{item?._id}</p>;
     },
   },
   {
@@ -39,14 +38,7 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: "Name",
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
-          {item?.name}
-        </Button>
-      );
+      return <p className="px-2">{item?.name}</p>;
     },
   },
   {
@@ -54,14 +46,7 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item?.category}
-        </Button>
-      );
+      return <p className="px-2">{item?.category}</p>;
     },
   },
   {
@@ -69,14 +54,7 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: () => <div>Last Updated</div>,
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
-          {item?.lastupdated?.split("T")[0]}
-        </Button>
-      );
+      return <p className="px-2">{item?.lastupdated}</p>;
     },
   },
   {
@@ -145,9 +123,16 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
               </div>
             </div>
           </Modal>
-          <Button variant={"ghost"} size={"icon"} className="text-red-500">
-            <Trash />
-          </Button>
+          {/* delete */}
+          <DeleteModal
+            triggerBtn={
+              <Button variant={"ghost"} size={"icon"} className="text-red-500">
+                <Trash />
+              </Button>
+            }
+            action={handleDelete}
+            itemId={item?._id.toString()}
+          />
         </div>
       );
     },

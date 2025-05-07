@@ -14,12 +14,7 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     cell: ({ row }) => {
       const item = row.original as IReport;
       return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
-          #{item.reportId}
-        </Button>
+        <p className="px-2">{item?.reportId}</p>
       );
     },
   },
@@ -29,12 +24,7 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     cell: ({ row }) => {
       const item = row.original as IReport;
       return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
-          {item?.content}
-        </Button>
+        <p className="px-2">{item?.content}</p>
       );
     },
   },
@@ -43,14 +33,7 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     header: "Reporter",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.reporter}
-        </Button>
-      );
+      return <p className="px-2">{item?.reporter}</p>;
     },
   },
   {
@@ -59,12 +42,7 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     cell: ({ row }) => {
       const item = row.original as IReport;
       return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.reason}
-        </Button>
+        <p className="px-2">{item?.reason}</p>
       );
     },
   },
@@ -73,14 +51,7 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     header: () => <div>Date</div>,
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return (
-        <Button
-          variant={"ghost"}
-          className="capitalize w-full justify-start hover:bg-transparent"
-        >
-          {item?.date?.split("T")[0]}
-        </Button>
-      );
+      return <p className="px-2">{item?.date?.split("T")[0]}</p>;
     },
   },
   {
@@ -90,17 +61,13 @@ const reportTableColumns: ColumnDef<IReport>[] = [
       const item = row.original as IReport;
       return (
         <Badge
-          className={`capitalize font-medium text-white rounded-full py-1.5 w-full flex justify-center`}
-          style={{
-            backgroundColor:
-              item?.status === "Pending"
-                ? "#9d987b"
-                : item?.status === "In Review"
-                ? "#ff6600"
-                : item?.status === "Resolved"
-                ? "#009933"
-                : "",
-          }}
+          className={`capitalize font-medium text-white shadow-none rounded-full py-1.5 w-full flex justify-center ${
+            item?.status === "Pending"
+              ? "bg-purple-50 text-purple-500 border-purple-400"
+              : item?.status === "In Review"
+              ? "bg-orange-50 text-orange-500 border-orange-400"
+              : "bg-green-50 text-green-600 border-green-400"
+          }`}
         >
           {item?.status}
         </Badge>
