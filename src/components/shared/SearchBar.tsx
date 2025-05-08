@@ -9,7 +9,6 @@ const SearchBar = () => {
   return (
     <div className="relative hidden md:block">
       <Input
-        type="search"
         id="search"
         placeholder="Search your interest"
         className="rounded-full bg-[#F1F1F1] px-5 h-10 placeholder:text-[#B6B6B6]"
