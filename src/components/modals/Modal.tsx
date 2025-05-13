@@ -17,7 +17,10 @@ const Modal = ({ dialogTrigger, dialogTitle, children, className }: ModalProps) 
   return (
     <Dialog>
       <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
-      <DialogContent className={`${className} rounded-xl`}>
+      <DialogContent
+        className={`
+          !${className} max-w-[100vw] lg:max-w-[95vw] rounded-xl`}
+      >
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             {dialogTitle}

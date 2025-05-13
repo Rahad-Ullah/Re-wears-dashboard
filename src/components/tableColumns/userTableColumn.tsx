@@ -6,6 +6,8 @@ import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Lock, LockOpen, Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
+import Modal from "../modals/Modal";
+import UserDetails from "../page/users/userDetails/UserDetails";
 
 // handle delete
 const handleDelete = async () => {
@@ -87,9 +89,18 @@ const columns: ColumnDef<IUser>[] = [
 
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Button variant={"ghost"} size={"icon"} className="text-primary">
-            <Eye />
-          </Button>
+          <Modal
+            dialogTrigger={
+              <Button variant={"ghost"} size={"icon"} className="text-primary">
+                <Eye />
+              </Button>
+            }
+            dialogTitle="User Details"
+            className="max-w-lg"
+          >
+            <UserDetails />
+          </Modal>
+
           {!item.isBlocked && (
             <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
               <LockOpen />
