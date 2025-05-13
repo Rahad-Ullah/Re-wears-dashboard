@@ -8,6 +8,7 @@ import { ICategory } from "@/types/category";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import DeleteModal from "../modals/DeleteModal";
+import Image from "next/image";
 
 // handle delete item
 const handleDelete = async () => {
@@ -37,12 +38,13 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
     cell: ({ row }) => {
       const item = row.original as ICategory;
       return (
-        <Button
-          variant={"ghost"}
-          className="text-3xl w-full justify-start hover:bg-transparent px-1"
-        >
-          {item?.icon}
-        </Button>
+        <Image
+          src={item?.icon}
+          alt="icon"
+          width={70}
+          height={70}
+          className="p-2"
+        />
       );
     },
   },
@@ -127,8 +129,17 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
               <h1 className="text-lg font-semibold">Edit Category</h1>
               <Label>Name</Label>
               <Input placeholder="Enter name" defaultValue={item?.name} />
-              <Label>Icon (Emoji)</Label>
-              <Input placeholder="Enter icon emoji" defaultValue={item?.icon} />
+              <Label>Icon</Label>
+              <Input
+                type="file"
+                placeholder="Upload icon"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    // Handle file upload logic here
+                  }
+                }}
+              />
               <Button className="ml-auto px-6">Save</Button>
             </div>
           </Modal>

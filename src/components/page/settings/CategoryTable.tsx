@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
@@ -71,8 +72,31 @@ const CategoryTable = ({ items = [], filters, meta }) => {
               <h1 className="text-lg font-semibold">Add Category</h1>
               <Label>Name</Label>
               <Input placeholder="Enter name" />
-              <Label>Icon (Emoji)</Label>
-              <Input placeholder="Enter icon emoji" />
+              <Label>Icon</Label>
+              <Input
+                type="file"
+                placeholder="Upload icon"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const preview = document.getElementById(
+                      "icon-preview"
+                    ) as HTMLImageElement;
+                    preview.src = URL.createObjectURL(file);
+                    preview.style.display = "block";
+                  }
+                }}
+              />
+              <img
+                id="icon-preview"
+                alt="Icon Preview"
+                style={{
+                  display: "none",
+                  marginTop: "10px",
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                }}
+              />
               <Button className="ml-auto px-6">Add</Button>
             </div>
           </Modal>
