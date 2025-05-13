@@ -5,11 +5,7 @@ export const userRoles = [
   },
   {
     id: 2,
-    title: "Buyer",
-  },
-  {
-    id: 3,
-    title: "Seller",
+    title: "User",
   },
 ] as const;
 
