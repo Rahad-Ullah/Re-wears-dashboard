@@ -30,8 +30,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { templateCategory, templateStatuses } from "@/constants/notification";
+import { templateCategory } from "@/constants/notification";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 const TemplateTable = ({ items = [], filters, meta }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
@@ -72,31 +73,6 @@ const TemplateTable = ({ items = [], filters, meta }) => {
 
         {/* right side filters */}
         <div className="flex flex-wrap items-center gap-4">
-          {/* Status Filter Dropdown */}
-          <Select
-            defaultValue={filters?.status}
-            onValueChange={(value) =>
-              updateMultiSearchParams({
-                page: null,
-                status: value === "All" ? null : value,
-              })
-            }
-          >
-            <SelectTrigger className="w-fit gap-2">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="All">All status</SelectItem>
-                {templateStatuses?.map((item, idx) => (
-                  <SelectItem key={idx} value={item}>
-                    {item}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
           {/* Filter by category */}
           <Select
             defaultValue={filters?.category}
@@ -132,8 +108,10 @@ const TemplateTable = ({ items = [], filters, meta }) => {
           >
             <div className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Template</h1>
-              <Input placeholder="Enter name" />
+              <Label>Name</Label>
+              <Input placeholder="Enter template name" />
 
+              <Label>Category</Label>
               <Select>
                 <SelectTrigger>
                   <SelectValue placeholder="Select Category" />
@@ -147,6 +125,7 @@ const TemplateTable = ({ items = [], filters, meta }) => {
                 </SelectContent>
               </Select>
 
+              <Label>Message</Label>
               <Textarea rows={4} placeholder="Write message..." />
 
               <div className="flex items-center gap-4 justify-end">

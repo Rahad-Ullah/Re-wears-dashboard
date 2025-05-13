@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Pencil, Trash } from "lucide-react";
@@ -17,6 +16,7 @@ import {
 } from "../ui/select";
 import { templateCategory } from "@/constants/notification";
 import DeleteModal from "../modals/DeleteModal";
+import { Label } from "../ui/label";
 
 // handle delete
 const handleDelete = async () => {
@@ -30,7 +30,7 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: "Sl. No",
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      return <p className="px-2">{item?._id}</p>;
+      return <p className="px-2"># {item?._id}</p>;
     },
   },
   {
@@ -54,36 +54,17 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: () => <div>Last Updated</div>,
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      return <p className="px-2">{item?.lastupdated}</p>;
-    },
-  },
-  {
-    accessorKey: "status",
-    header: () => <div>Status</div>,
-    cell: ({ row }) => {
-      const item = row.original as INotificationTemplate;
-      const status = item?.status;
-      return (
-        <Badge
-          className={`capitalize font-medium shadow-none rounded-full py-1.5 w-full flex justify-center ${
-            status === "Active"
-              ? "bg-green-50 text-green-600 border-green-400"
-              : "bg-yellow-50 text-yellow-600 border-yellow-400"
-          }`}
-        >
-          {item?.status}
-        </Badge>
-      );
+      return <p className="px-2">{item?.lastupdated?.split("T")[0]}</p>;
     },
   },
   {
     id: "actions",
     enableHiding: false,
-    header: () => <div className="px-8">Action</div>,
+    header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
       return (
-        <div className="flex items-center justify-evenly gap-1">
+        <div className="flex items-center justify-center gap-2">
           <Modal
             dialogTrigger={
               <Button variant={"ghost"} size={"icon"}>
@@ -94,8 +75,10 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
           >
             <div className="grid gap-3">
               <h1 className="text-lg font-semibold">Update Template</h1>
+              <Label>Name</Label>
               <Input placeholder="Enter name" defaultValue={item?.name} />
 
+              <Label>Category</Label>
               <Select defaultValue={item?.category}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select Category" />
@@ -109,6 +92,7 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
                 </SelectContent>
               </Select>
 
+              <Label>Message</Label>
               <Textarea
                 rows={4}
                 placeholder="Write message..."
