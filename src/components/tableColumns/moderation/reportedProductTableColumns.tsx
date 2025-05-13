@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import Link from "next/link";
 
 // table column definition
 const reportedProductTableColumns: ColumnDef<IReport>[] = [
@@ -95,9 +96,14 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Eye /> View product
-              </DropdownMenuItem>
+              <Link
+                href={`https://re-wears-rahad-ullah.vercel.app/product-details`}
+                target="_blank"
+              >
+                <DropdownMenuItem>
+                  <Eye /> View product
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <FileSearch /> Mark as In Review

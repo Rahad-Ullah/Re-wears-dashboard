@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import Link from "next/link";
 
 // table column definition
 const reportedMessageTableColumns: ColumnDef<IReport>[] = [
@@ -95,9 +96,14 @@ const reportedMessageTableColumns: ColumnDef<IReport>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Eye /> View message
-              </DropdownMenuItem>
+              <Link
+                href={`https://re-wears-rahad-ullah.vercel.app/inbox`}
+                target="_blank"
+              >
+                <DropdownMenuItem>
+                  <Eye /> View message
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <FileSearch /> Mark as In Review
