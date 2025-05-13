@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
 import Modal from "../modals/Modal";
 import { Textarea } from "../ui/textarea";
 
@@ -69,13 +68,10 @@ const notificationTableColumns: ColumnDef<IUser>[] = [
   {
     id: "actions",
     enableHiding: false,
-    header: () => <div className="px-8">Action</div>,
+    header: () => <div className="px-8 text-center">Action</div>,
     cell: () => {
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Button variant={"ghost"} size={"icon"} className="text-primary">
-            <Eye />
-          </Button>
           <Modal
             dialogTrigger={
               <Button size={"sm"} className="text-sm">

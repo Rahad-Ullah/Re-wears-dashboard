@@ -96,7 +96,7 @@ const columns: ColumnDef<IUser>[] = [
               </Button>
             }
             dialogTitle="User Details"
-            className="max-w-lg"
+            className="max-w-[100vw] lg:max-w-lg"
           >
             <UserDetails />
           </Modal>

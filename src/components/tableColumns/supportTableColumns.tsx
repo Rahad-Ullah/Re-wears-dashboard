@@ -129,7 +129,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
                 <Eye />
               </Button>
             }
-            className="max-w-xl"
+            className="max-w-[100vw] lg:max-w-lg"
           >
             <div className="text-stone-600 grid gap-2">
               <h1 className="text-xl font-semibold">{item?.subject}</h1>

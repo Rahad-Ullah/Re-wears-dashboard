@@ -116,7 +116,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
               </Button>
             }
             dialogTitle={<p>Edit Product</p>}
-            className="max-w-lg"
+            className="max-w-[100vw] lg:max-w-lg"
           >
             <EditProductForm product={item} />
           </Modal>

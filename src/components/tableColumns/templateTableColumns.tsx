@@ -116,9 +116,6 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
               />
 
               <div className="flex items-center gap-4 justify-end">
-                <Button variant={"outline"} className="">
-                  Save as draft
-                </Button>
                 <Button className="">Update</Button>
               </div>
             </div>

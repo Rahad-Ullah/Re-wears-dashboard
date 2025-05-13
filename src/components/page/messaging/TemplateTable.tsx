@@ -150,10 +150,7 @@ const TemplateTable = ({ items = [], filters, meta }) => {
               <Textarea rows={4} placeholder="Write message..." />
 
               <div className="flex items-center gap-4 justify-end">
-                <Button variant={"outline"} className="">
-                  Save as draft
-                </Button>
-                <Button className="">Add</Button>
+                <Button className="">Add Now</Button>
               </div>
             </div>
           </Modal>
