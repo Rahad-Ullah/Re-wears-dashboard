@@ -1,4 +1,6 @@
-import ReportTable from "@/components/page/moderation/ReportTable";
+import ReportedMessageTable from "@/components/page/moderation/ReportedMessageTable";
+import ReportedProductTable from "@/components/page/moderation/ReportedProductTable";
+import ReportedUserTable from "@/components/page/moderation/ReportedUserTable";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { demoReportsData } from "@/demoData/reports";
@@ -29,21 +31,21 @@ const ModerationPage = () => {
         </TabsList>
 
         <TabsContent value="products">
-          <ReportTable
+          <ReportedProductTable
             items={reportedProducts as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="users">
-          <ReportTable
+          <ReportedUserTable
             items={reportedUsers as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="messages">
-          <ReportTable
+          <ReportedMessageTable
             items={reportedMessages as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}

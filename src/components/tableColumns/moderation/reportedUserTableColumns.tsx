@@ -4,28 +4,32 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IReport } from "@/types/report";
 import { ColumnDef } from "@tanstack/react-table";
-import { Check, Eye } from "lucide-react";
+import { CircleCheckBig, Eye, FileSearch, MoreHorizontal } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../ui/dropdown-menu";
 
 // table column definition
-const reportTableColumns: ColumnDef<IReport>[] = [
+const reportedUserTableColumns: ColumnDef<IReport>[] = [
   {
     accessorKey: "reportId",
     header: "Report ID",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return (
-        <p className="px-2">{item?.reportId}</p>
-      );
+      return <p className="px-2">{item?.reportId}</p>;
     },
   },
   {
-    accessorKey: "title",
-    header: "Title",
+    accessorKey: "user",
+    header: "User",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return (
-        <p className="px-2">{item?.content}</p>
-      );
+      return <p className="px-2">{item?.content}</p>;
     },
   },
   {
@@ -41,9 +45,7 @@ const reportTableColumns: ColumnDef<IReport>[] = [
     header: "Reason",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return (
-        <p className="px-2">{item?.reason}</p>
-      );
+      return <p className="px-2">{item?.reason}</p>;
     },
   },
   {
@@ -77,23 +79,38 @@ const reportTableColumns: ColumnDef<IReport>[] = [
   {
     id: "actions",
     enableHiding: false,
-    header: () => <div className="px-8">Action</div>,
+    header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
       console.log(item);
 
       return (
-        <div className="flex items-center justify-evenly gap-1">
-          <Button variant={"ghost"} size={"icon"} className="text-primary">
-              <Eye />
-            </Button>
-          <Button variant={"ghost"} size={"icon"} className="text-green-500">
-            <Check />
-          </Button>
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <Eye /> View user profile
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <FileSearch /> Mark as In Review
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CircleCheckBig /> Mark as Resolved
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       );
     },
   },
 ];
 
-export default reportTableColumns;
+export default reportedUserTableColumns;

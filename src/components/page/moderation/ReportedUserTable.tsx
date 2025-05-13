@@ -26,13 +26,13 @@ import { IUser } from "@/types/user";
 import { useUpdateMultiSearchParams } from "@/hooks/useUpdateMultiSearchParams";
 import DashboardTable from "@/components/shared/table";
 import TablePagination from "@/components/shared/table-pagination";
-import reportTableColumns from "@/components/tableColumns/reportTableColumns";
 import { reportStauses } from "@/constants/report";
+import reportedUserTableColumns from "@/components/tableColumns/moderation/reportedUserTableColumns";
 
 // Extract unique status from data
 const statuses = Array.from(new Set(reportStauses.map((item) => item)));
 
-const ReportTable = ({ items = [], filters, meta }) => {
+const ReportedUserTable = ({ items = [], filters, meta }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -44,7 +44,7 @@ const ReportTable = ({ items = [], filters, meta }) => {
 
   const table = useReactTable<IUser>({
     data: items || [],
-    columns: reportTableColumns as ColumnDef<IUser>[],
+    columns: reportedUserTableColumns as ColumnDef<IUser>[],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -100,11 +100,11 @@ const ReportTable = ({ items = [], filters, meta }) => {
 
       {/* table and pagination*/}
       <section>
-        <DashboardTable table={table} columns={reportTableColumns} />
+        <DashboardTable table={table} columns={reportedUserTableColumns} />
         <TablePagination table={table} meta={meta} />
       </section>
     </div>
   );
 };
 
-export default ReportTable;
+export default ReportedUserTable;
