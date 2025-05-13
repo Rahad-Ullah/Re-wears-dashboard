@@ -36,6 +36,9 @@ const UserGrowthChart: React.FC = () => {
       { date: "Jul", newUsers: 1420, totalUsers: 22900 },
       { date: "Aug", newUsers: 890, totalUsers: 23790 },
       { date: "Sep", newUsers: 731, totalUsers: 24521 },
+      { date: "Oct", newUsers: 1020, totalUsers: 25541 },
+      { date: "Nov", newUsers: 1100, totalUsers: 26641 },
+      { date: "Dec", newUsers: 1250, totalUsers: 27891 },
     ],
   };
 

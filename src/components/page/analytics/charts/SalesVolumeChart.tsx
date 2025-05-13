@@ -17,6 +17,9 @@ const SalesVolumeChart: React.FC = () => {
     { month: "Jul", revenue: 116800 },
     { month: "Aug", revenue: 127000 },
     { month: "Sep", revenue: 142000 },
+    { month: "Oct", revenue: 150000 },
+    { month: "Nov", revenue: 160000 },
+    { month: "Dec", revenue: 170000 },
   ];
 
   // Calculate the maximum value for scaling
