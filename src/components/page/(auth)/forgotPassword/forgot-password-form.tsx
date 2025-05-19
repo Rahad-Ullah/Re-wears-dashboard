@@ -15,6 +15,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import BackButton from "@/components/shared/back-button";
+import { myFetch } from "@/utils/myFetch";
 
 export function ForgotPasswordForm({
   className,
@@ -31,13 +32,23 @@ export function ForgotPasswordForm({
     const payload = {
       email: formData.get("email"),
     };
-    console.log(payload);
 
     try {
-      //! perform your api call here...
-
-      toast.success("OTP sent to your email", { id: "forgot-password-toast" });
-      router.push(`/otp-verify?email=${payload.email}`);
+      const res = await myFetch("/auth/forgot-password", {
+        method: "POST",
+        body: payload,
+      });
+      console.log(res);
+      if (res.success) {
+        toast.success("OTP sent to your email", {
+          id: "forgot-password-toast",
+        });
+        router.push(`/otp-verify?email=${payload.email}`);
+      } else {
+        toast.error(res.message || "Something went wrong", {
+          id: "forgot-password-toast",
+        });
+      }
     } catch (error: unknown) {
       console.log("Error fetching data:", error);
     }
