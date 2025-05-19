@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import toast from "react-hot-toast";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, redirect } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,8 +31,8 @@ import {
 } from "@/components/ui/input-otp";
 
 const FormSchema = z.object({
-  oneTimeCode: z.string().min(5, {
-    message: "Your one-time password must be 5 digits.",
+  oneTimeCode: z.string().min(6, {
+    message: "Your one-time password must be 6 digits.",
   }),
 });
 export function OtpVerifyForm({
@@ -50,9 +50,9 @@ export function OtpVerifyForm({
     },
   });
 
-  // if (!email) {
-  //   redirect("/forgot-password");
-  // }
+  if (!email) {
+    redirect("/forgot-password");
+  }
 
   // handle form submit
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
@@ -64,13 +64,23 @@ export function OtpVerifyForm({
       oneTimeCode: Number(values.oneTimeCode),
       email,
     };
-    console.log(payload);
 
     try {
-      //! perform your api call here...
+      const res = await myFetch("/auth/verify-otp", {
+        method: "POST",
+        body: payload,
+      });
 
-      toast.success("OTP verified successfully", { id: "verify-otp-toast" });
-      router.push(`/reset-password?auth=demoAuthToken`);
+      if (res?.success) {
+        toast.success("OTP verified successfully", {
+          id: "verify-otp-toast",
+        });
+        router.push(`/reset-password?auth=${res?.data}`);
+      } else {
+        toast.error(res?.message || "Failed to verify", {
+          id: "verify-otp-toast",
+        });
+      }
     } catch (error: unknown) {
       console.log(error);
     }
@@ -82,7 +92,7 @@ export function OtpVerifyForm({
       id: "resend-otp-toast",
     });
     try {
-      const res = await myFetch("/auth/forget-password", {
+      const res = await myFetch("/auth/forgot-password", {
         method: "POST",
         body: { email },
       });
@@ -108,7 +118,7 @@ export function OtpVerifyForm({
           </figure>
           <CardTitle className="text-2xl">Verification code</CardTitle>
           <CardDescription className="pt-2 text-primary-foreground">
-            We sent a reset link to <strong>{email}</strong>. Enter 5 digit code
+            We sent a reset link to <strong>{email}</strong>. Enter 6 digit code
             that is mentioned in the email.
           </CardDescription>
         </CardHeader>
@@ -126,7 +136,7 @@ export function OtpVerifyForm({
                         <FormItem>
                           <FormControl>
                             <InputOTP
-                              maxLength={5}
+                              maxLength={6}
                               pattern={REGEXP_ONLY_DIGITS}
                               {...field}
                             >
@@ -136,6 +146,7 @@ export function OtpVerifyForm({
                                 <InputOTPSlot index={2} />
                                 <InputOTPSlot index={3} />
                                 <InputOTPSlot index={4} />
+                                <InputOTPSlot index={5} />
                               </InputOTPGroup>
                             </InputOTP>
                           </FormControl>
@@ -156,7 +167,7 @@ export function OtpVerifyForm({
               You have not received the email?{" "}
               <span
                 onClick={handleResend}
-                className="font-medium text-primary-foreground hover:underline underline-offset-4"
+                className="font-medium text-primary-foreground hover:underline underline-offset-4 cursor-pointer"
               >
                 Resend
               </span>
