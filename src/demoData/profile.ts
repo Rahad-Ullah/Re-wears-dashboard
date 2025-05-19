@@ -10,7 +10,7 @@ export const profileData = {
   gender: "Male",
   birthday: "2004-02-05",
   bio: "I am a full stack developer",
-  image: "https://tinyurl.com/5xs74r9v",
+  image: "https://tinyurl.com/4zb63cdn",
   status: "active",
   isLocked: false,
   verified: true,

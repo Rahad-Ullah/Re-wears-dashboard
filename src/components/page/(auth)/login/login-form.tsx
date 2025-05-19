@@ -17,6 +17,8 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import { myFetch } from "@/utils/myFetch";
+import { setCookie } from "cookies-next";
 
 export function LoginForm({
   className,
@@ -36,13 +38,20 @@ export function LoginForm({
       email: formData.get("email"),
       password: formData.get("password"),
     };
-    console.log(payload);
 
     try {
-      //! perform your api call here..
-
-      toast.success("Login successful", { id: "login" });
-      router.push(redirect || "/");
+      const res = await myFetch("/auth/login", {
+        method: "POST",
+        body: payload,
+      });
+      if (res.success) {
+        toast.success("Login successful", { id: "login" });
+        setCookie("accessToken", res.data.accessToken);
+        setCookie("refreshToken", res.data.refreshToken);
+        router.push(redirect || "/");
+      } else {
+        toast.error(res?.message || "Login failed", { id: "login" });
+      }
     } catch (error: unknown) {
       console.log("Error fetching data:", error);
     }
