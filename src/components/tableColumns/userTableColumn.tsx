@@ -34,8 +34,23 @@ const toggleBlock = async (id: string) => {
 };
 
 // handle delete
-const handleDelete = async () => {
-  // perform api here...
+const handleDelete = async (id: string) => {
+  toast.loading("Processing...", { id: "delete-user" });
+  try {
+    const res = await myFetch(`/users/${id}`, {
+      method: "DELETE",
+    });
+    if (res.success) {
+      revalidateTags(["users", "user-profile"]);
+      toast.success(res.message || "Deleted successfully", {
+        id: "delete-user",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", { id: "delete-user" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // table column definition
