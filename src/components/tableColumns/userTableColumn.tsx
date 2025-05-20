@@ -9,6 +9,29 @@ import DeleteModal from "../modals/DeleteModal";
 import Modal from "../modals/Modal";
 import UserDetails from "../page/users/userDetails/UserDetails";
 import { capitalizeSentence } from "@/utils/capitalizeSentence";
+import { myFetch } from "@/utils/myFetch";
+import toast from "react-hot-toast";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+
+// handle block
+const toggleBlock = async (id: string) => {
+  toast.loading("Processing...", { id: "block-user" });
+  try {
+    const res = await myFetch(`/users/block-user/${id}`, {
+      method: "PATCH",
+    });
+    if (res.success) {
+      revalidateTags(["users", "user-profile"]);
+      toast.success(res.message || "Updated successfully", {
+        id: "block-user",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", { id: "block-user" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // handle delete
 const handleDelete = async () => {
@@ -22,7 +45,7 @@ const columns: ColumnDef<IUser>[] = [
     header: "Sl. No",
     cell: ({ row }) => {
       const item = row.original as IUser;
-      return <p className="px-2">{item?.id}</p>;
+      return <p className="px-2"># {item?.id}</p>;
     },
   },
   {
@@ -103,16 +126,19 @@ const columns: ColumnDef<IUser>[] = [
             <UserDetails />
           </Modal>
 
-          {!item.isBlocked && (
-            <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
-              <LockOpen />
-            </Button>
-          )}
-          {item.isBlocked && (
-            <Button variant={"ghost"} size={"icon"} className="text-red-500">
-              <Lock />
-            </Button>
-          )}
+          <div onClick={() => toggleBlock(item._id)}>
+            {!item.isBlocked && (
+              <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
+                <LockOpen />
+              </Button>
+            )}
+            {item.isBlocked && (
+              <Button variant={"ghost"} size={"icon"} className="text-red-500">
+                <Lock />
+              </Button>
+            )}
+          </div>
+
           <DeleteModal
             triggerBtn={
               <Button variant={"ghost"} size={"icon"} className="text-red-500">
