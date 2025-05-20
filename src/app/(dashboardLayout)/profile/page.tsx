@@ -1,14 +1,14 @@
-import { profileData } from "@/demoData/profile";
 import ChangePasswordTab from "@/components/page/profile/ChangePasswordTab";
 import ProfileDetailsTab from "@/components/page/profile/ProfileDetailsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { myFetch } from "@/utils/myFetch";
 
 const ProfilePage = async () => {
-  // const res = await myFetch("/user/profile", {
-  //   tags: ["user-profile"],
-  // });
+  const res = await myFetch("/users/profile", {
+    tags: ["user-profile"],
+  });
 
-  const user = profileData;
+  const user = res?.data;
 
   return (
     <Tabs

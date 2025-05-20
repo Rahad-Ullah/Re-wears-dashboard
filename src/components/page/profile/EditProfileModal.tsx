@@ -27,7 +27,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { editProfileFormSchema } from "@/schemas/formSchemas/profile/editProfile";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -36,6 +35,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { userGenders } from "@/constants/user";
+import { myFetch } from "@/utils/myFetch";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 
 const EditProfileModal = ({ user }) => {
   const [file, setFile] = useState<File | string | null>(user.image);
@@ -51,19 +52,39 @@ const EditProfileModal = ({ user }) => {
     toast.loading("Updating...", {
       id: "update-profile",
     });
-    console.log(values, file);
+
+    // convert to form data
+    const formData = new FormData();
+    if (file) formData.append("file", file);
+
+    // Only append values that are not null or undefined
+    Object.entries(values).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value);
+      }
+    });
 
     try {
-      // perform the API call to update the user profile
-
-      toast.error("Failed to update profile", {
-        id: "update-profile",
+      const res = await myFetch("/users/update-profile", {
+        method: "PATCH",
+        body: formData,
       });
+      console.log(res);
+      if (res.success) {
+        toast.success("Profile updated successfully", {
+          id: "update-profile",
+        });
+        revalidateTags(["user-profile", "users"]);
+      } else {
+        toast.error("Failed to update profile", {
+          id: "update-profile",
+        });
+      }
     } catch (error) {
       toast.error("Failed to update", {
         id: "update-profile",
       });
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -93,13 +114,32 @@ const EditProfileModal = ({ user }) => {
               {/* First Name Field */}
               <FormField
                 control={form.control}
-                name="firstname"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="John"
+                        placeholder="Enter your first name"
+                        {...field}
+                        value={field.value ?? ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Last Name Field */}
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your last name"
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -128,25 +168,6 @@ const EditProfileModal = ({ user }) => {
                 )}
               />
 
-              {/* Phone Number Field */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="1234567890"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               {/* Location Field */}
               <FormField
                 control={form.control}
@@ -156,7 +177,7 @@ const EditProfileModal = ({ user }) => {
                     <FormLabel>Location</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="123 Road City State "
+                        placeholder="Enter your location"
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -198,7 +219,7 @@ const EditProfileModal = ({ user }) => {
               {/* birthday Field */}
               <FormField
                 control={form.control}
-                name="birthday"
+                name="dob"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Birthday</FormLabel>
@@ -206,26 +227,6 @@ const EditProfileModal = ({ user }) => {
                       <Input
                         type="date"
                         placeholder="Enter your birthday"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Bio Field */}
-              <FormField
-                control={form.control}
-                name="bio"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Bio</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        rows={3}
-                        placeholder="Write something about you..."
                         {...field}
                         value={field.value ?? ""}
                       />

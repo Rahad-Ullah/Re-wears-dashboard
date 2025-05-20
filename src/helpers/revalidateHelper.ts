@@ -2,6 +2,11 @@
 
 import { revalidateTag } from "next/cache";
 
-export const revalidate = async (tag: string) => {
-  return revalidateTag(tag);
+export const revalidateTags = async (tags: string[]) => {
+  // Revalidate each tag in the array
+  tags.forEach((tag) => {
+    revalidateTag(tag);
+  });
+
+  return;
 };

@@ -12,7 +12,7 @@ const ProfileDetailsTab = ({ user }) => {
       <section className="flex flex-col md:flex-row gap-16">
         <div className="flex flex-col items-center gap-2">
           <Image
-            src={`${user.image}`}
+            src={`${user?.image}`}
             alt="profile"
             width={250}
             height={250}
@@ -24,7 +24,7 @@ const ProfileDetailsTab = ({ user }) => {
           <div className="grid gap-2">
             <p className="text-[#A1A1A1]">Name</p>
             <p className="text-[#5C5C5C]">
-              {user.firstname} {user?.lastname}
+              {user?.firstName} {user?.lastName}
             </p>
           </div>
           <div className="grid gap-2">
@@ -36,24 +36,24 @@ const ProfileDetailsTab = ({ user }) => {
             <p className="text-[#5C5C5C]">{user.email}</p>
           </div>
           <div className="grid gap-2">
-            <p className="text-[#A1A1A1]">Phone No</p>
-            <p className="text-[#5C5C5C]">{user.phone}</p>
-          </div>
-          <div className="grid gap-2">
             <p className="text-[#A1A1A1]">Gender</p>
-            <p className="text-[#5C5C5C]">{user.gender}</p>
+            <p className="text-[#5C5C5C]">{user?.gender || "N/A"}</p>
           </div>
           <div className="grid gap-2">
             <p className="text-[#A1A1A1]">Birthday</p>
-            <p className="text-[#5C5C5C]">{user?.birthday}</p>
+            <p className="text-[#5C5C5C]">
+              {user?.dob?.split("T")[0] || "N/A"}
+            </p>
           </div>
           <div className="grid gap-2">
             <p className="text-[#A1A1A1]">Location</p>
-            <p className="text-[#5C5C5C]">{user.location}</p>
+            <p className="text-[#5C5C5C]">{user.location || "N/A"}</p>
           </div>
           <div className="grid gap-2">
-            <p className="text-[#A1A1A1]">Bio</p>
-            <p className="text-[#5C5C5C]">{user.bio}</p>
+            <p className="text-[#A1A1A1]">Verify Status</p>
+            <p className="text-[#5C5C5C]">
+              {user.isVerified ? "Verified" : "Not verified"}
+            </p>
           </div>
         </div>
       </section>
