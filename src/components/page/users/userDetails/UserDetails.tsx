@@ -5,9 +5,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import { IUser } from "@/types/user";
+import { myFetch } from "@/utils/myFetch";
 import { Star } from "lucide-react";
+import toast from "react-hot-toast";
 
-const UserDetails = () => {
+const UserDetails = ({ user }: { user: IUser }) => {
+  // handle update user role
+  const updateUserRole = async (role: string) => {
+    try {
+      const res = await myFetch(`/users/${user?._id}`, {
+        method: "PATCH",
+        body: { role },
+      });
+      if (res.success) {
+        revalidateTags(["users", "user-profile"]);
+        toast.success(res.message || "Updated successfully");
+      } else {
+        toast.error(res.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="grid gap-4">
       <p className="grid grid-cols-2 gap-4 items-center">
@@ -26,13 +48,16 @@ const UserDetails = () => {
       </p>
       <p className="grid grid-cols-2 gap-4 items-center">
         <span>Assign Role</span>
-        <Select>
+        <Select
+          defaultValue={user?.role}
+          onValueChange={(e) => updateUserRole(e)}
+        >
           <SelectTrigger className="h-10 max-w-40">
             <SelectValue placeholder="Select a role" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="Admin">Admin</SelectItem>
-            <SelectItem value="User">User</SelectItem>
+            <SelectItem value="ADMIN">Admin</SelectItem>
+            <SelectItem value="USER">User</SelectItem>
           </SelectContent>
         </Select>
       </p>

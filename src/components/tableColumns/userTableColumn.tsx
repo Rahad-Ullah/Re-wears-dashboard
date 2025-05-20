@@ -138,7 +138,7 @@ const columns: ColumnDef<IUser>[] = [
             dialogTitle="User Details"
             className="max-w-[100vw] lg:max-w-lg"
           >
-            <UserDetails />
+            <UserDetails user={item} />
           </Modal>
 
           <div onClick={() => toggleBlock(item._id)}>
