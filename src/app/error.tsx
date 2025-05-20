@@ -1,10 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useAuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
 const GlobalErrorPage = () => {
   const router = useRouter();
+  const { logout } = useAuthContext();
+  logout();
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 min-h-screen">
