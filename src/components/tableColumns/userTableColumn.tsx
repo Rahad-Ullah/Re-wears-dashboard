@@ -8,6 +8,7 @@ import { Eye, Lock, LockOpen, Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
 import Modal from "../modals/Modal";
 import UserDetails from "../page/users/userDetails/UserDetails";
+import { capitalizeSentence } from "@/utils/capitalizeSentence";
 
 // handle delete
 const handleDelete = async () => {
@@ -21,7 +22,7 @@ const columns: ColumnDef<IUser>[] = [
     header: "Sl. No",
     cell: ({ row }) => {
       const item = row.original as IUser;
-      return <p className="px-2">{item?._id}</p>;
+      return <p className="px-2">{item?.id}</p>;
     },
   },
   {
@@ -65,17 +66,18 @@ const columns: ColumnDef<IUser>[] = [
     header: () => <div>Role</div>,
     cell: ({ row }) => {
       const item = row.original as IUser;
+      const role = capitalizeSentence(item?.role);
       return (
         <Badge
           className={`capitalize font-medium text-white shadow-none rounded-full py-1.5 w-full flex justify-center ${
-            item?.role === "Admin"
+            role === "Admin"
               ? "bg-purple-50 text-purple-500 border-purple-400"
-              : item?.role === "User"
+              : role === "User"
               ? "bg-orange-50 text-orange-500 border-orange-400"
               : ""
           }`}
         >
-          {item?.role}
+          {role}
         </Badge>
       );
     },

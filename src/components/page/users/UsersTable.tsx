@@ -128,6 +128,7 @@ const UsersTable = ({ users = [], filters, meta }) => {
                 onClick={() =>
                   updateMultiSearchParams({ role: item, page: null })
                 }
+                className="capitalize"
               >
                 {capitalizeSentence(item)}
               </DropdownMenuItem>
