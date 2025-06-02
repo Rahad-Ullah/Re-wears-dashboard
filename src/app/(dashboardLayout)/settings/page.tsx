@@ -10,26 +10,43 @@ import { demoBrandsData } from "@/demoData/brands";
 import { demoCategoriesData } from "@/demoData/categories";
 import { demoColorsData } from "@/demoData/colors";
 import { demoSizesData } from "@/demoData/sizes";
+import { myFetch } from "@/utils/myFetch";
 
 const SettingPage = async ({ searchParams }) => {
-  const { status, category, tab, nestedTab } = await searchParams;
+  const { tab, nestedTab, searchTerm, status, category } = await searchParams;
+
+  // Build query parameters for the backend request
+  const queryParams = new URLSearchParams({
+    ...(searchTerm && { searchTerm }),
+  });
+
+  // Fetch data from the backend when backend is ready
+  const categoryResponse = await myFetch(
+    `/category?${queryParams.toString()}`,
+    {
+      tags: ["categories"],
+    }
+  );
+  console.log(categoryResponse?.data);
 
   return (
     <Card className="p-5 h-full">
-      <Tabs defaultValue={"categories"} value={tab} className="h-full flex flex-col">
+      <Tabs
+        defaultValue={"categories"}
+        value={tab}
+        className="h-full flex flex-col"
+      >
         <SettingTabs />
 
         <TabsContent value="categories">
           <CategoryTable
             items={demoCategoriesData as never[]}
-            filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="brand">
           <BrandTable
             items={demoBrandsData as never[]}
-            filters={{ status, category }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>

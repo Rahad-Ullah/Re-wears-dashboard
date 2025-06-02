@@ -23,7 +23,7 @@ import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-const CategoryTable = ({ items = [], filters, meta }) => {
+const CategoryTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -51,8 +51,6 @@ const CategoryTable = ({ items = [], filters, meta }) => {
       rowSelection,
     },
   });
-
-  console.log(filters);
 
   return (
     <div className="w-full bg-white rounded-xl h-full">

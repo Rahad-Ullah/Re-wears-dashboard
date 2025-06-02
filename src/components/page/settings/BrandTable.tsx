@@ -22,7 +22,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import brandTableColumns from "@/components/tableColumns/brandTableColumns";
 
-const BrandTable = ({ items = [], filters, meta }) => {
+const BrandTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -50,8 +50,6 @@ const BrandTable = ({ items = [], filters, meta }) => {
       rowSelection,
     },
   });
-
-  console.log(filters);
 
   return (
     <div className="w-full bg-white rounded-xl h-full">
