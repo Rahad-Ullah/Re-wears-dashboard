@@ -2,7 +2,6 @@ import UsersTable from "@/components/page/users/UsersTable";
 import { myFetch } from "@/utils/myFetch";
 const UsersPage = async ({ searchParams }) => {
   const {
-    role,
     location,
     gender,
     searchTerm,
@@ -12,7 +11,6 @@ const UsersPage = async ({ searchParams }) => {
 
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
-    ...(role && { role }),
     ...(gender && { gender }),
     ...(location && { location }),
     ...(searchTerm && { searchTerm }),
@@ -34,7 +32,7 @@ const UsersPage = async ({ searchParams }) => {
       <UsersTable
         users={filteredData}
         meta={{ page: 1, totalPage: 1, total: 12 } as never}
-        filters={{ role }}
+        filters={{ location, gender, searchTerm }}
       />
     </>
   );

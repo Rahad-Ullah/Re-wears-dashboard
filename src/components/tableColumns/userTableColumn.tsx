@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
@@ -8,7 +7,6 @@ import { Eye, Lock, LockOpen, Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
 import Modal from "../modals/Modal";
 import UserDetails from "../page/users/userDetails/UserDetails";
-import { capitalizeSentence } from "@/utils/capitalizeSentence";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
@@ -97,27 +95,6 @@ const columns: ColumnDef<IUser>[] = [
     cell: ({ row }) => {
       const item = row.original as IUser;
       return <p className="px-2">{item?.location}</p>;
-    },
-  },
-  {
-    accessorKey: "role",
-    header: () => <div>Role</div>,
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      const role = capitalizeSentence(item?.role);
-      return (
-        <Badge
-          className={`capitalize font-medium text-white shadow-none rounded-full py-1.5 w-full flex justify-center ${
-            role === "Admin"
-              ? "bg-purple-50 text-purple-500 border-purple-400"
-              : role === "User"
-              ? "bg-orange-50 text-orange-500 border-orange-400"
-              : ""
-          }`}
-        >
-          {role}
-        </Badge>
-      );
     },
   },
   {
