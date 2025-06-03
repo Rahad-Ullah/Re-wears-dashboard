@@ -167,40 +167,6 @@ export const demoProductsData = [
     status: "Blocked",
     createdAt: "2024-06-10T19:00:00Z",
   },
-  {
-    _id: "11",
-    title: "Women's Sandals",
-    description: "Comfortable sandals for casual outings.",
-    category: "Footwear",
-    brand: "Clarks",
-    size: "S",
-    condition: "Good",
-    colors: ["Brown"],
-    material: "Leather",
-    photos: [
-      "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/266af2347a461b1d5baaa8bc4ac9986a.jpg?imageView2/2/w/500/q/60/format/webp",
-    ],
-    price: 25,
-    status: "Active",
-    createdAt: "2024-06-11T20:00:00Z",
-  },
-  {
-    _id: "12",
-    title: "Men's Hoodie",
-    description: "Cozy hoodie with a front pocket.",
-    category: "Clothing",
-    brand: "Champion",
-    size: "XL",
-    condition: "Fair",
-    colors: ["Gray"],
-    material: "Cotton Blend",
-    photos: [
-      "https://i4.cloudfable.net/styles/550x550/19.224/Black/water-polo-dad-fathers-day-father-sport-men-hoodie-20231121231908-vdsuwygk.jpg",
-    ],
-    price: 35,
-    status: "Active",
-    createdAt: "2024-06-12T21:00:00Z",
-  },
 ];
 
 export const productCategories = [

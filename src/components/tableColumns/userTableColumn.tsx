@@ -111,8 +111,7 @@ const columns: ColumnDef<IUser>[] = [
                 <Eye />
               </Button>
             }
-            dialogTitle="User Details"
-            className="max-w-[100vw] lg:max-w-lg"
+            className="max-w-[100vw] lg:max-w-[80vw]"
           >
             <UserDetails user={item} />
           </Modal>
