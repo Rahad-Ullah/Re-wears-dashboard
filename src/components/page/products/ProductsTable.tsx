@@ -3,13 +3,7 @@
 import * as React from "react";
 import {
   ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
@@ -27,41 +21,23 @@ import DashboardTable from "@/components/shared/table";
 import TablePagination from "@/components/shared/table-pagination";
 import productTableColumns from "@/components/tableColumns/productTableColumns";
 import { IProduct } from "@/types/product";
-import {
-  productCategories,
-  productConditions,
-  productStatuses,
-} from "@/constants/product";
+import { productConditions, productStatuses } from "@/constants/product";
 import { Input } from "@/components/ui/input";
+import { productCategories } from "@/demoData/products";
 
 const ProductsTable = ({ products = [], meta, filters }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+
   const [rowSelection, setRowSelection] = React.useState({});
 
   // Table Pagination, Sorting, Filtering, Column Visibility, Row Selection
   const table = useReactTable<IProduct>({
     data: products || [],
     columns: productTableColumns as ColumnDef<IProduct>[],
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
       rowSelection,
-      // pagination: { pageIndex: 0, pageSize: 10 },
     },
   });
 

@@ -14,6 +14,7 @@ export const demoProductsData = [
     ],
     price: 120,
     status: "Active",
+    createdAt: "2024-06-01T10:00:00Z",
   },
   {
     _id: "02",
@@ -30,6 +31,7 @@ export const demoProductsData = [
     ],
     price: 45,
     status: "Blocked",
+    createdAt: "2024-06-02T11:00:00Z",
   },
   {
     _id: "03",
@@ -46,6 +48,7 @@ export const demoProductsData = [
     ],
     price: 75,
     status: "Active",
+    createdAt: "2024-06-03T12:00:00Z",
   },
   {
     _id: "04",
@@ -62,6 +65,7 @@ export const demoProductsData = [
     ],
     price: 25,
     status: "Reported",
+    createdAt: "2024-06-04T13:00:00Z",
   },
   {
     _id: "05",
@@ -78,6 +82,7 @@ export const demoProductsData = [
     ],
     price: 60,
     status: "Blocked",
+    createdAt: "2024-06-05T14:00:00Z",
   },
   {
     _id: "06",
@@ -94,6 +99,7 @@ export const demoProductsData = [
     ],
     price: 30,
     status: "Reported",
+    createdAt: "2024-06-06T15:00:00Z",
   },
   {
     _id: "07",
@@ -108,6 +114,7 @@ export const demoProductsData = [
     photos: ["https://m.media-amazon.com/images/I/71qNZJySzdL._AC_UY1000_.jpg"],
     price: 90,
     status: "Active",
+    createdAt: "2024-06-07T16:00:00Z",
   },
   {
     _id: "08",
@@ -124,6 +131,7 @@ export const demoProductsData = [
     ],
     price: 20,
     status: "Blocked",
+    createdAt: "2024-06-08T17:00:00Z",
   },
   {
     _id: "09",
@@ -140,6 +148,7 @@ export const demoProductsData = [
     ],
     price: 50,
     status: "Active",
+    createdAt: "2024-06-09T18:00:00Z",
   },
   {
     _id: "10",
@@ -156,6 +165,7 @@ export const demoProductsData = [
     ],
     price: 40,
     status: "Blocked",
+    createdAt: "2024-06-10T19:00:00Z",
   },
   {
     _id: "11",
@@ -172,6 +182,7 @@ export const demoProductsData = [
     ],
     price: 25,
     status: "Active",
+    createdAt: "2024-06-11T20:00:00Z",
   },
   {
     _id: "12",
@@ -188,5 +199,16 @@ export const demoProductsData = [
     ],
     price: 35,
     status: "Active",
+    createdAt: "2024-06-12T21:00:00Z",
   },
+];
+
+export const productCategories = [
+  "Clothing",
+  "Footwear",
+  "Accessories",
+  "Bags",
+  "Watches",
+  "Jewelry",
+  "Sportswear",
 ];

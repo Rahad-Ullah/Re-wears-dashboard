@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
-import { Lock, LockOpen, Pencil, Trash } from "lucide-react";
+import { Lock, LockOpen, Trash } from "lucide-react";
 import Image from "next/image";
 import Modal from "../modals/Modal";
 import DeleteModal from "../modals/DeleteModal";
-import EditProductForm from "../forms/product/EditProduct";
+import BlockProductForm from "../forms/product/BlockProduct";
 
 // handleDelete
 const handleDelete = async () => {
@@ -19,9 +19,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Sl. No",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return (
-          <p className="px-2">#{item?._id}</p>
-      )
+      return <p className="px-2">#{item?._id}</p>;
     },
   },
   {
@@ -30,13 +28,13 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-          <Image
-            src={item.photos[0] || ""}
-            alt={item?.title}
-            width={50}
-            height={50}
-            className="object-cover w-12 h-12 rounded-md"
-          />
+        <Image
+          src={item.photos[0] || ""}
+          alt={item?.title}
+          width={50}
+          height={50}
+          className="object-cover w-12 h-12 rounded-md"
+        />
       );
     },
   },
@@ -45,9 +43,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Title",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return (
-        <p className="px-2">{item?.title}</p>
-      );
+      return <p className="px-2">{item?.title}</p>;
     },
   },
   {
@@ -55,9 +51,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Brand",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return (
-        <p className="px-2">{item?.brand}</p>
-      );
+      return <p className="px-2">{item?.brand}</p>;
     },
   },
   {
@@ -65,9 +59,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return (
-        <p className="px-2">{item?.category}</p>
-      );
+      return <p className="px-2">{item?.category}</p>;
     },
   },
   {
@@ -75,9 +67,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Condition",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return (
-        <p className="px-2">{item?.condition}</p>
-      );
+      return <p className="px-2">{item?.condition}</p>;
     },
   },
   {
@@ -85,9 +75,15 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: () => <div>Price</div>,
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return (
-        <p className="px-2">${item?.price}</p>
-      );
+      return <p className="px-2">${item?.price}</p>;
+    },
+  },
+  {
+    accessorKey: "date",
+    header: () => <div>Date</div>,
+    cell: ({ row }) => {
+      const item = row.original as IProduct;
+      return <p className="px-2">{item.createdAt.split("T")[0]}</p>;
     },
   },
   {
@@ -103,23 +99,23 @@ const productTableColumns: ColumnDef<IProduct>[] = [
               <Lock />
             </Button>
           ) : (
-            <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
-              <LockOpen />
-            </Button>
+            // edit modal
+            <Modal
+              dialogTrigger={
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  className="text-zinc-400"
+                >
+                  <LockOpen />
+                </Button>
+              }
+              dialogTitle={<p>Block Product</p>}
+              className="max-w-[100vw] lg:max-w-lg"
+            >
+              <BlockProductForm product={item} />
+            </Modal>
           )}
-
-          {/* edit item */}
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-body">
-                <Pencil />
-              </Button>
-            }
-            dialogTitle={<p>Edit Product</p>}
-            className="max-w-[100vw] lg:max-w-lg"
-          >
-            <EditProductForm product={item} />
-          </Modal>
 
           {/* delete */}
           <DeleteModal
