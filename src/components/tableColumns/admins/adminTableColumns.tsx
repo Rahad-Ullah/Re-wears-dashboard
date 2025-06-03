@@ -3,13 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, Lock, LockOpen, Trash } from "lucide-react";
-import DeleteModal from "../modals/DeleteModal";
-import Modal from "../modals/Modal";
-import UserDetails from "../page/users/userDetails/UserDetails";
+import { Lock, LockOpen, Trash } from "lucide-react";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import DeleteModal from "@/components/modals/DeleteModal";
 
 // handle block
 const toggleBlock = async (id: string) => {
@@ -52,7 +50,7 @@ const handleDelete = async (id: string) => {
 };
 
 // table column definition
-const columns: ColumnDef<IUser>[] = [
+const adminTableColumns: ColumnDef<IUser>[] = [
   {
     accessorKey: "id",
     header: "Sl. No",
@@ -104,45 +102,47 @@ const columns: ColumnDef<IUser>[] = [
       const item = row.original;
 
       return (
-        <div className="flex items-center justify-evenly gap-1">
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-primary">
-                <Eye />
-              </Button>
-            }
-            dialogTitle="User Details"
-            className="max-w-[100vw] lg:max-w-lg"
-          >
-            <UserDetails user={item} />
-          </Modal>
+        item?.role === "SUPER_ADMIN" && (
+          <div className="flex items-center justify-evenly gap-1">
+            <div onClick={() => toggleBlock(item._id)}>
+              {!item.isBlocked && (
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  className="text-zinc-400"
+                >
+                  <LockOpen />
+                </Button>
+              )}
+              {item.isBlocked && (
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  className="text-red-500"
+                >
+                  <Lock />
+                </Button>
+              )}
+            </div>
 
-          <div onClick={() => toggleBlock(item._id)}>
-            {!item.isBlocked && (
-              <Button variant={"ghost"} size={"icon"} className="text-zinc-400">
-                <LockOpen />
-              </Button>
-            )}
-            {item.isBlocked && (
-              <Button variant={"ghost"} size={"icon"} className="text-red-500">
-                <Lock />
-              </Button>
-            )}
+            <DeleteModal
+              triggerBtn={
+                <Button
+                  variant={"ghost"}
+                  size={"icon"}
+                  className="text-red-500"
+                >
+                  <Trash />
+                </Button>
+              }
+              itemId={item?._id}
+              action={handleDelete}
+            />
           </div>
-
-          <DeleteModal
-            triggerBtn={
-              <Button variant={"ghost"} size={"icon"} className="text-red-500">
-                <Trash />
-              </Button>
-            }
-            itemId={item?._id}
-            action={handleDelete}
-          />
-        </div>
+        )
       );
     },
   },
 ];
 
-export default columns;
+export default adminTableColumns;

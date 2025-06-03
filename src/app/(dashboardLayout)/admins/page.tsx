@@ -1,18 +1,11 @@
-import UsersTable from "@/components/page/users/UsersTable";
+import AdminsTable from "@/components/page/admins/AdminsTable";
+
 import { myFetch } from "@/utils/myFetch";
-const UsersPage = async ({ searchParams }) => {
-  const {
-    location,
-    gender,
-    searchTerm,
-    page,
-    sort = "asc",
-  } = await searchParams;
+const AdminsPage = async ({ searchParams }) => {
+  const { searchTerm, page, sort = "asc" } = await searchParams;
 
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
-    ...(gender && { gender }),
-    ...(location && { location }),
     ...(searchTerm && { searchTerm }),
     ...(page && { page }),
     ...(sort && { sort }),
@@ -23,17 +16,16 @@ const UsersPage = async ({ searchParams }) => {
     tags: ["users"],
   });
   // filter out super admin and minus him
-  const filteredData = res?.data?.filter((item) => item?.role === "USER");
+  const filteredData = res?.data?.filter((item) => item?.role === "ADMIN");
 
   return (
     <>
-      <UsersTable
+      <AdminsTable
         users={filteredData}
-        meta={res?.pagination as never}
-        filters={{ location, gender, searchTerm }}
+        meta={res?.pagination}
       />
     </>
   );
 };
 
-export default UsersPage;
+export default AdminsPage;

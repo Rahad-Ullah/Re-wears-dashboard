@@ -31,7 +31,6 @@ const locations = Array.from(
 
 const UsersTable = ({ users = [], filters, meta }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
-  console.log(filters?.location);
 
   const table = useReactTable<IUser>({
     data: users || [],

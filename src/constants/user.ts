@@ -10,3 +10,13 @@ export const userRoles = [
 ] as const;
 
 export const userGenders = ["Male", "Female"] as const;
+
+export const userLocations = [
+  "Abu Dhabi, UAE",
+  "Dubai, UAE",
+  "Sharjah, UAE",
+  "Ajman, UAE",
+  "Fujairah, UAE",
+  "Ras Al Khaimah, UAE",
+  "Umm Al Quwain, UAE",
+] as const;
