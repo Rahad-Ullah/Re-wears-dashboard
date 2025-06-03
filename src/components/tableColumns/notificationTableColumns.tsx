@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
@@ -43,26 +42,6 @@ const notificationTableColumns: ColumnDef<IUser>[] = [
     cell: ({ row }) => {
       const item = row.original as IUser;
       return <p className="px-2">{item?.location}</p>;
-    },
-  },
-  {
-    accessorKey: "role",
-    header: () => <div>Role</div>,
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      return (
-        <Badge
-          className={`capitalize font-medium text-white shadow-none rounded-full py-1.5 w-full flex justify-center ${
-            item?.role === "Admin"
-              ? "bg-purple-50 text-purple-500 border-purple-400"
-              : item?.role === "Buyer"
-              ? "bg-green-50 text-green-600 border-green-400"
-              : "bg-orange-50 text-orange-500 border-orange-400"
-          }`}
-        >
-          {item?.role}
-        </Badge>
-      );
     },
   },
   {
