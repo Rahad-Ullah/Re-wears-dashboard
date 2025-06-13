@@ -1,10 +1,11 @@
-# Dashboard Template for Next.js with Shadcn UI
+# Re-wears Dashboard
+### Multi-vendor e-commerce platform
 
 ## Getting Started
 
 First, clone the repository:
 ```bash
-git clone https://github.com/Rahad-Ullah/Dashboard-Template-Next.js-ShadcnUI.git
+git clone https://github.com/your-repo-link.git
 ```
 
 Second, install packages:
