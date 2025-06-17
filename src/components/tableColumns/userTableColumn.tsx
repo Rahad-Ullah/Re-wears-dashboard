@@ -64,6 +64,7 @@ const columns: ColumnDef<IUser>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
+      // console.log(row, "juyel");
       const item = row.original as IUser;
       return (
         <p className="px-2">

@@ -4,7 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const config = {
-  serverHost: process.env.SERVER_HOST || "10.0.70.50",
-  serverURL: process.env.SERVER_URL || "http://10.0.70.50:5003",
-  baseURL: process.env.BASE_URL || "http://10.0.70.50:5003/api/v1",
+  serverHost: process.env.SERVER_HOST || "10.0.80.47",
+  serverURL: process.env.SERVER_URL || "http://10.0.80.47:5005",
+  baseURL: process.env.BASE_URL || "http://10.0.80.47:5005/api/v1",
 };
+
+export const BASE_URL = process.env.BASE_URL;
+export const IMAGE_URL = process.env.SERVER_URL;

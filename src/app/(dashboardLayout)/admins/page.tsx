@@ -13,17 +13,16 @@ const AdminsPage = async ({ searchParams }) => {
 
   // Fetch data from the backend when backend is ready
   const res = await myFetch(`/users?${queryParams.toString()}`, {
-    tags: ["users"],
+    method: "GET",
+    tags: ["Admins"],
   });
+
   // filter out super admin and minus him
   const filteredData = res?.data?.filter((item) => item?.role === "ADMIN");
 
   return (
     <>
-      <AdminsTable
-        users={filteredData}
-        meta={res?.pagination}
-      />
+      <AdminsTable users={filteredData} meta={res?.pagination} />
     </>
   );
 };

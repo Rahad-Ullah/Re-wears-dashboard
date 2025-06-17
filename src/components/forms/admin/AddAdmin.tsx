@@ -10,9 +10,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 import { addAdminFormSchema } from "@/schemas/formSchemas/admin/addAdminForm";
+import { myFetch } from "@/utils/myFetch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const AddAdminForm = () => {
@@ -22,10 +25,23 @@ const AddAdminForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof addAdminFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof addAdminFormSchema>) {
+    const data = { ...values, role: "ADMIN" };
+
+    try {
+      const res = await myFetch("/users/create-admin", {
+        method: "POST",
+        body: data,
+      });
+      if (res?.success) {
+        toast.success("admin create successfully");
+        await revalidateTags(["Admins"]);
+      } else {
+        toast.error(res.message || "admin create failed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

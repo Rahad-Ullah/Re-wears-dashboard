@@ -23,11 +23,11 @@ const nextConfig: NextConfig = {
         pathname: "**",
       },
       {
-        // Allow images from 10.0.70.50
+        // Allow images from 10.0.80.47
         protocol: "http",
-        hostname: "10.0.70.50",
-        port: "5003",
-        pathname: "/api/v1/**", // Ensure the pathname matches the actual URL structure
+        hostname: "10.0.80.47",
+        port: "5005",
+        pathname: "**", // Allow all paths from this host
       },
     ],
   },

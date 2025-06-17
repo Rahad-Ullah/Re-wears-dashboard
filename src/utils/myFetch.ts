@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { config } from "@/config/env-config";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { BASE_URL } from "./../config/env-config";
 import { getToken } from "./get-token";
 
 export interface FetchResponse {
@@ -36,7 +37,7 @@ export const myFetch = async (
     tags,
     token,
     headers = {},
-    cache = "force-cache",
+    cache = "no-store",
   }: FetchOptions = {}
 ): Promise<FetchResponse> => {
   const accessToken = token || (await getToken());
@@ -52,7 +53,7 @@ export const myFetch = async (
   };
 
   try {
-    const response = await fetch(`${config.baseURL}${url}`, {
+    const response = await fetch(`${BASE_URL}${url}`, {
       method,
       headers: reqHeaders,
       ...(hasBody && { body: isFormData ? body : JSON.stringify(body) }),

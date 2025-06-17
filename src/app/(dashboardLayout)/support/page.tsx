@@ -1,6 +1,7 @@
 import SupportTable from "@/components/page/support/SupportTable";
 import { Card } from "@/components/ui/card";
 import { demoSupportTicketsData } from "@/demoData/support";
+import { myFetch } from "@/utils/myFetch";
 const SupportPage = async ({ searchParams }) => {
   const { priority, status } = await searchParams;
 
@@ -10,29 +11,46 @@ const SupportPage = async ({ searchParams }) => {
       (!status || item?.status === status)
   );
 
+  // support overview data
+  const res = await myFetch("/supports/overview");
+  const supportData = res?.data || {};
+
+  // supports data get
+  const supports = await myFetch("/supports");
+
+  console.log(supports.data.data, "supports data");
+  const supportsData = supports?.data?.data || [];
+
   return (
     <section className="flex flex-col gap-4 h-full">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card className="grid gap-2 p-4 text-center">
           <h1 className="text-xl font-semibold text-stone-700">Open Tickets</h1>
-          <h1 className="text-3xl font-bold text-blue-500">12</h1>
+          <h1 className="text-3xl font-bold text-blue-500">
+            {supportData?.totalTickets || 0}
+          </h1>
         </Card>
         <Card className="grid gap-2 p-4 text-center">
           <h1 className="text-xl font-semibold text-stone-700">
             Avg. Response Time
           </h1>
-          <h1 className="text-3xl font-bold text-purple-600">2.4 h</h1>
+          <h1 className="text-3xl font-bold text-purple-600">
+            {supportData?.metrics?.avgResponseTime}
+          </h1>
         </Card>
         <Card className="grid gap-2 p-4 text-center">
           <h1 className="text-xl font-semibold text-stone-700">
             Resolution Rate
           </h1>
-          <h1 className="text-3xl font-bold text-emerald-500">92%</h1>
+          <h1 className="text-3xl font-bold text-emerald-500">
+            {" "}
+            {supportData?.metrics?.resolutionRate}%
+          </h1>
         </Card>
       </div>
       <Card className="p-5 flex-1">
         <SupportTable
-          tickets={tickets as never[]}
+          tickets={supportsData || []}
           meta={{ page: 1, totalPage: 1, total: 12 }}
           filters={{ priority, status }}
         />

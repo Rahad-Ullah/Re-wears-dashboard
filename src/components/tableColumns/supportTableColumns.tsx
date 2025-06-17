@@ -13,13 +13,13 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      const item = row.original as ISupportTicket;
+      console.log(row, "row data");
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          #{row.index + 1}
         </Button>
       );
     },
@@ -34,7 +34,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
           variant={"ghost"}
           className="w-full justify-start hover:bg-transparent"
         >
-          {item?.user}
+          {item?.name}
         </Button>
       );
     },
@@ -59,6 +59,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     header: () => <div>Priority</div>,
     cell: ({ row }) => {
       const item = row.original as ISupportTicket;
+      console.log("PRIORITY", item.priority);
       return (
         <Badge
           className={`capitalize font-medium shadow-none rounded-full py-1.5 w-full flex justify-center ${
