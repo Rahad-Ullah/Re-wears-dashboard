@@ -2,13 +2,12 @@ import AdminsTable from "@/components/page/admins/AdminsTable";
 
 import { myFetch } from "@/utils/myFetch";
 const AdminsPage = async ({ searchParams }) => {
-  const { searchTerm, page, sort = "asc" } = await searchParams;
+  const { searchTerm, page } = await searchParams;
 
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
     ...(searchTerm && { searchTerm }),
     ...(page && { page }),
-    ...(sort && { sort }),
   });
 
   // Fetch data from the backend when backend is ready
