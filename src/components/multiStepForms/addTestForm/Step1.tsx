@@ -53,7 +53,7 @@ const Step1 = ({ nextStep }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setFormData(values);
     nextStep();
-    console.log(formData);
+    formData;
   }
 
   return (

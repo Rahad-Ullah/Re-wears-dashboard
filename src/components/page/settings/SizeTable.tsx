@@ -51,7 +51,7 @@ const SizeTable = ({ items = [], filters, meta }) => {
     },
   });
 
-  console.log(filters);
+  filters;
 
   return (
     <div className="w-full bg-white rounded-xl h-full">

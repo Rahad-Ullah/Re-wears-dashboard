@@ -27,7 +27,7 @@ const toggleBlock = async (id: string) => {
       toast.error(res.message || "Something went wrong", { id: "block-user" });
     }
   } catch (error) {
-    console.log(error);
+    error;
   }
 };
 
@@ -47,7 +47,7 @@ const handleDelete = async (id: string) => {
       toast.error(res.message || "Something went wrong", { id: "delete-user" });
     }
   } catch (error) {
-    console.log(error);
+    error;
   }
 };
 
@@ -64,7 +64,7 @@ const columns: ColumnDef<IUser>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
-      // console.log(row, "juyel");
+      // (row, "juyel");
       const item = row.original as IUser;
       return (
         <p className="px-2">

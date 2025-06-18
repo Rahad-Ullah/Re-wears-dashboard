@@ -82,7 +82,7 @@ export function OtpVerifyForm({
         });
       }
     } catch (error: unknown) {
-      console.log(error);
+      error;
     }
   };
 
@@ -105,7 +105,7 @@ export function OtpVerifyForm({
         });
       }
     } catch (error: unknown) {
-      console.log("Error fetching data:", error);
+      "Error fetching data:", error;
     }
   };
 

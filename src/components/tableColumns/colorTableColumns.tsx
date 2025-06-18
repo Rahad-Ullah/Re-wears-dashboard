@@ -49,7 +49,7 @@ const colorTableColumns: ColumnDef<IColor>[] = [
     cell: ({ row }) => {
       const item = row.original as IColor;
       const color = item.hexCode;
-      console.log(color);
+      color;
       return (
         <div
           className={`size-8 mx-2 rounded-full border`}

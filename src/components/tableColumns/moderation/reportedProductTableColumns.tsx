@@ -30,7 +30,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: "Product Name",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.content}</p>;
+      return <p className="px-2">{item?.reason}</p>;
     },
   },
   {
@@ -38,7 +38,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: "Reporter",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.reporter}</p>;
+      return <p className="px-2">{item?.reporter?.email}</p>;
     },
   },
   {
@@ -54,7 +54,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: () => <div>Date</div>,
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.date?.split("T")[0]}</p>;
+      return <p className="px-2">{item?.createdAt?.split("T")[0]}</p>;
     },
   },
   {
@@ -83,7 +83,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
-      console.log(item);
+      item;
 
       return (
         <div className="flex justify-center">

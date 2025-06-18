@@ -13,7 +13,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      console.log(row, "row data");
+      row, "row data";
       return (
         <Button
           variant={"ghost"}
@@ -59,7 +59,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     header: () => <div>Priority</div>,
     cell: ({ row }) => {
       const item = row.original as ISupportTicket;
-      console.log("PRIORITY", item.priority);
+      "PRIORITY", item.priority;
       return (
         <Badge
           className={`capitalize font-medium shadow-none rounded-full py-1.5 w-full flex justify-center ${

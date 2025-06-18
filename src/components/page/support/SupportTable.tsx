@@ -29,7 +29,7 @@ import {
 import { ticketStatuses } from "@/constants/support";
 
 const SupportTable = ({ tickets = [], filters, meta }) => {
-  console.log(tickets, "tickets data");
+  tickets, "tickets data";
   const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

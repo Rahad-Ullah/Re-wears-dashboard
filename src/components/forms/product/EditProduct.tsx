@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const EditProductForm = ({ product }) => {
-  console.log(product);
+  product;
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof editProductFormSchema>>({
@@ -37,7 +37,7 @@ const EditProductForm = ({ product }) => {
   function onSubmit(values: z.infer<typeof editProductFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    values;
   }
 
   return (

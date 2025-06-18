@@ -19,6 +19,8 @@ const handleDelete = async (id: string) => {
     const res = await myFetch(`/product/${id}`, {
       method: "DELETE",
     });
+
+    res;
     if (res?.success) {
       revalidateTags(["products"]);
       toast.success(res?.message || "Product deleted successfully", {
@@ -81,6 +83,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as IProduct;
+
       // return <p className="px-2">{item?.category}</p>;
     },
   },

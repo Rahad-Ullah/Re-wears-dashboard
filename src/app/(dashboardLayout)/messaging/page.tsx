@@ -4,10 +4,21 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { demoTemplateData } from "@/demoData/notification";
 import { demoUsersData } from "@/demoData/users";
+import { myFetch } from "@/utils/myFetch";
 import { Bell, LayoutPanelTop } from "lucide-react";
 
 const MessagingPage = async ({ searchParams }) => {
   const { userType, status, category } = await searchParams;
+
+  // const queryParams = new URLSearchParams({
+  //   ...(userType && { userType }),
+  //   ...(status && { status }),
+  //   ...(category && { category }),
+  // });
+
+  const res = await myFetch(`/order`);
+
+  console.log(res?.data, "order data");
 
   // filter users
   const usersData = demoUsersData?.filter((item) =>

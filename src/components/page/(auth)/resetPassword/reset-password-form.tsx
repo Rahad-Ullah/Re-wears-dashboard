@@ -83,7 +83,7 @@ export function ResetPasswordForm({
         });
       }
     } catch (error: unknown) {
-      console.log(error);
+      error;
     }
   };
 

@@ -27,7 +27,7 @@ const SettingPage = async ({ searchParams }) => {
       tags: ["categories"],
     }
   );
-  console.log(categoryResponse?.data);
+  categoryResponse?.data;
 
   return (
     <Card className="p-5 h-full">

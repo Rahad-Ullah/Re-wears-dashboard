@@ -18,7 +18,7 @@ const SupportPage = async ({ searchParams }) => {
   // supports data get
   const supports = await myFetch("/supports");
 
-  console.log(supports.data.data, "supports data");
+  supports.data.data, "supports data";
   const supportsData = supports?.data?.data || [];
 
   return (

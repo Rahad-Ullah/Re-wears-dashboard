@@ -1,10 +1,12 @@
 export interface IProduct {
   _id: string;
   name: string;
+  brand: {
+    name: string;
+  };
   productImage: string[];
   description: string;
   category: string;
-  brand: string;
   size: string;
   condition: "Like New" | "Very Good" | "Good" | "Fair";
   colors: string[];

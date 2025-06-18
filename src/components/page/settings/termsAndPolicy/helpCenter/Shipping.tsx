@@ -13,7 +13,7 @@ const Shipping = () => {
   const [content, setContent] = useState("");
 
   const handleUpdate = () => {
-    console.log("Updated Content:", content);
+    "Updated Content:", content;
     // Add your update logic here
   };
 

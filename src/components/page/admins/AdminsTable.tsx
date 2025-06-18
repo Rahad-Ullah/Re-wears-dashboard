@@ -18,7 +18,7 @@ import AddAdminForm from "@/components/forms/admin/AddAdmin";
 import adminTableColumns from "@/components/tableColumns/admins/adminTableColumns";
 
 const AdminsTable = ({ users = [], meta }) => {
-  console.log(users);
+  users;
   const table = useReactTable<IUser>({
     data: users || [],
     columns: adminTableColumns as ColumnDef<IUser>[],
