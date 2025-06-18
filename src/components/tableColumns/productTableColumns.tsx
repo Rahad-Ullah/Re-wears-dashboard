@@ -10,7 +10,6 @@ import { myFetch } from "@/utils/myFetch";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import toast from "react-hot-toast";
 import { IMAGE_URL } from "@/config/env-config";
-console.log(process.env.SERVER_URL);
 
 // handleDelete
 const handleDelete = async (id: string) => {
@@ -50,15 +49,15 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
 
-      // return (
-      //   <Image
-      //     src={`${IMAGE_URL}${item?.productImage[0]}` || ""}
-      //     alt="Product Image"
-      //     width={50}
-      //     height={50}
-      //     className="object-cover w-12 h-12 rounded-md"
-      //   />
-      // );
+      return (
+        <Image
+          src={`${IMAGE_URL}${item?.productImage[0]}` || ""}
+          alt="Product Image"
+          width={50}
+          height={50}
+          className="object-cover w-12 h-12 rounded-md"
+        />
+      );
     },
   },
   {
