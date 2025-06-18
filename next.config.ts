@@ -1,3 +1,4 @@
+import { config } from "@/config/env-config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -25,7 +26,7 @@ const nextConfig: NextConfig = {
       {
         // Allow images from 10.0.80.47
         protocol: "http",
-        hostname: "10.0.80.47",
+        hostname: config.serverHost,
         port: "5005",
         pathname: "**", // Allow all paths from this host
       },

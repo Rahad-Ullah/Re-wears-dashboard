@@ -19,8 +19,6 @@ const ProductPage = async ({ searchParams }) => {
     tags: ["products"],
   });
 
-  console.log(res?.data);
-
   return (
     <>
       <ProductsTable
