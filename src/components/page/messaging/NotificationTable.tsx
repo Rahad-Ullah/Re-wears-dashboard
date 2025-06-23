@@ -70,13 +70,13 @@ const NotificationTable = ({ users = [], filters, meta }) => {
           </ToggleGroupItem>
           <ToggleGroupItem
             value="Seller"
-            onClick={() => updateMultiSearchParams({ userType: "Seller" })}
+            onClick={() => updateMultiSearchParams({ userType: "seller" })}
           >
             Top Sellers
           </ToggleGroupItem>
           <ToggleGroupItem
             value="Buyer"
-            onClick={() => updateMultiSearchParams({ userType: "Buyer" })}
+            onClick={() => updateMultiSearchParams({ userType: "buyer" })}
           >
             Top Buyers
           </ToggleGroupItem>

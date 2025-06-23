@@ -26,8 +26,8 @@ const toggleBlock = async (id: string) => {
     } else {
       toast.error(res.message || "Something went wrong", { id: "block-user" });
     }
-  } catch (error) {
-    error;
+  } catch (error: unknown) {
+    toast.error((error as Error)?.message);
   }
 };
 
@@ -46,8 +46,8 @@ const handleDelete = async (id: string) => {
     } else {
       toast.error(res.message || "Something went wrong", { id: "delete-user" });
     }
-  } catch (error) {
-    error;
+  } catch (error: unknown) {
+    toast.error((error as Error)?.message);
   }
 };
 

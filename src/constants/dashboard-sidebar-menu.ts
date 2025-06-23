@@ -43,8 +43,8 @@ export const sidebarMenu = {
       icon: MessagesSquare,
     },
     {
-      title: "Support",
-      url: "/support",
+      title: "Supports",
+      url: "/supports",
       icon: Handshake,
     },
   ],

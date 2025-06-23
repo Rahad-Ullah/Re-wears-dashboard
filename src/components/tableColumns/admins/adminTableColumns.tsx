@@ -24,8 +24,8 @@ const toggleBlock = async (id: string) => {
     } else {
       toast.error(res.message || "Something went wrong", { id: "block-user" });
     }
-  } catch (error) {
-    error;
+  } catch (error: unknown) {
+    toast.error((error as Error)?.message);
   }
 };
 
@@ -45,7 +45,7 @@ const handleDelete = async (id: string) => {
       toast.error(res.message || "Something went wrong", { id: "delete-user" });
     }
   } catch (error) {
-    error;
+    console.error(error);
   }
 };
 
@@ -70,14 +70,7 @@ const adminTableColumns: ColumnDef<IUser>[] = [
       );
     },
   },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      return <p className="px-2">{item?.gender}</p>;
-    },
-  },
+
   {
     accessorKey: "email",
     header: "Email",
@@ -86,21 +79,13 @@ const adminTableColumns: ColumnDef<IUser>[] = [
       return <p className="px-2">{item?.email}</p>;
     },
   },
-  {
-    accessorKey: "location",
-    header: () => <div>Location</div>,
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      return <p className="px-2">{item?.location}</p>;
-    },
-  },
+
   {
     id: "actions",
     enableHiding: false,
     header: () => <div className="px-8">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
-
       return (
         item?.role === "SUPER_ADMIN" && (
           <div className="flex items-center justify-evenly gap-1">
@@ -133,6 +118,7 @@ const adminTableColumns: ColumnDef<IUser>[] = [
                   className="text-red-500"
                 >
                   <Trash />
+                  ppppp
                 </Button>
               }
               itemId={item?._id}

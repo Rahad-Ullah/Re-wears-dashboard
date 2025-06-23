@@ -1,25 +1,22 @@
 import SupportTable from "@/components/page/support/SupportTable";
 import { Card } from "@/components/ui/card";
-import { demoSupportTicketsData } from "@/demoData/support";
 import { myFetch } from "@/utils/myFetch";
 const SupportPage = async ({ searchParams }) => {
   const { priority, status } = await searchParams;
 
-  const tickets = demoSupportTicketsData?.filter(
-    (item) =>
-      (!priority || item?.priority === priority) &&
-      (!status || item?.status === status)
-  );
+  const queryParams = new URLSearchParams({
+    ...(priority && { priority }),
+    ...(status && { status }),
+  });
 
   // support overview data
   const res = await myFetch("/supports/overview");
-  const supportData = res?.data || {};
+  const supportOverviewData = res?.data || {};
 
   // supports data get
-  const supports = await myFetch("/supports");
-
-  supports.data.data, "supports data";
+  const supports = await myFetch(`/supports?${queryParams.toString()}`);
   const supportsData = supports?.data?.data || [];
+  console.log(supportsData);
 
   return (
     <section className="flex flex-col gap-4 h-full">
@@ -27,7 +24,7 @@ const SupportPage = async ({ searchParams }) => {
         <Card className="grid gap-2 p-4 text-center">
           <h1 className="text-xl font-semibold text-stone-700">Open Tickets</h1>
           <h1 className="text-3xl font-bold text-blue-500">
-            {supportData?.totalTickets || 0}
+            {supportOverviewData?.totalTickets || 0}
           </h1>
         </Card>
         <Card className="grid gap-2 p-4 text-center">
@@ -35,7 +32,7 @@ const SupportPage = async ({ searchParams }) => {
             Avg. Response Time
           </h1>
           <h1 className="text-3xl font-bold text-purple-600">
-            {supportData?.metrics?.avgResponseTime}
+            {supportOverviewData?.metrics?.avgResponseTime}
           </h1>
         </Card>
         <Card className="grid gap-2 p-4 text-center">
@@ -43,8 +40,7 @@ const SupportPage = async ({ searchParams }) => {
             Resolution Rate
           </h1>
           <h1 className="text-3xl font-bold text-emerald-500">
-            {" "}
-            {supportData?.metrics?.resolutionRate}%
+            {supportOverviewData?.metrics?.resolutionRate}%
           </h1>
         </Card>
       </div>

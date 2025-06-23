@@ -17,15 +17,7 @@ const ModerationPage = async ({ searchParams }) => {
   });
 
   const res = await myFetch(`/reports?${queryParams.toString()}`);
-  const reportsData = res.data.data;
-  // (reportsData);
-  const reportedProducts = reportsData.filter(
-    (item) => item.type === "Product"
-  );
-  const reportedUsers = reportsData.filter((item) => item.type === "User");
-  const reportedMessages = reportsData.filter(
-    (item) => item.type === "Message"
-  );
+  const reportsData = res?.data?.data;
 
   return (
     <Card className="p-5 h-full">
@@ -51,21 +43,21 @@ const ModerationPage = async ({ searchParams }) => {
 
         <TabsContent value="products">
           <ReportedProductTable
-            items={reportedProducts as never[]}
+            items={reportsData as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="users">
           <ReportedUserTable
-            items={reportedUsers as never[]}
+            items={reportsData as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="messages">
           <ReportedMessageTable
-            items={reportedMessages as never[]}
+            items={reportsData as never[]}
             filters={{}}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
