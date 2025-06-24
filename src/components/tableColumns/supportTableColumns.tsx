@@ -13,7 +13,6 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      row, "row data";
       return (
         <Button
           variant={"ghost"}
@@ -59,7 +58,6 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     header: () => <div>Priority</div>,
     cell: ({ row }) => {
       const item = row.original as ISupportTicket;
-      "PRIORITY", item.priority;
       return (
         <Badge
           className={`capitalize font-medium shadow-none rounded-full py-1.5 w-full flex justify-center ${
@@ -84,12 +82,13 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     header: () => <div className="text-center">Created</div>,
     cell: ({ row }) => {
       const item = row.original as ISupportTicket;
+
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-center hover:bg-transparent"
         >
-          {item?.createdAt}
+          {item?.createdAt.split("T")[0]}
         </Button>
       );
     },
@@ -104,7 +103,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
           className={`capitalize font-medium shadow-none rounded-full py-1.5 w-full flex justify-center ${
             item?.status === "Pending"
               ? "bg-red-50 text-red-600 border-red-400"
-              : item?.status === "Open"
+              : item?.status === "OPEN"
               ? "bg-yellow-50 text-yellow-600 border-yellow-400"
               : item?.status === "Resolved"
               ? "bg-green-50 text-green-600 border-green-400"
@@ -122,6 +121,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     header: () => <div className="text-center">Action</div>,
     cell: ({ row }) => {
       const item = row?.original as ISupportTicket;
+      console.log(item);
       return (
         <div className="flex items-center justify-evenly gap-1">
           <Modal
@@ -135,7 +135,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
             <div className="text-stone-600 grid gap-2">
               <h1 className="text-xl font-semibold">{item?.subject}</h1>
               <h2 className="font-medium">
-                <strong>User:</strong> {item?.user}
+                <strong>User:</strong> {item?.name}
               </h2>
               <p className="font-medium">
                 <strong>Message:</strong> <br /> {item?.message}

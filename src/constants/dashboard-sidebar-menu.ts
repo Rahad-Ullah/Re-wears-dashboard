@@ -1,5 +1,6 @@
 import {
   Blocks,
+  CassetteTape,
   ChartNoAxesCombined,
   Handshake,
   MessagesSquare,
@@ -31,6 +32,11 @@ export const sidebarMenu = {
       title: "Admins",
       url: "/admins",
       icon: Users,
+    },
+    {
+      title: "Categories",
+      url: "categories",
+      icon: CassetteTape,
     },
     {
       title: "Moderation",

@@ -8,10 +8,56 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import DeleteModal from "../modals/DeleteModal";
 import { IColor } from "@/types/color";
+import toast from "react-hot-toast";
+import { myFetch } from "@/utils/myFetch";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 
 // handle delete item
-const handleDelete = async () => {
-  // perform backend api here...
+const handleDelete = async (id: string) => {
+  toast.loading("Processing...", { id: "delete-user" });
+
+  try {
+    const res = await myFetch(`/type/material/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.success) {
+      revalidateTags(["material"]);
+      toast.success(res.message || "Deleted successfully", {
+        id: "delete-user",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", { id: "delete-user" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const handleEdit = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
+  console.log(id);
+  e.preventDefault();
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+  const name = formData.get("name");
+
+  // update api
+
+  try {
+    const res = await myFetch(`/type/material/${id}`, {
+      method: "PATCH",
+      body: { name },
+    });
+
+    if (res.success) {
+      toast.success(res.message || "Edit successfully", { id: "edit-user" });
+      await revalidateTags(["material"]);
+    } else {
+      toast.error(res.message || "failed edit data", { id: "edit-user" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // table column definition
@@ -20,13 +66,12 @@ const colorTableColumns: ColumnDef<IColor>[] = [
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      const item = row.original as IColor;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          # {row.index + 1}
         </Button>
       );
     },
@@ -43,48 +88,7 @@ const colorTableColumns: ColumnDef<IColor>[] = [
       );
     },
   },
-  {
-    accessorKey: "color",
-    header: "Color",
-    cell: ({ row }) => {
-      const item = row.original as IColor;
-      const color = item.hexCode;
-      color;
-      return (
-        <div
-          className={`size-8 mx-2 rounded-full border`}
-          style={{ backgroundColor: item?.hexCode }}
-        ></div>
-      );
-    },
-  },
-  {
-    accessorKey: "hexCode",
-    header: "Hex Code",
-    cell: ({ row }) => {
-      const item = row.original as IColor;
-      return (
-        <span className="capitalize font-medium justify-start px-2 hover:bg-transparent">
-          {item?.hexCode}
-        </span>
-      );
-    },
-  },
-  {
-    accessorKey: "totalAssignedItems",
-    header: "Assinged Products",
-    cell: ({ row }) => {
-      const item = row.original as IColor;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.totalAssignedItems}
-        </Button>
-      );
-    },
-  },
+
   {
     accessorKey: "created",
     header: () => <div>Created</div>,
@@ -132,14 +136,21 @@ const colorTableColumns: ColumnDef<IColor>[] = [
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form
+              onSubmit={(e) => handleEdit(e, item?._id.toString())}
+              className="grid gap-3"
+            >
               <h1 className="text-lg font-semibold">Edit Color</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" defaultValue={item?.name} />
-              <Label>Hex Code</Label>
-              <Input placeholder="#50C878" defaultValue={item?.hexCode} />
-              <Button className="ml-auto px-6">Save</Button>
-            </div>
+              <Input
+                name="name"
+                placeholder="Enter name"
+                defaultValue={item?.name}
+              />
+              <Button type="submit" className="ml-auto px-6">
+                Save
+              </Button>
+            </form>
           </Modal>
           {/* delete */}
           <DeleteModal

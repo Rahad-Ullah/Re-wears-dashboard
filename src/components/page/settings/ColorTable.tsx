@@ -21,8 +21,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { IColor } from "@/types/color";
 import colorTableColumns from "@/components/tableColumns/colorTableColumns";
+import { myFetch } from "@/utils/myFetch";
+import toast from "react-hot-toast";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 
 const ColorTable = ({ items = [], filters, meta }) => {
+  console.log(filters);
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -51,7 +55,33 @@ const ColorTable = ({ items = [], filters, meta }) => {
     },
   });
 
-  filters;
+  // create material
+  const handleCreateMaterial = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+
+    // update api
+
+    try {
+      const res = await myFetch(`/type/create`, {
+        method: "POST",
+        body: { name, type: "material" },
+      });
+
+      if (res.success) {
+        toast.success(res.message || "Create material successfully", {
+          id: "material",
+        });
+        await revalidateTags(["material"]);
+      } else {
+        toast.error(res.message || "failed create data", { id: "material" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full bg-white rounded-xl h-full">
@@ -67,14 +97,15 @@ const ColorTable = ({ items = [], filters, meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form onSubmit={handleCreateMaterial} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Color</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter color name" />
-              <Label>Hex Code</Label>
-              <Input placeholder="#50C878" />
-              <Button className="ml-auto px-6">Add</Button>
-            </div>
+              <Input name="name" placeholder="Enter color name" />
+
+              <Button type="submit" className="ml-auto px-6">
+                Add
+              </Button>
+            </form>
           </Modal>
         </div>
       </section>

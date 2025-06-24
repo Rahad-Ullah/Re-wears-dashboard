@@ -21,8 +21,11 @@ import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import sizeTableColumns from "@/components/tableColumns/sizeTableColumns";
+import toast from "react-hot-toast";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import { myFetch } from "@/utils/myFetch";
 
-const SizeTable = ({ items = [], filters, meta }) => {
+const SizeTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -51,7 +54,35 @@ const SizeTable = ({ items = [], filters, meta }) => {
     },
   });
 
-  filters;
+  // create size
+  const handleCreateSize = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+
+    // update api
+
+    try {
+      const res = await myFetch(`/type/create`, {
+        method: "POST",
+        body: { name, type: "size" },
+      });
+
+      if (res.success) {
+        toast.success(res.message || "Create size successfully", {
+          id: "size",
+        });
+        await revalidateTags(["size"]);
+      } else {
+        toast.error(res.message || "failed create data try again", {
+          id: "size",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full bg-white rounded-xl h-full">
@@ -67,12 +98,14 @@ const SizeTable = ({ items = [], filters, meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form onSubmit={handleCreateSize} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Size</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" />
-              <Button className="ml-auto px-6">Add</Button>
-            </div>
+              <Input name="name" placeholder="Enter name" />
+              <Button type="submit" className="ml-auto px-6">
+                Add
+              </Button>
+            </form>
           </Modal>
         </div>
       </section>

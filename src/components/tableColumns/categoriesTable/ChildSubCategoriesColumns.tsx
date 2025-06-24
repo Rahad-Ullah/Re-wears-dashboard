@@ -3,74 +3,30 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Pencil, Trash } from "lucide-react";
-import Modal from "../modals/Modal";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import DeleteModal from "../modals/DeleteModal";
+import Modal from "../../modals/Modal";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import DeleteModal from "../../modals/DeleteModal";
 import { ISize } from "@/types/size";
-import toast from "react-hot-toast";
-import { myFetch } from "@/utils/myFetch";
-import { revalidateTags } from "@/helpers/revalidateHelper";
 
 // handle delete item
-const handleDelete = async (id: string) => {
-  toast.loading("Processing...", { id: "delete-user" });
-
-  try {
-    const res = await myFetch(`/type/size/${id}`, {
-      method: "DELETE",
-    });
-
-    if (res.success) {
-      revalidateTags(["size"]);
-      toast.success(res.message || "Deleted successfully", {
-        id: "delete-user",
-      });
-    } else {
-      toast.error(res.message || "Something went wrong", { id: "delete-user" });
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const handleEdit = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
-  e.preventDefault();
-  const form = e.currentTarget;
-  const formData = new FormData(form);
-  const name = formData.get("name");
-
-  // update api
-
-  try {
-    const res = await myFetch(`/type/size/${id}`, {
-      method: "PATCH",
-      body: { name },
-    });
-
-    if (res.success) {
-      toast.success(res.message || "Edit successfully", { id: "edit-user" });
-      await revalidateTags(["size"]);
-    } else {
-      toast.error(res.message || "failed edit data", { id: "edit-user" });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+const handleDelete = async () => {
+  // perform backend api here...
 };
 
 // table column definition
-const sizeTableColumns: ColumnDef<ISize>[] = [
+const childSubCategoriesColumns: ColumnDef<ISize>[] = [
   {
     accessorKey: "id",
-    header: "Sl. No",
+    header: "Sl. No || child sub c.",
     cell: ({ row }) => {
+      const item = row.original as ISize;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          # {row.index + 1}
+          #{item._id}
         </Button>
       );
     },
@@ -87,7 +43,21 @@ const sizeTableColumns: ColumnDef<ISize>[] = [
       );
     },
   },
-
+  {
+    accessorKey: "totalAssignedItems",
+    header: "Assinged Products",
+    cell: ({ row }) => {
+      const item = row.original as ISize;
+      return (
+        <Button
+          variant={"ghost"}
+          className="w-full justify-start hover:bg-transparent"
+        >
+          {item.totalAssignedItems}
+        </Button>
+      );
+    },
+  },
   {
     accessorKey: "created",
     header: () => <div>Created</div>,
@@ -135,21 +105,12 @@ const sizeTableColumns: ColumnDef<ISize>[] = [
             }
             className="max-w-lg"
           >
-            <form
-              onSubmit={(e) => handleEdit(e, item?._id.toString())}
-              className="grid gap-3"
-            >
+            <div className="grid gap-3">
               <h1 className="text-lg font-semibold">Edit Size</h1>
               <Label>Name</Label>
-              <Input
-                name="name"
-                placeholder="Enter name"
-                defaultValue={item?.name}
-              />
-              <Button type="submit" className="ml-auto px-6">
-                Save
-              </Button>
-            </form>
+              <Input placeholder="Enter name" defaultValue={item?.name} />
+              <Button className="ml-auto px-6">Save</Button>
+            </div>
           </Modal>
           {/* delete */}
           <DeleteModal
@@ -168,4 +129,4 @@ const sizeTableColumns: ColumnDef<ISize>[] = [
   },
 ];
 
-export default sizeTableColumns;
+export default childSubCategoriesColumns;

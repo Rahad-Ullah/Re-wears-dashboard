@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
@@ -20,12 +21,9 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import brandTableColumns from "@/components/tableColumns/brandTableColumns";
-import { myFetch } from "@/utils/myFetch";
-import toast from "react-hot-toast";
-import { revalidateTags } from "@/helpers/revalidateHelper";
+import categoriesTableColumns from "@/components/tableColumns/categoriesTable/categoriesTableColumns";
 
-const BrandTable = ({ items = [], meta }) => {
+const CategoriesTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -37,7 +35,7 @@ const BrandTable = ({ items = [], meta }) => {
 
   const table = useReactTable<ICategory>({
     data: items || [],
-    columns: brandTableColumns as ColumnDef<ICategory>[],
+    columns: categoriesTableColumns as ColumnDef<ICategory>[],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -54,34 +52,6 @@ const BrandTable = ({ items = [], meta }) => {
     },
   });
 
-  // create brand
-  const handleCreateBrand = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const name = formData.get("name");
-
-    // update api
-
-    try {
-      const res = await myFetch(`/type/create`, {
-        method: "POST",
-        body: { name, type: "brand" },
-      });
-
-      if (res.success) {
-        toast.success(res.message || "Create brand successfully", {
-          id: "brand",
-        });
-        await revalidateTags(["material"]);
-      } else {
-        toast.error(res.message || "failed edit data", { id: "brand" });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="w-full bg-white rounded-xl h-full">
       {/* table top option bar */}
@@ -96,25 +66,48 @@ const BrandTable = ({ items = [], meta }) => {
             }
             className="max-w-lg"
           >
-            <form onSubmit={handleCreateBrand} className="grid gap-3">
-              <h1 className="text-lg font-semibold">Add Brand</h1>
+            <div className="grid gap-3">
+              <h1 className="text-lg font-semibold">Add Categories</h1>
               <Label>Name</Label>
-              <Input name="name" placeholder="Enter name" />
-              <Button type="submit" className="ml-auto px-6">
-                Add
-              </Button>
-            </form>
+              <Input placeholder="Enter name" />
+              <Label>Icon</Label>
+              <Input
+                type="file"
+                placeholder="Upload icon"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const preview = document.getElementById(
+                      "icon-preview"
+                    ) as HTMLImageElement;
+                    preview.src = URL.createObjectURL(file);
+                    preview.style.display = "block";
+                  }
+                }}
+              />
+              <img
+                id="icon-preview"
+                alt="Icon Preview"
+                style={{
+                  display: "none",
+                  marginTop: "10px",
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                }}
+              />
+              <Button className="ml-auto px-6">Add</Button>
+            </div>
           </Modal>
         </div>
       </section>
 
       {/* table and pagination*/}
       <section>
-        <DashboardTable table={table} columns={brandTableColumns} />
+        <DashboardTable table={table} columns={categoriesTableColumns} />
         <TablePagination table={table} meta={meta} />
       </section>
     </div>
   );
 };
 
-export default BrandTable;
+export default CategoriesTable;

@@ -20,7 +20,6 @@ const handleDelete = async (id: string) => {
       method: "DELETE",
     });
 
-    res;
     if (res?.success) {
       revalidateTags(["products"]);
       toast.success(res?.message || "Product deleted successfully", {
@@ -50,10 +49,15 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "",
     cell: ({ row }) => {
       const item = row.original as IProduct;
+      console.log(`{${IMAGE_URL}${item?.productImage[0]}}`);
 
       return (
         <Image
-          src={`${IMAGE_URL}${item?.productImage[0]}` || ""}
+          src={
+            item?.productImage[0]
+              ? `${IMAGE_URL}${item?.productImage[0]}`
+              : "/other.jpg"
+          }
           alt="Product Image"
           width={50}
           height={50}
@@ -81,9 +85,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({ row }) => {
-      const item = row.original as IProduct;
-
+    cell: ({}) => {
       // return <p className="px-2">{item?.category}</p>;
     },
   },

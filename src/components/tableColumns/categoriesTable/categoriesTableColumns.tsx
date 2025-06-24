@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Pencil, Trash } from "lucide-react";
-import Modal from "../modals/Modal";
+import Modal from "../../modals/Modal";
 import { ICategory } from "@/types/category";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import DeleteModal from "../modals/DeleteModal";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import DeleteModal from "../../modals/DeleteModal";
 import Image from "next/image";
 
 // handle delete item
@@ -16,10 +16,10 @@ const handleDelete = async () => {
 };
 
 // table column definition
-const categoryTableColumns: ColumnDef<ICategory>[] = [
+const categoriesTableColumns: ColumnDef<ICategory>[] = [
   {
     accessorKey: "id",
-    header: "Sl. No",
+    header: "Sl. No || categories",
     cell: ({ row }) => {
       const item = row.original as ICategory;
       return (
@@ -160,4 +160,4 @@ const categoryTableColumns: ColumnDef<ICategory>[] = [
   },
 ];
 
-export default categoryTableColumns;
+export default categoriesTableColumns;

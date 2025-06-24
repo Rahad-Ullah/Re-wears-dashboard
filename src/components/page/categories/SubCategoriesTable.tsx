@@ -20,12 +20,10 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import SubCategoriesTableColumns from "@/components/tableColumns/categoriesTable/SubCategoriesTableColumns";
 import brandTableColumns from "@/components/tableColumns/brandTableColumns";
-import { myFetch } from "@/utils/myFetch";
-import toast from "react-hot-toast";
-import { revalidateTags } from "@/helpers/revalidateHelper";
 
-const BrandTable = ({ items = [], meta }) => {
+const SubCategoriesTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -37,7 +35,7 @@ const BrandTable = ({ items = [], meta }) => {
 
   const table = useReactTable<ICategory>({
     data: items || [],
-    columns: brandTableColumns as ColumnDef<ICategory>[],
+    columns: SubCategoriesTableColumns as ColumnDef<ICategory>[],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -54,34 +52,6 @@ const BrandTable = ({ items = [], meta }) => {
     },
   });
 
-  // create brand
-  const handleCreateBrand = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const name = formData.get("name");
-
-    // update api
-
-    try {
-      const res = await myFetch(`/type/create`, {
-        method: "POST",
-        body: { name, type: "brand" },
-      });
-
-      if (res.success) {
-        toast.success(res.message || "Create brand successfully", {
-          id: "brand",
-        });
-        await revalidateTags(["material"]);
-      } else {
-        toast.error(res.message || "failed edit data", { id: "brand" });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="w-full bg-white rounded-xl h-full">
       {/* table top option bar */}
@@ -96,14 +66,12 @@ const BrandTable = ({ items = [], meta }) => {
             }
             className="max-w-lg"
           >
-            <form onSubmit={handleCreateBrand} className="grid gap-3">
+            <div className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Brand</h1>
               <Label>Name</Label>
-              <Input name="name" placeholder="Enter name" />
-              <Button type="submit" className="ml-auto px-6">
-                Add
-              </Button>
-            </form>
+              <Input placeholder="Enter name" />
+              <Button className="ml-auto px-6">Add</Button>
+            </div>
           </Modal>
         </div>
       </section>
@@ -117,4 +85,4 @@ const BrandTable = ({ items = [], meta }) => {
   );
 };
 
-export default BrandTable;
+export default SubCategoriesTable;

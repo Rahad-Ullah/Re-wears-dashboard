@@ -25,6 +25,8 @@ const handleSendNotifications = async (
     type: "ADMIN",
   };
 
+  console.log(message, "message");
+
   const res = await myFetch(`/notification/create-admin-notification`, {
     method: "POST",
     body: message,
@@ -32,7 +34,7 @@ const handleSendNotifications = async (
 
   try {
     if (res?.success) {
-      toast.success("Create message successfully");
+      toast.success("Send message successfully");
       await revalidateTags(["message"]);
     } else {
       toast.error(res?.message || "failed message try again");
