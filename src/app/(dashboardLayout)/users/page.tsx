@@ -23,7 +23,6 @@ const UsersPage = async ({ searchParams }) => {
     tags: ["users"],
   });
 
-  res;
   // filter out super admin and minus him
   const filteredData = res?.data?.filter((item) => item?.role === "USER");
 

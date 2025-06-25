@@ -73,14 +73,14 @@ const columns: ColumnDef<IUser>[] = [
       );
     },
   },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      return <p className="px-2">{item?.gender}</p>;
-    },
-  },
+  // {
+  //   accessorKey: "gender",
+  //   header: "Gender",
+  //   cell: ({ row }) => {
+  //     const item = row.original as IUser;
+  //     return <p className="px-2">{item?.gender}</p>;
+  //   },
+  // },
   {
     accessorKey: "email",
     header: "Email",

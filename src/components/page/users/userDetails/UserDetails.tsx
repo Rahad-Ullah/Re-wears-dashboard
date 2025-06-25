@@ -5,8 +5,7 @@ import UserProductsTable from "./UserProductsTable";
 import { demoProductsData } from "@/demoData/products";
 
 const UserDetails = ({ user }: { user: IUser }) => {
-  user;
-
+  console.log(user);
   //1. fetch user products data
   //2. then pass it the table
 

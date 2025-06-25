@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import Link from "next/link";
+import { WEBSITE_URL } from "@/config/env-config";
 
 // table column definition
 const reportedProductTableColumns: ColumnDef<IReport>[] = [
@@ -83,8 +84,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
-      item;
-
+      console.log(item);
       return (
         <div className="flex justify-center">
           <DropdownMenu>
@@ -97,7 +97,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <Link
-                href={`https://re-wears-rahad-ullah.vercel.app/product-details`}
+                href={`${WEBSITE_URL}/product-details/${item?._id}`}
                 target="_blank"
               >
                 <DropdownMenuItem>
