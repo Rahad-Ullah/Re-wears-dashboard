@@ -52,6 +52,16 @@ const CategoriesTable = ({ items = [], meta }) => {
     },
   });
 
+  const handleCategories = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const file = formData.get("file");
+
+    console.log(name, file);
+  };
+
   return (
     <div className="w-full bg-white rounded-xl h-full">
       {/* table top option bar */}
@@ -66,13 +76,14 @@ const CategoriesTable = ({ items = [], meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form onSubmit={handleCategories} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Categories</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" />
+              <Input name="name" placeholder="Enter name" />
               <Label>Icon</Label>
               <Input
                 type="file"
+                name="file"
                 placeholder="Upload icon"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
@@ -96,7 +107,7 @@ const CategoriesTable = ({ items = [], meta }) => {
                 }}
               />
               <Button className="ml-auto px-6">Add</Button>
-            </div>
+            </form>
           </Modal>
         </div>
       </section>

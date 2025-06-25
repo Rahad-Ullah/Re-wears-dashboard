@@ -9,6 +9,7 @@ import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import DeleteModal from "../../modals/DeleteModal";
 import Image from "next/image";
+import { IMAGE_URL } from "@/config/env-config";
 
 // handle delete item
 const handleDelete = async () => {
@@ -19,15 +20,14 @@ const handleDelete = async () => {
 const categoriesTableColumns: ColumnDef<ICategory>[] = [
   {
     accessorKey: "id",
-    header: "Sl. No || categories",
+    header: "Sl. No ",
     cell: ({ row }) => {
-      const item = row.original as ICategory;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          # {row.index + 1}
         </Button>
       );
     },
@@ -37,9 +37,14 @@ const categoriesTableColumns: ColumnDef<ICategory>[] = [
     header: () => <span>Icon</span>,
     cell: ({ row }) => {
       const item = row.original as ICategory;
+      console.log(item?.subCategories[0]?.icon);
       return (
         <Image
-          src={item?.icon}
+          src={
+            item?.subCategories[0]?.icon?.startsWith("http")
+              ? item?.subCategories?.icon
+              : `${IMAGE_URL}${item?.subCategories[0]?.icon}`
+          }
           alt="icon"
           width={70}
           height={70}
@@ -63,21 +68,7 @@ const categoriesTableColumns: ColumnDef<ICategory>[] = [
       );
     },
   },
-  {
-    accessorKey: "totalAssignedItems",
-    header: "Assinged Products",
-    cell: ({ row }) => {
-      const item = row.original as ICategory;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.totalAssignedItems}
-        </Button>
-      );
-    },
-  },
+
   {
     accessorKey: "created",
     header: () => <div>Created</div>,

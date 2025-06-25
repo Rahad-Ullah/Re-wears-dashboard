@@ -52,6 +52,15 @@ const SubCategoriesTable = ({ items = [], meta }) => {
     },
   });
 
+  const handleSubCategories = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+
+    console.log(name);
+  };
+
   return (
     <div className="w-full bg-white rounded-xl h-full">
       {/* table top option bar */}
@@ -66,12 +75,14 @@ const SubCategoriesTable = ({ items = [], meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form onSubmit={handleSubCategories} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Brand</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" />
-              <Button className="ml-auto px-6">Add</Button>
-            </div>
+              <Input name="name" placeholder="Enter name" />
+              <Button type="submit" className="ml-auto px-6">
+                Add
+              </Button>
+            </form>
           </Modal>
         </div>
       </section>

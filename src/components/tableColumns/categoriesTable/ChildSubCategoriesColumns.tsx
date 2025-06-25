@@ -18,15 +18,14 @@ const handleDelete = async () => {
 const childSubCategoriesColumns: ColumnDef<ISize>[] = [
   {
     accessorKey: "id",
-    header: "Sl. No || child sub c.",
+    header: "Sl. No ",
     cell: ({ row }) => {
-      const item = row.original as ISize;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          # {row.index + 1}
         </Button>
       );
     },
@@ -43,21 +42,7 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
       );
     },
   },
-  {
-    accessorKey: "totalAssignedItems",
-    header: "Assinged Products",
-    cell: ({ row }) => {
-      const item = row.original as ISize;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.totalAssignedItems}
-        </Button>
-      );
-    },
-  },
+
   {
     accessorKey: "created",
     header: () => <div>Created</div>,

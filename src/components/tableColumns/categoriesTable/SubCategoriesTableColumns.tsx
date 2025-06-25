@@ -18,15 +18,14 @@ const handleDelete = async () => {
 const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
   {
     accessorKey: "id",
-    header: "Sl. No || sub categories",
+    header: "Sl. No ",
     cell: ({ row }) => {
-      const item = row.original as IBrand;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          # {row.index + 1}
         </Button>
       );
     },
@@ -43,21 +42,7 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
       );
     },
   },
-  {
-    accessorKey: "totalAssignedItems",
-    header: "Assinged Products",
-    cell: ({ row }) => {
-      const item = row.original as IBrand;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.totalAssignedItems}
-        </Button>
-      );
-    },
-  },
+
   {
     accessorKey: "created",
     header: () => <div>Created</div>,

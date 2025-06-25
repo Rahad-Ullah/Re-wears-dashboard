@@ -6,10 +6,8 @@ import ColorTable from "@/components/page/settings/ColorTable";
 import TermsAndPolicy from "@/components/page/settings/TermsAndPolicy";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { demoBrandsData } from "@/demoData/brands";
-import { demoCategoriesData } from "@/demoData/categories";
 import { demoColorsData } from "@/demoData/colors";
-import { demoSizesData } from "@/demoData/sizes";
+import { myFetch } from "@/utils/myFetch";
 
 const CategoriesPage = async ({ searchParams }) => {
   const { tab, nestedTab, status, category } = await searchParams;
@@ -18,6 +16,22 @@ const CategoriesPage = async ({ searchParams }) => {
   // const queryParams = new URLSearchParams({
   //   ...(searchTerm && { searchTerm }),
   // });
+
+  const categories = await myFetch("/category", {
+    tags: ["category"],
+  });
+  const categoriesData = categories?.data;
+
+  // sub categories
+  const subCategories = await myFetch("/sub-category", {
+    tags: ["sub-category"],
+  });
+  const subCategoriesData = subCategories?.data;
+  // child sub categories
+  const childSubCategories = await myFetch("/child-sub-category", {
+    tags: ["child-sub-category"],
+  });
+  const childSubCategoriesData = childSubCategories?.data;
 
   return (
     <Card className="p-5 h-full">
@@ -30,19 +44,19 @@ const CategoriesPage = async ({ searchParams }) => {
 
         <TabsContent value="categories">
           <CategoriesTable
-            items={demoCategoriesData as never[]}
+            items={categoriesData}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="brand">
           <SubCategoriesTable
-            items={demoBrandsData as never[]}
+            items={subCategoriesData}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="sizes">
           <ChildSubCategories
-            items={demoSizesData as never[]}
+            items={childSubCategoriesData}
             filters={{ status, category }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
