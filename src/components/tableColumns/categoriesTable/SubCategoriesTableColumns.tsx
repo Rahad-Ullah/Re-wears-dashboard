@@ -164,7 +164,7 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
           className="max-w-lg"
         >
           <form
-            onSubmit={(e) => handleAddChild(e, item?.category)}
+            onSubmit={(e) => handleAddChild(e, String(item?._id))}
             className="grid gap-3"
           >
             <h1 className="text-lg font-semibold">Add Child</h1>
