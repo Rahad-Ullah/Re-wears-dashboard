@@ -32,7 +32,7 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Child Sub Category",
     cell: ({ row }) => {
       const item = row.original as ISize;
       return (

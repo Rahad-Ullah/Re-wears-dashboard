@@ -4,4 +4,8 @@ export interface IBrand {
   totalAssignedItems: number;
   createdAt: string;
   updatedAt: string;
+  icon: string;
+  category: {
+    name: string;
+  };
 }

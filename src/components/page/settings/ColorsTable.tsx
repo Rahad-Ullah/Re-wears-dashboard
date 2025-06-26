@@ -20,10 +20,10 @@ import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { IColor } from "@/types/color";
-import colorTableColumns from "@/components/tableColumns/colorTableColumns";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import colorsTableColumns from "@/components/tableColumns/colorsTableColumns";
 
 const ColorTable = ({ items = [], filters, meta }) => {
   console.log(filters);
@@ -38,7 +38,7 @@ const ColorTable = ({ items = [], filters, meta }) => {
 
   const table = useReactTable<IColor>({
     data: items || [],
-    columns: colorTableColumns as ColumnDef<IColor>[],
+    columns: colorsTableColumns as ColumnDef<IColor>[],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -55,28 +55,29 @@ const ColorTable = ({ items = [], filters, meta }) => {
     },
   });
 
-  // create material
-  const handleCreateMaterial = async (e: React.FormEvent<HTMLFormElement>) => {
+  // create color
+  const handleCreatecolor = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const name = formData.get("name");
+    const hexCode = formData.get("hexCode");
 
     // update api
 
     try {
-      const res = await myFetch(`/type/create`, {
+      const res = await myFetch(`/color/create`, {
         method: "POST",
-        body: { name, type: "material" },
+        body: { name, hexCode },
       });
 
       if (res.success) {
-        toast.success(res.message || "Create material successfully", {
-          id: "material",
+        toast.success(res.message || "Create color successfully", {
+          id: "color",
         });
-        await revalidateTags(["material"]);
+        await revalidateTags(["color"]);
       } else {
-        toast.error(res.message || "failed create data", { id: "material" });
+        toast.error(res.message || "failed create data", { id: "color" });
       }
     } catch (error) {
       console.log(error);
@@ -97,10 +98,12 @@ const ColorTable = ({ items = [], filters, meta }) => {
             }
             className="max-w-lg"
           >
-            <form onSubmit={handleCreateMaterial} className="grid gap-3">
+            <form onSubmit={handleCreatecolor} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Color</h1>
               <Label>Name</Label>
               <Input name="name" placeholder="Enter color name" />
+              <Label>Color Code</Label>
+              <Input name="hexCode" placeholder="Enter color code" />
 
               <Button type="submit" className="ml-auto px-6">
                 Add
@@ -112,7 +115,7 @@ const ColorTable = ({ items = [], filters, meta }) => {
 
       {/* table and pagination*/}
       <section>
-        <DashboardTable table={table} columns={colorTableColumns} />
+        <DashboardTable table={table} columns={colorsTableColumns} />
         <TablePagination table={table} meta={meta} />
       </section>
     </div>

@@ -61,7 +61,7 @@ const handleEdit = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
 };
 
 // table column definition
-const colorTableColumns: ColumnDef<IColor>[] = [
+const materialTableColumns: ColumnDef<IColor>[] = [
   {
     accessorKey: "id",
     header: "Sl. No",
@@ -169,4 +169,4 @@ const colorTableColumns: ColumnDef<IColor>[] = [
   },
 ];
 
-export default colorTableColumns;
+export default materialTableColumns;

@@ -8,8 +8,6 @@ import { ICategory } from "@/types/category";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import DeleteModal from "../../modals/DeleteModal";
-import Image from "next/image";
-import { IMAGE_URL } from "@/config/env-config";
 
 // handle delete item
 const handleDelete = async () => {
@@ -32,27 +30,27 @@ const categoriesTableColumns: ColumnDef<ICategory>[] = [
       );
     },
   },
-  {
-    accessorKey: "icon",
-    header: () => <span>Icon</span>,
-    cell: ({ row }) => {
-      const item = row.original as ICategory;
-      console.log(item?.subCategories[0]?.icon);
-      return (
-        <Image
-          src={
-            item?.subCategories[0]?.icon?.startsWith("http")
-              ? item?.subCategories?.icon
-              : `${IMAGE_URL}${item?.subCategories[0]?.icon}`
-          }
-          alt="icon"
-          width={70}
-          height={70}
-          className="p-2"
-        />
-      );
-    },
-  },
+  // {
+  //   accessorKey: "icon",
+  //   header: () => <span>Icon</span>,
+  //   cell: ({ row }) => {
+  //     const item = row.original as ICategory;
+  //     console.log(item?.subCategories[0]?.icon);
+  //     return (
+  //       <Image
+  //         src={
+  //           item?.subCategories[0]?.icon?.startsWith("http")
+  //             ? item?.subCategories?.icon
+  //             : `${IMAGE_URL}${item?.subCategories[0]?.icon}`
+  //         }
+  //         alt="icon"
+  //         width={70}
+  //         height={70}
+  //         className="p-2"
+  //       />
+  //     );
+  //   },
+  // },
   {
     accessorKey: "name",
     header: "Name",

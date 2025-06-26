@@ -1,5 +1,7 @@
 import BrandTable from "@/components/page/settings/BrandTable";
-import ColorTable from "@/components/page/settings/ColorTable";
+import ColorTable from "@/components/page/settings/ColorsTable";
+import MaterialTable from "@/components/page/settings/MaterialTable";
+// import ColorTable from "@/components/page/settings/MaterialTable";
 import SettingTabs from "@/components/page/settings/SettingTabs";
 import SizeTable from "@/components/page/settings/SizeTable";
 import TermsAndPolicy from "@/components/page/settings/TermsAndPolicy";
@@ -27,6 +29,10 @@ const SettingPage = async ({ searchParams }) => {
     tags: ["material"],
   });
 
+  const colorData = await myFetch("/color", {
+    tags: ["color"],
+  });
+
   return (
     <Card className="p-5 h-full">
       <Tabs defaultValue={"brand"} value={tab} className="h-full flex flex-col">
@@ -43,9 +49,16 @@ const SettingPage = async ({ searchParams }) => {
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
+        <TabsContent value="material">
+          <MaterialTable
+            items={materialData?.data}
+            filters={{ status }}
+            meta={{ page: 1, totalPage: 1, total: 1 }}
+          />
+        </TabsContent>
         <TabsContent value="colors">
           <ColorTable
-            items={materialData?.data}
+            items={colorData?.data}
             filters={{ status }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />

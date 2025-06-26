@@ -2,7 +2,7 @@ import CategoriesTabs from "@/components/page/categories/CategoriesTab";
 import CategoriesTable from "@/components/page/categories/CategoriesTable";
 import ChildSubCategories from "@/components/page/categories/ChildSubCategories";
 import SubCategoriesTable from "@/components/page/categories/SubCategoriesTable";
-import ColorTable from "@/components/page/settings/ColorTable";
+import ColorTable from "@/components/page/settings/MaterialTable";
 import TermsAndPolicy from "@/components/page/settings/TermsAndPolicy";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -51,6 +51,7 @@ const CategoriesPage = async ({ searchParams }) => {
         <TabsContent value="brand">
           <SubCategoriesTable
             items={subCategoriesData}
+            categoriesData={categoriesData}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
