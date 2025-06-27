@@ -8,12 +8,66 @@ import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import DeleteModal from "../../modals/DeleteModal";
 import { ISize } from "@/types/size";
+import toast from "react-hot-toast";
+import { myFetch } from "@/utils/myFetch";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 
 // handle delete item
-const handleDelete = async () => {
-  // perform backend api here...
+const handleDelete = async (id: string) => {
+  toast.loading("Processing...", { id: "delete-child" });
+
+  try {
+    const res = await myFetch(`/child-sub-category/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.success) {
+      revalidateTags(["child-sub-category"]);
+      toast.success(res.message || "Deleted successfully", {
+        id: "delete-child",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", {
+        id: "delete-child",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
+const handleChildUpdate = async (
+  e: React.FormEvent<HTMLFormElement>,
+  id: string
+) => {
+  console.log(id);
+  e.preventDefault();
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+  const name = formData.get("name");
+
+  toast.loading("Processing...", { id: "update-child" });
+
+  try {
+    const res = await myFetch(`/child-sub-category/${id}`, {
+      method: "PATCH",
+      body: { name },
+    });
+
+    if (res.success) {
+      revalidateTags(["child-sub-category"]);
+      toast.success(res.message || "Update successfully", {
+        id: "update-child",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", {
+        id: "update-child",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 // table column definition
 const childSubCategoriesColumns: ColumnDef<ISize>[] = [
   {
@@ -32,7 +86,19 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
   },
   {
     accessorKey: "name",
-    header: "Child Sub Category",
+    header: "Sub Category",
+    cell: ({ row }) => {
+      const item = row.original as ISize;
+      return (
+        <span className="capitalize font-medium w-full justify-start px-2 hover:bg-transparent">
+          {item?.subCategory?.name}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: "Child Category",
     cell: ({ row }) => {
       const item = row.original as ISize;
       return (
@@ -90,12 +156,21 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Edit Size</h1>
+            <form
+              onSubmit={(e) => handleChildUpdate(e, item?._id?.toString())}
+              className="grid gap-3"
+            >
+              <h1 className="text-lg font-semibold">Edit Child</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" defaultValue={item?.name} />
-              <Button className="ml-auto px-6">Save</Button>
-            </div>
+              <Input
+                name="name"
+                placeholder="Enter name"
+                defaultValue={item?.name}
+              />
+              <Button type="submit" className="ml-auto px-6">
+                Save
+              </Button>
+            </form>
           </Modal>
           {/* delete */}
           <DeleteModal

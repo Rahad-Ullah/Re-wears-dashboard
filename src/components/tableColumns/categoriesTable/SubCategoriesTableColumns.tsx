@@ -15,10 +15,28 @@ import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 
 // handle delete item
-const handleDelete = async () => {
-  // perform backend api here...
-};
+const handleDelete = async (id: string) => {
+  toast.loading("Processing...", { id: "delete-sub-category" });
 
+  try {
+    const res = await myFetch(`/sub-category/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.success) {
+      revalidateTags(["sub-category"]);
+      toast.success(res.message || "Deleted successfully", {
+        id: "delete-sub-category",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", {
+        id: "delete-sub-category",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 const handleAddChild = async (
   e: React.FormEvent<HTMLFormElement>,
   subCategory: string
@@ -45,6 +63,35 @@ const handleAddChild = async (
       toast.error(res.message || "failed Sub category data", {
         id: "child-category",
       });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// update
+const handleUpdate = async (
+  e: React.FormEvent<HTMLFormElement>,
+  id: string
+) => {
+  toast.loading("Processing...", { id: "sub" });
+  e.preventDefault();
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+
+  // update api
+
+  try {
+    const res = await myFetch(`/sub-category/${id}`, {
+      method: "PATCH",
+      body: formData,
+    });
+
+    if (res.success) {
+      toast.success(res.message || "Edit successfully", { id: "sub" });
+      await revalidateTags(["sub-category"]);
+    } else {
+      toast.error(res.message || "failed edit data", { id: "sub" });
     }
   } catch (error) {
     console.log(error);
@@ -195,12 +242,34 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Edit Brand</h1>
+            <form
+              onSubmit={(e) => handleUpdate(e, item?._id.toString())}
+              className="grid gap-3"
+            >
+              <h1 className="text-lg font-semibold">Edit Sub Category</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" defaultValue={item?.name} />
+              <Input
+                name="name"
+                placeholder="Enter name"
+                defaultValue={item?.name}
+              />
+              <Input
+                type="file"
+                name="icon"
+                placeholder="Upload icon"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const preview = document.getElementById(
+                      "icon-preview"
+                    ) as HTMLImageElement;
+                    preview.src = URL.createObjectURL(file);
+                    preview.style.display = "block";
+                  }
+                }}
+              />
               <Button className="ml-auto px-6">Save</Button>
-            </div>
+            </form>
           </Modal>
           {/* delete */}
           <DeleteModal

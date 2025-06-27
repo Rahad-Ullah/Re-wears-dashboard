@@ -19,11 +19,25 @@ import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import categoriesTableColumns from "@/components/tableColumns/categoriesTable/categoriesTableColumns";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const itemNames = [
+  { name: "MEN", value: "MEN" },
+  { name: "WOMEN", value: "WOMEN" },
+  { name: "KIDS", value: "KIDS" },
+  { name: "BEAUTY/GROOMING", value: "BEAUTY/GROOMING" },
+];
 
 const CategoriesTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
@@ -100,7 +114,21 @@ const CategoriesTable = ({ items = [], meta }) => {
             <form onSubmit={handleCategories} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Categories</h1>
               <Label>Name</Label>
-              <Input name="name" placeholder="Enter name" />
+              <Select name="name">
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {Array.isArray(itemNames) &&
+                      itemNames.map((category) => (
+                        <SelectItem key={category.name} value={category.value}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
 
               <Button type="submit" className="ml-auto px-6">
                 Add
