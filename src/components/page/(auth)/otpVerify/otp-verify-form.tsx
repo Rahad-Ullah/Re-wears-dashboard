@@ -82,7 +82,9 @@ export function OtpVerifyForm({
         });
       }
     } catch (error: unknown) {
-      error;
+      toast.error(
+        error instanceof Error ? error.message : "Error fetching data"
+      );
     }
   };
 
@@ -105,7 +107,9 @@ export function OtpVerifyForm({
         });
       }
     } catch (error: unknown) {
-      "Error fetching data:", error;
+      toast.error(
+        error instanceof Error ? error.message : "Error fetching data"
+      );
     }
   };
 

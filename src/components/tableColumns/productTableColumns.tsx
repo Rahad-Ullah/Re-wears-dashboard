@@ -46,10 +46,9 @@ const productTableColumns: ColumnDef<IProduct>[] = [
   },
   {
     accessorKey: "photo",
-    header: "",
+    header: "Icon",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      console.log(`{${IMAGE_URL}${item?.productImage[0]}}`);
 
       return (
         <Image
@@ -140,7 +139,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
               dialogTitle={<p>Block Product</p>}
               className="max-w-[100vw] lg:max-w-lg"
             >
-              <BlockProductForm product={item} />
+              <BlockProductForm />
             </Modal>
           )}
 

@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Pencil, Trash } from "lucide-react";
 import Modal from "../../modals/Modal";
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
 import DeleteModal from "../../modals/DeleteModal";
 import { IBrand } from "@/types/brand";
 import Image from "next/image";
@@ -13,6 +11,8 @@ import { IMAGE_URL } from "@/config/env-config";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import EditSubCategoryForm from "@/components/page/categories/forms/EditSubCategoryForm";
+import AddChildCategoryForm from "@/components/page/categories/forms/AddChildCategoryForm";
 
 // handle delete item
 const handleDelete = async (id: string) => {
@@ -35,66 +35,6 @@ const handleDelete = async (id: string) => {
     }
   } catch (error) {
     console.error(error);
-  }
-};
-const handleAddChild = async (
-  e: React.FormEvent<HTMLFormElement>,
-  subCategory: string
-) => {
-  e.preventDefault();
-  const form = e.currentTarget;
-  const formData = new FormData(form);
-  const name = formData.get("name");
-
-  try {
-    const res = await myFetch(`/child-sub-category`, {
-      method: "POST",
-      body: { name, subCategory },
-    });
-
-    console.log(res);
-
-    if (res.success) {
-      toast.success(res.message || "Create child category successfully", {
-        id: "child-category",
-      });
-      await revalidateTags(["child-sub-category"]);
-    } else {
-      toast.error(res.message || "failed Sub category data", {
-        id: "child-category",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// update
-const handleUpdate = async (
-  e: React.FormEvent<HTMLFormElement>,
-  id: string
-) => {
-  toast.loading("Processing...", { id: "sub" });
-  e.preventDefault();
-  const form = e.currentTarget;
-  const formData = new FormData(form);
-
-  // update api
-
-  try {
-    const res = await myFetch(`/sub-category/${id}`, {
-      method: "PATCH",
-      body: formData,
-    });
-
-    if (res.success) {
-      toast.success(res.message || "Edit successfully", { id: "sub" });
-      await revalidateTags(["sub-category"]);
-    } else {
-      toast.error(res.message || "failed edit data", { id: "sub" });
-    }
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -138,11 +78,11 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
   },
 
   {
-    accessorKey: "name",
+    accessorKey: "category",
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as IBrand;
-      console.log(item?.category);
+
       return (
         <span className="capitalize font-medium w-full justify-start hover:bg-transparent pl-3">
           {item?.category?.name}
@@ -198,29 +138,21 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
     header: () => <div>Add Child Category</div>,
     cell: ({ row }) => {
       const item = row.original as IBrand;
+
       return (
         <Modal
           dialogTrigger={
             <Button
               variant={"ghost"}
-              className="capitalize justify-start hover:bg-transparent border border-gray-500 w-24 h-10"
+              className="capitalize justify-start hover:bg-transparent border border-gray-500  h-10"
             >
-              Add Child
+              Add Child Category
             </Button>
           }
           className="max-w-lg"
         >
-          <form
-            onSubmit={(e) => handleAddChild(e, String(item?._id))}
-            className="grid gap-3"
-          >
-            <h1 className="text-lg font-semibold">Add Child</h1>
-            <Label>Name</Label>
-            <Input name="name" placeholder="Enter name" />
-            <Button type="submit" className="ml-auto px-6">
-              Save
-            </Button>
-          </form>
+          {/* here function add */}
+          <AddChildCategoryForm item={item} />
         </Modal>
       );
     },
@@ -231,6 +163,7 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
     header: () => <div className="text-center">Actions</div>,
     cell: ({ row }) => {
       const item = row.original as IBrand;
+
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
@@ -242,34 +175,7 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
             }
             className="max-w-lg"
           >
-            <form
-              onSubmit={(e) => handleUpdate(e, item?._id.toString())}
-              className="grid gap-3"
-            >
-              <h1 className="text-lg font-semibold">Edit Sub Category</h1>
-              <Label>Name</Label>
-              <Input
-                name="name"
-                placeholder="Enter name"
-                defaultValue={item?.name}
-              />
-              <Input
-                type="file"
-                name="icon"
-                placeholder="Upload icon"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    const preview = document.getElementById(
-                      "icon-preview"
-                    ) as HTMLImageElement;
-                    preview.src = URL.createObjectURL(file);
-                    preview.style.display = "block";
-                  }
-                }}
-              />
-              <Button className="ml-auto px-6">Save</Button>
-            </form>
+            <EditSubCategoryForm item={item} />
           </Modal>
           {/* delete */}
           <DeleteModal

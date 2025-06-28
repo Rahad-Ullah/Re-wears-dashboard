@@ -81,9 +81,7 @@ const reportedUserTableColumns: ColumnDef<IReport>[] = [
     id: "actions",
     enableHiding: false,
     header: () => <div className="px-8 text-center">Action</div>,
-    cell: ({ row }) => {
-      const item = row.original;
-
+    cell: () => {
       return (
         <div className="flex justify-center">
           <DropdownMenu>

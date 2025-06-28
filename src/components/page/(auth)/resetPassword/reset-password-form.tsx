@@ -83,7 +83,9 @@ export function ResetPasswordForm({
         });
       }
     } catch (error: unknown) {
-      error;
+      toast.error(
+        error instanceof Error ? error.message : "Error fetching data"
+      );
     }
   };
 

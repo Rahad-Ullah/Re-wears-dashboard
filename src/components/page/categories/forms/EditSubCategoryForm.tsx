@@ -1,0 +1,103 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import { IBrand } from "@/types/brand";
+import { myFetch } from "@/utils/myFetch";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+export default function EditSubCategoryForm({ item }) {
+  const [categoryData, setCategoryData] = useState([]);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      const res = await myFetch("/category", {
+        tags: ["category"],
+        cache: "no-store",
+      });
+      setCategoryData(res?.data);
+    };
+    fetchCategory();
+  }, []);
+
+  // update
+  const handleUpdate = async (
+    e: React.FormEvent<HTMLFormElement>,
+    id: string
+  ) => {
+    toast.loading("Processing...", { id: "sub" });
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // update api
+
+    try {
+      const res = await myFetch(`/sub-category/${id}`, {
+        method: "PATCH",
+        body: formData,
+      });
+      console.log(res);
+      if (res.success) {
+        toast.success(res.message || "Edit successfully", { id: "sub" });
+        await revalidateTags(["sub-category"]);
+      } else {
+        toast.error(res.message || "failed edit data", { id: "sub" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={(e) => handleUpdate(e, item?._id.toString())}
+      className="grid gap-3"
+    >
+      <h1 className="text-lg font-semibold">Edit Sub Category</h1>
+      <Label>Name</Label>
+      <Input name="name" placeholder="Enter name" defaultValue={item?.name} />
+
+      <Select name="category" defaultValue={item?.category?._id}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Select category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {categoryData?.map((item: IBrand, idx: number) => (
+              <SelectItem key={idx} value={item?._id}>
+                {item?.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
+      <Input
+        type="file"
+        name="icon"
+        placeholder="Upload icon"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            const preview = document.getElementById(
+              "icon-preview"
+            ) as HTMLImageElement;
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+          }
+        }}
+      />
+      <Button className="ml-auto px-6">Save</Button>
+    </form>
+  );
+}

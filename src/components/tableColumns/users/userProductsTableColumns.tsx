@@ -19,7 +19,7 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Image src={item?.photos[0]} alt={item?.title} width={30} height={30} />
+        <Image src={item?.photos[0]} alt={item?.name} width={30} height={30} />
       );
     },
   },
@@ -28,7 +28,7 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
     header: "Title",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return <p className="px-2">{item?.title}</p>;
+      return <p className="px-2">{item?.name}</p>;
     },
   },
   {

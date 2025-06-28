@@ -69,7 +69,7 @@ const EditProfileModal = ({ user }) => {
         method: "PATCH",
         body: formData,
       });
-      res;
+
       if (res.success) {
         toast.success("Profile updated successfully", {
           id: "update-profile",

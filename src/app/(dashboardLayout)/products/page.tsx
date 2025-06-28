@@ -19,11 +19,13 @@ const ProductPage = async ({ searchParams }) => {
     tags: ["products"],
   });
 
+  console.log(res);
+
   return (
     <>
       <ProductsTable
         products={res?.data || []}
-        meta={res?.pagination || {}}
+        meta={res?.pagination?.limit || {}}
         filters={{ category }}
       />
     </>

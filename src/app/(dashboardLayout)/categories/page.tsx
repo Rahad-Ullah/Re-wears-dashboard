@@ -10,28 +10,36 @@ import { demoColorsData } from "@/demoData/colors";
 import { myFetch } from "@/utils/myFetch";
 
 const CategoriesPage = async ({ searchParams }) => {
-  const { tab, nestedTab, status, category } = await searchParams;
+  const { tab, nestedTab, status, category, searchTerm, page } =
+    await searchParams;
 
   // // Build query parameters for the backend request
-  // const queryParams = new URLSearchParams({
-  //   ...(searchTerm && { searchTerm }),
-  // });
+  const queryParams = new URLSearchParams({
+    ...(searchTerm && { searchTerm }),
+    ...(page && { page }),
+  });
 
   const categories = await myFetch("/category", {
     tags: ["category"],
+    cache: "no-store",
   });
   const categoriesData = categories?.data;
 
   // sub categories
-  const subCategories = await myFetch("/sub-category", {
-    tags: ["sub-category"],
-  });
+  const subCategories = await myFetch(
+    `/sub-category?${queryParams.toString()}`,
+    {
+      tags: ["sub-category"],
+    }
+  );
   const subCategoriesData = subCategories?.data;
   // child sub categories
-  const childSubCategories = await myFetch("/child-sub-category", {
-    tags: ["child-sub-category"],
-  });
-  const childSubCategoriesData = childSubCategories?.data;
+  const childSubCategoriesRes = await myFetch(
+    `/child-sub-category?${queryParams.toString()}`,
+    {
+      tags: ["child-sub-category"],
+    }
+  );
 
   return (
     <Card className="p-5 h-full">
@@ -57,9 +65,9 @@ const CategoriesPage = async ({ searchParams }) => {
         </TabsContent>
         <TabsContent value="sizes">
           <ChildSubCategories
-            items={childSubCategoriesData}
+            items={childSubCategoriesRes?.data}
             filters={{ status, category }}
-            meta={{ page: 1, totalPage: 1, total: 1 }}
+            meta={childSubCategoriesRes?.pagination}
           />
         </TabsContent>
         <TabsContent value="colors">

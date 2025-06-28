@@ -16,7 +16,7 @@ export default function useGetSettingData(url: string) {
       }
     };
     fetchTerms();
-  }, []);
+  }, [url]);
 
   return { content, setContent };
 }

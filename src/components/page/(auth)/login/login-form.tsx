@@ -53,7 +53,9 @@ export function LoginForm({
         toast.error(res?.message || "Login failed", { id: "login" });
       }
     } catch (error: unknown) {
-      "Error fetching data:", error;
+      toast.error(
+        error instanceof Error ? error.message : "Error fetching data"
+      );
     }
   };
 

@@ -83,30 +83,6 @@ const ChildSubCategories = ({
 
   return (
     <div className="w-full bg-white rounded-xl h-full">
-      {/* table top option bar */}
-      <section className="flex flex-wrap justify-center md:justify-between gap-4 items-center pb-4">
-        <div></div>
-        {/* <div>
-          <Modal
-            dialogTrigger={
-              <Button>
-                <Plus /> Add New
-              </Button>
-            }
-            className="max-w-lg"
-          >
-            <form onSubmit={handleChildCategories} className="grid gap-3">
-              <h1 className="text-lg font-semibold">Add Size</h1>
-              <Label>Name</Label>
-              <Input name="name" placeholder="Enter name" />
-              <Button type="submit" className="ml-auto px-6">
-                Add
-              </Button>
-            </form>
-          </Modal>
-        </div> */}
-      </section>
-
       {/* table and pagination*/}
       <section>
         <DashboardTable table={table} columns={childSubCategoriesColumns} />

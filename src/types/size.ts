@@ -6,5 +6,8 @@ export interface ISize {
   updatedAt: string;
   subCategory: {
     name: string;
+    category: {
+      name: string;
+    };
   };
 }

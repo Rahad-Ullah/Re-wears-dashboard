@@ -86,6 +86,18 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
   },
   {
     accessorKey: "name",
+    header: "Category",
+    cell: ({ row }) => {
+      const item = row.original as ISize;
+      return (
+        <span className="capitalize font-medium w-full justify-start px-2 hover:bg-transparent">
+          {item?.subCategory?.category?.name}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "sub category",
     header: "Sub Category",
     cell: ({ row }) => {
       const item = row.original as ISize;
@@ -97,7 +109,7 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "child category",
     header: "Child Category",
     cell: ({ row }) => {
       const item = row.original as ISize;
