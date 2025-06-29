@@ -41,6 +41,7 @@ const itemNames = [
 
 const CategoriesTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -87,6 +88,8 @@ const CategoriesTable = ({ items = [], meta }) => {
           id: "category",
         });
         await revalidateTags(["category"]);
+        setOpen(false);
+        form.reset();
       } else {
         toast.error(res.message || "failed category data try again.", {
           id: "category",
@@ -104,6 +107,8 @@ const CategoriesTable = ({ items = [], meta }) => {
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New

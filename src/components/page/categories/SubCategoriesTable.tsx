@@ -51,6 +51,7 @@ const SubCategoriesTable = ({
   meta?: any;
 }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -96,6 +97,8 @@ const SubCategoriesTable = ({
           id: "sub-category",
         });
         await revalidateTags(["sub-category"]);
+        setOpen(false);
+        form.reset();
       } else {
         toast.error(res.message || "failed Sub category data", {
           id: "sub-category",
@@ -113,6 +116,8 @@ const SubCategoriesTable = ({
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New

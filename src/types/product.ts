@@ -6,7 +6,11 @@ export interface IProduct {
   };
   productImage: string[];
   description: string;
-  category: string;
+  category: {
+    category: {
+      name: string;
+    };
+  };
   size: string;
   condition: "Like New" | "Very Good" | "Good" | "Fair";
   colors: string[];

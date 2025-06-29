@@ -17,13 +17,13 @@ const MessagingPage = async ({ searchParams }) => {
   const users = await myFetch(`/order/users?${queryParams.toString()}`);
   console.log(users.data);
   const usersData = users?.data;
-  console.log(usersData);
 
   //notification templetes
   const templates = await myFetch(`/templates?${queryParams.toString()}`, {
     tags: ["Templates"],
   });
   const templateGetData = templates?.data?.data;
+  console.log(templateGetData, "templates");
 
   // filter users
 

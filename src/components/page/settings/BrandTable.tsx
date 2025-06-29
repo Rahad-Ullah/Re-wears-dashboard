@@ -27,6 +27,7 @@ import { revalidateTags } from "@/helpers/revalidateHelper";
 
 const BrandTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -74,6 +75,8 @@ const BrandTable = ({ items = [], meta }) => {
           id: "brand",
         });
         await revalidateTags(["material"]);
+        setOpen(false);
+        form.reset();
       } else {
         toast.error(res.message || "failed edit data", { id: "brand" });
       }
@@ -89,6 +92,8 @@ const BrandTable = ({ items = [], meta }) => {
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { myFetch } from "@/utils/myFetch";
 
-type TimeFrame = "daily" | "weakly" | "monthly";
+type TimeFrame = "daily" | "weakly" | "yearly";
 
 interface itemType {
   date: string;
@@ -14,7 +14,7 @@ interface itemType {
 }
 
 const UserGrowthChart = () => {
-  const [timeFrame, setTimeFrame] = useState<TimeFrame>("monthly");
+  const [timeFrame, setTimeFrame] = useState<TimeFrame>("yearly");
   const [userGrowthData, setUserGrowthData] = useState<any>(null);
 
   console.log(userGrowthData?.data);
@@ -92,7 +92,7 @@ const UserGrowthChart = () => {
           >
             <option value="daily">Daily</option>
             <option value="weakly">Weekly</option>
-            <option value="monthly">Monthly</option>
+            <option value="yearly">Monthly</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <ChevronDown className="h-4 w-4" />

@@ -25,6 +25,7 @@ const ChildSubCategories = ({
 }) => {
   console.log(filters, subCategoriesData);
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

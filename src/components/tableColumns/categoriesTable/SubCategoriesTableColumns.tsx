@@ -2,8 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash } from "lucide-react";
-import Modal from "../../modals/Modal";
 import DeleteModal from "../../modals/DeleteModal";
 import { IBrand } from "@/types/brand";
 import Image from "next/image";
@@ -13,6 +11,7 @@ import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import EditSubCategoryForm from "@/components/page/categories/forms/EditSubCategoryForm";
 import AddChildCategoryForm from "@/components/page/categories/forms/AddChildCategoryForm";
+import { Trash } from "lucide-react";
 
 // handle delete item
 const handleDelete = async (id: string) => {
@@ -140,20 +139,10 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
       const item = row.original as IBrand;
 
       return (
-        <Modal
-          dialogTrigger={
-            <Button
-              variant={"ghost"}
-              className="capitalize justify-start hover:bg-transparent border border-gray-500  h-10"
-            >
-              Add Child Category
-            </Button>
-          }
-          className="max-w-lg"
-        >
+        <>
           {/* here function add */}
           <AddChildCategoryForm item={item} />
-        </Modal>
+        </>
       );
     },
   },
@@ -167,16 +156,9 @@ const SubCategoriesTableColumns: ColumnDef<IBrand>[] = [
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-primary">
-                <Pencil />
-              </Button>
-            }
-            className="max-w-lg"
-          >
+          <>
             <EditSubCategoryForm item={item} />
-          </Modal>
+          </>
           {/* delete */}
           <DeleteModal
             triggerBtn={

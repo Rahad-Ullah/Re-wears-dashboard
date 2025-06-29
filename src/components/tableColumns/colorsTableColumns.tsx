@@ -2,15 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash } from "lucide-react";
-import Modal from "../modals/Modal";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
 import { IColor } from "@/types/color";
 import toast from "react-hot-toast";
 import { myFetch } from "@/utils/myFetch";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import HandleColorEdit from "../page/settings/handlerForms/HandleColorEdit";
 
 // handle delete item
 const handleDelete = async (id: string) => {
@@ -31,33 +29,6 @@ const handleDelete = async (id: string) => {
     }
   } catch (error) {
     console.error(error);
-  }
-};
-
-const handleEdit = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
-  console.log(id);
-  e.preventDefault();
-  const form = e.currentTarget;
-  const formData = new FormData(form);
-  const name = formData.get("name");
-  const hexCode = formData.get("hexCode");
-
-  // update api
-
-  try {
-    const res = await myFetch(`/color/${id}`, {
-      method: "PATCH",
-      body: { name, hexCode },
-    });
-
-    if (res.success) {
-      toast.success(res.message || "Edit successfully", { id: "edit-user" });
-      await revalidateTags(["material"]);
-    } else {
-      toast.error(res.message || "failed edit data", { id: "edit-user" });
-    }
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -85,6 +56,18 @@ const colorsTableColumns: ColumnDef<IColor>[] = [
       return (
         <span className={`capitalize font-medium w-full justify-start px-2`}>
           {item?.name}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "code",
+    header: "HexCode",
+    cell: ({ row }) => {
+      const item = row.original as IColor;
+      return (
+        <span className={`capitalize font-medium w-full justify-start px-2`}>
+          {item?.hexCode}
         </span>
       );
     },
@@ -129,36 +112,7 @@ const colorsTableColumns: ColumnDef<IColor>[] = [
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-primary">
-                <Pencil />
-              </Button>
-            }
-            className="max-w-lg"
-          >
-            <form
-              onSubmit={(e) => handleEdit(e, item?._id.toString())}
-              className="grid gap-3"
-            >
-              <h1 className="text-lg font-semibold">Edit Color</h1>
-              <Label>Name</Label>
-              <Input
-                name="name"
-                placeholder="Enter name"
-                defaultValue={item?.name}
-              />
-              <Input
-                name="color"
-                placeholder="Enter color name"
-                defaultValue={item?.hexCode}
-              />
-              <Button type="submit" className="ml-auto px-6">
-                Save
-              </Button>
-            </form>
-          </Modal>
-          {/* delete */}
+          <HandleColorEdit item={item} />
           <DeleteModal
             triggerBtn={
               <Button variant={"ghost"} size={"icon"} className="text-red-500">

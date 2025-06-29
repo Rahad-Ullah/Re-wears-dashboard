@@ -29,6 +29,7 @@ import materialTableColumns from "@/components/tableColumns/materialTableColumns
 const MaterialTable = ({ items = [], filters, meta }) => {
   console.log(filters);
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -76,6 +77,8 @@ const MaterialTable = ({ items = [], filters, meta }) => {
           id: "material",
         });
         await revalidateTags(["material"]);
+        setOpen(false);
+        form.reset();
       } else {
         toast.error(res.message || "failed create data", { id: "material" });
       }
@@ -91,6 +94,8 @@ const MaterialTable = ({ items = [], filters, meta }) => {
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New

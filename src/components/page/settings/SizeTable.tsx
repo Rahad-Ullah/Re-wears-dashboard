@@ -27,6 +27,7 @@ import { myFetch } from "@/utils/myFetch";
 
 const SizeTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -74,6 +75,8 @@ const SizeTable = ({ items = [], meta }) => {
           id: "size",
         });
         await revalidateTags(["size"]);
+        form.reset();
+        setOpen(false);
       } else {
         toast.error(res.message || "failed create data try again", {
           id: "size",
@@ -91,6 +94,8 @@ const SizeTable = ({ items = [], meta }) => {
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New

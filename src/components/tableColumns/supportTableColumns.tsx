@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import { ISupportTicket } from "@/types/support";
 import Modal from "../modals/Modal";
+import UpdateStatus from "../page/support/updateStatus/UpdateStatus";
 
 // table column definition
 const supportTableColumns: ColumnDef<ISupportTicket>[] = [
@@ -140,10 +141,8 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
               <p className="font-medium">
                 <strong>Message:</strong> <br /> {item?.message}
               </p>
-              <div className="flex items-center gap-4 justify-end mt-2">
-                <Button variant={"outline"}>Mark as pending</Button>
-                <Button>Mark as resolved</Button>
-              </div>
+              {/* here component name */}
+              <UpdateStatus item={item} />
             </div>
           </Modal>
         </div>

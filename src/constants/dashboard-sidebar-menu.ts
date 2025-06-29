@@ -1,11 +1,11 @@
 import {
   Blocks,
-  CassetteTape,
   ChartNoAxesCombined,
   Handshake,
   MessagesSquare,
   Settings,
   Shield,
+  Tag,
   Users,
   UsersRound,
 } from "lucide-react";
@@ -35,8 +35,8 @@ export const sidebarMenu = {
     },
     {
       title: "Categories",
-      url: "categories",
-      icon: CassetteTape,
+      url: "/categories",
+      icon: Tag,
     },
     {
       title: "Moderation",

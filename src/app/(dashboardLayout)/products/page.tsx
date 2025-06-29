@@ -2,7 +2,7 @@ import ProductsTable from "@/components/page/products/ProductsTable";
 import { myFetch } from "@/utils/myFetch";
 
 const ProductPage = async ({ searchParams }) => {
-  const { category, minPrice, maxPrice, condition, status } =
+  const { category, minPrice, maxPrice, condition, status, searchTerm } =
     await searchParams;
 
   // Build query parameters for the backend request
@@ -12,6 +12,7 @@ const ProductPage = async ({ searchParams }) => {
     ...(maxPrice && { maxPrice }),
     ...(condition && { condition }),
     ...(status && { status }),
+    ...(searchTerm && { searchTerm }),
   });
 
   const res = await myFetch(`/product?${queryParams.toString()}`, {
@@ -25,7 +26,7 @@ const ProductPage = async ({ searchParams }) => {
     <>
       <ProductsTable
         products={res?.data || []}
-        meta={res?.pagination?.limit || {}}
+        meta={res?.pagination}
         filters={{ category }}
       />
     </>

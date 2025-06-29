@@ -16,7 +16,9 @@ const ModerationPage = async ({ searchParams }) => {
     ...(type && { type }),
   });
 
-  const res = await myFetch(`/reports?${queryParams.toString()}`);
+  const res = await myFetch(`/reports?${queryParams.toString()}`, {
+    tags: ["reports"],
+  });
   const reportsData = res?.data?.data;
 
   return (

@@ -4,17 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IReport } from "@/types/report";
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleCheckBig, Eye, FileSearch, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import Link from "next/link";
-import { WEBSITE_URL } from "@/config/env-config";
+import StatusUpdate from "./statusUpdate/StatusUpdate";
 
 // table column definition
 const reportedProductTableColumns: ColumnDef<IReport>[] = [
@@ -95,22 +91,12 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <Link
-                href={`${WEBSITE_URL}/product-details/${item?._id}`}
-                target="_blank"
-              >
-                <DropdownMenuItem>
-                  <Eye /> View product
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <FileSearch /> Mark as In Review
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CircleCheckBig /> Mark as Resolved
-              </DropdownMenuItem>
+              {/* todo here */}
+              <StatusUpdate
+                item={item}
+                review="In Review"
+                resolved="Resolved"
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -1,3 +1,5 @@
+"use client";
+import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,11 +14,13 @@ import {
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import { IBrand } from "@/types/brand";
 import { myFetch } from "@/utils/myFetch";
+import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function EditSubCategoryForm({ item }) {
   const [categoryData, setCategoryData] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -59,45 +63,56 @@ export default function EditSubCategoryForm({ item }) {
   };
 
   return (
-    <form
-      onSubmit={(e) => handleUpdate(e, item?._id.toString())}
-      className="grid gap-3"
+    <Modal
+      open={open}
+      onOpenChange={setOpen}
+      dialogTrigger={
+        <Button variant={"ghost"} size={"icon"} className="text-primary">
+          <Pencil />
+        </Button>
+      }
+      className="max-w-lg"
     >
-      <h1 className="text-lg font-semibold">Edit Sub Category</h1>
-      <Label>Name</Label>
-      <Input name="name" placeholder="Enter name" defaultValue={item?.name} />
+      <form
+        onSubmit={(e) => handleUpdate(e, item?._id.toString())}
+        className="grid gap-3"
+      >
+        <h1 className="text-lg font-semibold">Edit Sub Category</h1>
+        <Label>Name</Label>
+        <Input name="name" placeholder="Enter name" defaultValue={item?.name} />
 
-      <Select name="category" defaultValue={item?.category?._id}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select category" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {categoryData?.map((item: IBrand, idx: number) => (
-              <SelectItem key={idx} value={item?._id}>
-                {item?.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+        <Select name="category" defaultValue={item?.category?._id}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {categoryData?.map((item: IBrand, idx: number) => (
+                <SelectItem key={idx} value={item?._id}>
+                  {item?.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
 
-      <Input
-        type="file"
-        name="icon"
-        placeholder="Upload icon"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) {
-            const preview = document.getElementById(
-              "icon-preview"
-            ) as HTMLImageElement;
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = "block";
-          }
-        }}
-      />
-      <Button className="ml-auto px-6">Save</Button>
-    </form>
+        <Input
+          type="file"
+          name="icon"
+          placeholder="Upload icon"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              const preview = document.getElementById(
+                "icon-preview"
+              ) as HTMLImageElement;
+              preview.src = URL.createObjectURL(file);
+              preview.style.display = "block";
+            }
+          }}
+        />
+        <Button className="ml-auto px-6">Save</Button>
+      </form>
+    </Modal>
   );
 }

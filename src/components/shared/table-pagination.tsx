@@ -3,7 +3,6 @@ import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -12,14 +11,11 @@ import {
 
 const TablePagination = ({ table, meta }) => {
   const page = meta?.page;
+  console.log(page);
   const updateSearchParams = useUpdateSearchParams();
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-4 pt-4">
-      {/* <div className="md:absolute text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div> */}
       <div className="flex justify-center flex-1">
         <Pagination className="text-[#A7A7A7]">
           <PaginationContent>
@@ -32,13 +28,13 @@ const TablePagination = ({ table, meta }) => {
               />
             </PaginationItem>
 
-            {getPageNumbers(page, meta?.totalPage, 10).map((pageNumber) => (
+            {getPageNumbers(page, meta?.totalPage).map((pageNumber) => (
               <PaginationItem key={pageNumber}>
                 <PaginationLink
                   onClick={() => updateSearchParams("page", `${pageNumber}`)}
                   className={`transition-colors duration-500 ${
                     page === pageNumber
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[#9D987B] text-white"
                       : "text-gray-400"
                   }`}
                 >
@@ -71,7 +67,7 @@ const TablePagination = ({ table, meta }) => {
 
 export default TablePagination;
 
-function getPageNumbers(currentPage, totalPages, windowSize = 10) {
+function getPageNumbers(currentPage, totalPages, windowSize = 8) {
   const half = Math.floor(windowSize / 2);
   let start = Math.max(1, currentPage - half);
   let end = Math.min(totalPages, currentPage + half);

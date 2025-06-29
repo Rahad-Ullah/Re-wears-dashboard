@@ -18,6 +18,8 @@ import AddAdminForm from "@/components/forms/admin/AddAdmin";
 import adminTableColumns from "@/components/tableColumns/admins/adminTableColumns";
 
 const AdminsTable = ({ users = [], meta }) => {
+  const [open, setOpen] = React.useState(false);
+
   const table = useReactTable<IUser>({
     data: users || [],
     columns: adminTableColumns as ColumnDef<IUser>[],
@@ -30,6 +32,8 @@ const AdminsTable = ({ users = [], meta }) => {
       <section className="flex flex-wrap justify-center md:justify-end gap-4 items-center pb-4">
         {/* add admin button */}
         <Modal
+          open={open}
+          onOpenChange={setOpen}
           dialogTrigger={
             <Button>
               <Plus /> Add Admin
@@ -38,7 +42,7 @@ const AdminsTable = ({ users = [], meta }) => {
           dialogTitle="Add Admin"
           className="max-w-sm lg:max-w-lg"
         >
-          <AddAdminForm />
+          <AddAdminForm setOpen={setOpen} />
         </Modal>
       </section>
 

@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
         // Allow images from 10.0.80.47
         protocol: "http",
         hostname: config.serverHost,
-        port: "5005",
+        port: "6001",
         pathname: "**", // Allow all paths from this host
       },
     ],

@@ -84,8 +84,9 @@ const productTableColumns: ColumnDef<IProduct>[] = [
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({}) => {
-      // return <p className="px-2">{item?.category}</p>;
+    cell: ({ row }) => {
+      const item = row.original as IProduct;
+      return <p className="px-2">{item?.category?.category?.name}</p>;
     },
   },
   {

@@ -21,7 +21,7 @@ import { revalidateTags } from "@/helpers/revalidateHelper";
 import { myFetch } from "@/utils/myFetch";
 
 export default function TemplateEditModal({ item }) {
-  console.log(item._id);
+  const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(item.category || "");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,6 +45,8 @@ export default function TemplateEditModal({ item }) {
       if (res?.message) {
         toast.success("Template updated successfully");
         await revalidateTags(["Templates"]);
+        setOpen(false);
+        form.reset();
       } else {
         toast.error(res.message || "Failed to update template");
       }
@@ -59,6 +61,8 @@ export default function TemplateEditModal({ item }) {
 
   return (
     <Modal
+      open={open}
+      onOpenChange={setOpen}
       dialogTrigger={
         <Button variant={"ghost"} size={"icon"}>
           <Pencil />

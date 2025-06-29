@@ -2,15 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash } from "lucide-react";
-import Modal from "../modals/Modal";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Trash } from "lucide-react";
+
 import DeleteModal from "../modals/DeleteModal";
 import { ISize } from "@/types/size";
 import toast from "react-hot-toast";
 import { myFetch } from "@/utils/myFetch";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import ThreeHandleEdit from "../page/settings/handlerForms/ThreeHandleEdit";
 
 // handle delete item
 const handleDelete = async (id: string) => {
@@ -31,31 +30,6 @@ const handleDelete = async (id: string) => {
     }
   } catch (error) {
     console.error(error);
-  }
-};
-
-const handleEdit = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
-  e.preventDefault();
-  const form = e.currentTarget;
-  const formData = new FormData(form);
-  const name = formData.get("name");
-
-  // update api
-
-  try {
-    const res = await myFetch(`/type/size/${id}`, {
-      method: "PATCH",
-      body: { name },
-    });
-
-    if (res.success) {
-      toast.success(res.message || "Edit successfully", { id: "edit-user" });
-      await revalidateTags(["size"]);
-    } else {
-      toast.error(res.message || "failed edit data", { id: "edit-user" });
-    }
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -127,30 +101,7 @@ const sizeTableColumns: ColumnDef<ISize>[] = [
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-primary">
-                <Pencil />
-              </Button>
-            }
-            className="max-w-lg"
-          >
-            <form
-              onSubmit={(e) => handleEdit(e, item?._id.toString())}
-              className="grid gap-3"
-            >
-              <h1 className="text-lg font-semibold">Edit Size</h1>
-              <Label>Name</Label>
-              <Input
-                name="name"
-                placeholder="Enter name"
-                defaultValue={item?.name}
-              />
-              <Button type="submit" className="ml-auto px-6">
-                Save
-              </Button>
-            </form>
-          </Modal>
+          <ThreeHandleEdit item={item} type="/type/size" />
           {/* delete */}
           <DeleteModal
             triggerBtn={

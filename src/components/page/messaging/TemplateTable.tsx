@@ -39,6 +39,7 @@ import { revalidateTags } from "@/helpers/revalidateHelper";
 
 const TemplateTable = ({ items = [], filters, meta }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -88,6 +89,8 @@ const TemplateTable = ({ items = [], filters, meta }) => {
       if (res?.message) {
         toast.success("Template Create sucessfully");
         await revalidateTags(["Templates"]);
+        form.reset();
+        setOpen(false);
       } else {
         toast.error(res.message || "Failed to create template");
       }
@@ -135,6 +138,8 @@ const TemplateTable = ({ items = [], filters, meta }) => {
           </Select>
 
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add

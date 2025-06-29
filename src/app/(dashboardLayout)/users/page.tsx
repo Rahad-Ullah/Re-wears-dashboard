@@ -30,7 +30,7 @@ const UsersPage = async ({ searchParams }) => {
     <>
       <UsersTable
         users={filteredData}
-        meta={res?.pagination as never}
+        meta={res?.pagination}
         filters={{ location, gender, searchTerm }}
       />
     </>

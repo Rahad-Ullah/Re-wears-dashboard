@@ -1,11 +1,16 @@
+"use client";
+
+import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import { myFetch } from "@/utils/myFetch";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AddChildCategoryForm({ item }) {
+  const [open, setOpen] = useState(false);
   const handleAddChild = async (
     e: React.FormEvent<HTMLFormElement>,
     subCategory: string
@@ -27,7 +32,7 @@ export default function AddChildCategoryForm({ item }) {
         });
 
         form.reset();
-
+        setOpen(false);
         await revalidateTags(["child-sub-category"]);
       } else {
         toast.error(res.message || "failed Sub category data", {
@@ -39,7 +44,19 @@ export default function AddChildCategoryForm({ item }) {
     }
   };
   return (
-    <>
+    <Modal
+      open={open}
+      onOpenChange={setOpen}
+      dialogTrigger={
+        <Button
+          variant={"ghost"}
+          className="capitalize justify-start hover:bg-transparent border border-gray-500  h-10"
+        >
+          Add Child Category
+        </Button>
+      }
+      className="max-w-lg"
+    >
       <form
         onSubmit={(e) => handleAddChild(e, String(item?._id))}
         className="grid gap-3"
@@ -51,6 +68,6 @@ export default function AddChildCategoryForm({ item }) {
           Save
         </Button>
       </form>
-    </>
+    </Modal>
   );
 }
