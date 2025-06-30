@@ -7,7 +7,7 @@ const ProductPage = async ({ searchParams }) => {
 
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
-    ...(category && { category }),
+    ...(category && { "category.category": category }),
     ...(minPrice && { minPrice }),
     ...(maxPrice && { maxPrice }),
     ...(condition && { condition }),

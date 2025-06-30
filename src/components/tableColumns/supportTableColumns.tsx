@@ -3,9 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
 import { ISupportTicket } from "@/types/support";
-import Modal from "../modals/Modal";
 import UpdateStatus from "../page/support/updateStatus/UpdateStatus";
 
 // table column definition
@@ -124,28 +122,32 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
       const item = row?.original as ISupportTicket;
       console.log(item);
       return (
-        <div className="flex items-center justify-evenly gap-1">
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"}>
-                <Eye />
-              </Button>
-            }
-            className="max-w-[100vw] lg:max-w-lg"
-          >
-            <div className="text-stone-600 grid gap-2">
-              <h1 className="text-xl font-semibold">{item?.subject}</h1>
-              <h2 className="font-medium">
-                <strong>User:</strong> {item?.name}
-              </h2>
-              <p className="font-medium">
-                <strong>Message:</strong> <br /> {item?.message}
-              </p>
-              {/* here component name */}
-              <UpdateStatus item={item} />
-            </div>
-          </Modal>
-        </div>
+        // <div className="flex items-center justify-evenly gap-1">
+        //   <Modal
+        //     dialogTrigger={
+        //       <Button variant={"ghost"} size={"icon"}>
+        //         <Eye />
+        //       </Button>
+        //     }
+        //     className="max-w-[100vw] lg:max-w-lg"
+        //   >
+        //     <div className="text-stone-600 grid gap-2">
+        //       <h1 className="text-xl font-semibold">{item?.subject}</h1>
+        //       <h2 className="font-medium">
+        //         <strong>User:</strong> {item?.name}
+        //       </h2>
+        //       <p className="font-medium">
+        //         <strong>Message:</strong> <br /> {item?.message}
+        //       </p>
+        //       {/* here component name */}
+        //       <UpdateStatus item={item} />
+        //     </div>
+        //   </Modal>
+        // </div>
+        <>
+          {" "}
+          <UpdateStatus item={item} />
+        </>
       );
     },
   },

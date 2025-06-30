@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 
 // table column definition
-const userProductsColumns: ColumnDef<IProduct>[] = [
+const userProductSoldColumns: ColumnDef<IProduct>[] = [
   {
     accessorKey: "id",
     header: "Sl. No",
@@ -19,6 +19,7 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
     header: "Image",
     cell: ({ row }) => {
       const item = row.original as IProduct;
+      console.log(item, "again check");
       return (
         <Image
           src={
@@ -67,4 +68,4 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
   },
 ];
 
-export default userProductsColumns;
+export default userProductSoldColumns;

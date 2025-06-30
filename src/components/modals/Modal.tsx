@@ -11,8 +11,8 @@ type ModalProps = {
   children?: React.ReactNode;
   dialogTitle?: React.ReactNode;
   className?: string;
-  open: boolean; // ✅ controlled open
-  onOpenChange: (open: boolean) => void; // ✅ controlled
+  open?: boolean; // ✅ controlled open
+  onOpenChange?: (open: boolean) => void; // ✅ controlled
 };
 
 const Modal = ({

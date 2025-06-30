@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
-import { Lock, LockOpen, Trash } from "lucide-react";
+import { Lock, Trash, Unlock } from "lucide-react";
 import Image from "next/image";
-import Modal from "../modals/Modal";
 import DeleteModal from "../modals/DeleteModal";
-import BlockProductForm from "../forms/product/BlockProduct";
 import { myFetch } from "@/utils/myFetch";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import toast from "react-hot-toast";
@@ -28,6 +26,34 @@ const handleDelete = async (id: string) => {
     } else {
       toast.error(res?.message || "Failed to delete product", {
         id: "delete-product",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// handle status update
+const handleStatusUpdate = async (status: string, id: string) => {
+  console.log(status, id);
+  toast.loading("Update...", { id: "status" });
+
+  try {
+    const res = await myFetch(`/product/update-status/${id}`, {
+      method: "PATCH",
+      body: { status },
+    });
+
+    console.log(res);
+
+    if (res?.success) {
+      revalidateTags(["products"]);
+      toast.success(res?.message || "Product update successfully", {
+        id: "status",
+      });
+    } else {
+      toast.error(res?.message || "Failed to update product", {
+        id: "status",
       });
     }
   } catch (error) {
@@ -119,32 +145,20 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: () => <div className="px-8">Actions</div>,
     cell: ({ row }) => {
       const item = row.original;
+      const isBlocked = item.status === "Blocked";
+      const newStatus = isBlocked ? "Active" : "Blocked";
       return (
         <div className="flex items-center justify-evenly gap-1">
-          {item.status === "Blocked" ? (
-            <Button variant={"ghost"} size={"icon"} className="text-red-500">
-              <Lock />
-            </Button>
-          ) : (
-            // edit modal
-            <Modal
-              dialogTrigger={
-                <Button
-                  variant={"ghost"}
-                  size={"icon"}
-                  className="text-zinc-400"
-                >
-                  <LockOpen />
-                </Button>
-              }
-              dialogTitle={<p>Block Product</p>}
-              className="max-w-[100vw] lg:max-w-lg"
-            >
-              <BlockProductForm />
-            </Modal>
-          )}
-
           {/* delete */}
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={isBlocked ? "Unblock product" : "Block product"}
+            className="text-red-500"
+            onClick={() => item?._id && handleStatusUpdate(newStatus, item._id)}
+          >
+            {isBlocked ? <Lock /> : <Unlock />}
+          </Button>
           <DeleteModal
             triggerBtn={
               <Button variant={"ghost"} size={"icon"} className="text-red-500">

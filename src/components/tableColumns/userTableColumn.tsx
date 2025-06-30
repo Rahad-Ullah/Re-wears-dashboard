@@ -5,11 +5,11 @@ import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Lock, LockOpen, Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
-import Modal from "../modals/Modal";
 import UserDetails from "../page/users/userDetails/UserDetails";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import Modal from "../modals/Modal";
 
 // handle block
 const toggleBlock = async (id: string) => {
@@ -112,7 +112,7 @@ const columns: ColumnDef<IUser>[] = [
                 <Eye />
               </Button>
             }
-            className="max-w-[100vw] lg:max-w-[80vw]"
+            className="w-[80vw]"
           >
             <UserDetails user={item} />
           </Modal>
