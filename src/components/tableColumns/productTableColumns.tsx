@@ -149,7 +149,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
       const newStatus = isBlocked ? "Active" : "Blocked";
       return (
         <div className="flex items-center justify-evenly gap-1">
-          {/* delete */}
+          {/* update */}
           <Button
             variant="ghost"
             size="icon"
