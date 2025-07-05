@@ -27,7 +27,6 @@ import { productCategories } from "@/demoData/products";
 
 const ProductsTable = ({ products = [], meta, filters }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
-
   const [rowSelection, setRowSelection] = React.useState({});
 
   // Table Pagination, Sorting, Filtering, Column Visibility, Row Selection

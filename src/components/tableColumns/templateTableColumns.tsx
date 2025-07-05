@@ -60,7 +60,6 @@ const templateTableColumns: ColumnDef<INotificationTemplate>[] = [
     header: () => <div>Last Updated</div>,
     cell: ({ row }) => {
       const item = row.original as INotificationTemplate;
-      console.log(item);
       return <p className="px-2">{item?.updatedAt?.split("T")[0]}</p>;
     },
   },

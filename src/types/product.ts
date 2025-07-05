@@ -18,5 +18,6 @@ export interface IProduct {
   photos: string[];
   price: number;
   status: "Active" | "Blocked" | "Reported";
+  isBlocked: string;
   createdAt: string;
 }

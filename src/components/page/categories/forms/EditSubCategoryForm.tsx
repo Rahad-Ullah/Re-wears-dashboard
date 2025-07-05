@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
@@ -50,15 +51,15 @@ export default function EditSubCategoryForm({ item }) {
         method: "PATCH",
         body: formData,
       });
-      console.log(res);
+
       if (res.success) {
         toast.success(res.message || "Edit successfully", { id: "sub" });
         await revalidateTags(["sub-category"]);
       } else {
         toast.error(res.message || "failed edit data", { id: "sub" });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 

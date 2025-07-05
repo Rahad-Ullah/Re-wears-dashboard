@@ -10,7 +10,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { myFetch } from "@/utils/myFetch";
 
 const SettingPage = async ({ searchParams }) => {
-  const { tab, nestedTab, status } = await searchParams;
+  const { tab, nestedTab } = await searchParams;
 
   // Build query parameters for the backend request
   // const queryParams = new URLSearchParams({
@@ -52,14 +52,12 @@ const SettingPage = async ({ searchParams }) => {
         <TabsContent value="material">
           <MaterialTable
             items={materialData?.data}
-            filters={{ status }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>
         <TabsContent value="colors">
           <ColorTable
             items={colorData?.data}
-            filters={{ status }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>

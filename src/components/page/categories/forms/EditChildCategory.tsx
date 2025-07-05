@@ -15,7 +15,6 @@ export default function EditChildCategory({ item }) {
     e: React.FormEvent<HTMLFormElement>,
     id: string
   ) => {
-    console.log(id);
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);

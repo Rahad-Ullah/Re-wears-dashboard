@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
@@ -34,8 +35,8 @@ export default function HandleColorAdd() {
       } else {
         toast.error(res.message || "failed create data", { id: "color" });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 

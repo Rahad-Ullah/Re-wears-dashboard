@@ -18,7 +18,6 @@ const SupportPage = async ({ searchParams }) => {
     tags: ["supports"],
   });
   const supportsData = supports?.data?.data || [];
-  console.log(supportsData);
 
   return (
     <section className="flex flex-col gap-4 h-full">

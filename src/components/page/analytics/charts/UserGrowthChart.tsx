@@ -17,8 +17,6 @@ const UserGrowthChart = () => {
   const [timeFrame, setTimeFrame] = useState<TimeFrame>("yearly");
   const [userGrowthData, setUserGrowthData] = useState<any>(null);
 
-  console.log(userGrowthData?.data);
-
   React.useEffect(() => {
     const fetchData = async () => {
       const res = await myFetch(`/dashboard/user-growth?period=${timeFrame}`);

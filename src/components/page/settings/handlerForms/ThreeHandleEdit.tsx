@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,8 +37,8 @@ export default function ThreeHandleEdit({ item, type }) {
       } else {
         toast.error(res.message || "failed edit data", { id: "edit-user" });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 

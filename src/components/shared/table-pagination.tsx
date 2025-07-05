@@ -11,7 +11,6 @@ import {
 
 const TablePagination = ({ table, meta }) => {
   const page = meta?.page;
-  console.log(page);
   const updateSearchParams = useUpdateSearchParams();
 
   return (

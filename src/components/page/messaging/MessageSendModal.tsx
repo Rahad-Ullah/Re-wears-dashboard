@@ -24,8 +24,6 @@ export default function MessageSendModal({ item }) {
       type: "ADMIN",
     };
 
-    console.log(message, "message");
-
     const res = await myFetch(`/notification/create-admin-notification`, {
       method: "POST",
       body: message,

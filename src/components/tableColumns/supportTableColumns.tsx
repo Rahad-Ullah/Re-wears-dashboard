@@ -120,7 +120,6 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     header: () => <div className="text-center">Action</div>,
     cell: ({ row }) => {
       const item = row?.original as ISupportTicket;
-      console.log(item);
       return (
         // <div className="flex items-center justify-evenly gap-1">
         //   <Modal

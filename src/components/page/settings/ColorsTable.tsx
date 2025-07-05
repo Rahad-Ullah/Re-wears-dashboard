@@ -18,8 +18,7 @@ import { IColor } from "@/types/color";
 import colorsTableColumns from "@/components/tableColumns/colorsTableColumns";
 import HandleColorAdd from "./handlerForms/HandleColorAdd";
 
-const ColorTable = ({ items = [], filters, meta }) => {
-  console.log(filters);
+const ColorTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

@@ -18,9 +18,8 @@ const ProductPage = async ({ searchParams }) => {
   const res = await myFetch(`/product?${queryParams.toString()}`, {
     method: "GET",
     tags: ["products"],
+    cache: "no-store",
   });
-
-  console.log(res);
 
   return (
     <>

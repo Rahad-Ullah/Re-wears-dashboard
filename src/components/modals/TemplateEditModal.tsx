@@ -34,8 +34,6 @@ export default function TemplateEditModal({ item }) {
       message: data.get("message"),
     };
 
-    console.log(updateTemplate);
-
     try {
       const res = await myFetch(`/templates/${item?._id}`, {
         method: "PATCH",

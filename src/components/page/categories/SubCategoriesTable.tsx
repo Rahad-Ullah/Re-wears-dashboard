@@ -90,8 +90,6 @@ const SubCategoriesTable = ({
         body: formData,
       });
 
-      console.log(res);
-
       if (res.success) {
         toast.success(res.message || "Create Sub category successfully", {
           id: "sub-category",
@@ -104,8 +102,8 @@ const SubCategoriesTable = ({
           id: "sub-category",
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 

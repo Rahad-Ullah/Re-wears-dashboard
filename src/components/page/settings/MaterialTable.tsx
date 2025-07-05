@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -26,8 +27,7 @@ import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import materialTableColumns from "@/components/tableColumns/materialTableColumns";
 
-const MaterialTable = ({ items = [], filters, meta }) => {
-  console.log(filters);
+const MaterialTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -82,8 +82,8 @@ const MaterialTable = ({ items = [], filters, meta }) => {
       } else {
         toast.error(res.message || "failed create data", { id: "material" });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 

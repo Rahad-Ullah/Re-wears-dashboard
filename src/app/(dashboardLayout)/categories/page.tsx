@@ -73,7 +73,6 @@ const CategoriesPage = async ({ searchParams }) => {
         <TabsContent value="colors">
           <ColorTable
             items={demoColorsData as never[]}
-            filters={{ status, category }}
             meta={{ page: 1, totalPage: 1, total: 1 }}
           />
         </TabsContent>

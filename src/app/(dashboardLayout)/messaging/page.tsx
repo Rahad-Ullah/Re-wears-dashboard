@@ -15,7 +15,6 @@ const MessagingPage = async ({ searchParams }) => {
   });
 
   const users = await myFetch(`/order/users?${queryParams.toString()}`);
-  console.log(users.data);
   const usersData = users?.data;
 
   //notification templetes
@@ -23,7 +22,6 @@ const MessagingPage = async ({ searchParams }) => {
     tags: ["Templates"],
   });
   const templateGetData = templates?.data?.data;
-  console.log(templateGetData, "templates");
 
   // filter users
 

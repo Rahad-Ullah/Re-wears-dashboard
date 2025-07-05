@@ -19,7 +19,6 @@ const userProductSoldColumns: ColumnDef<IProduct>[] = [
     header: "Image",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      console.log(item, "again check");
       return (
         <Image
           src={

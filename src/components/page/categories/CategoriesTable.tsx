@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -81,8 +82,6 @@ const CategoriesTable = ({ items = [], meta }) => {
         body: { name },
       });
 
-      console.log(res);
-
       if (res.success) {
         toast.success(res.message || "Create category successfully", {
           id: "category",
@@ -95,8 +94,8 @@ const CategoriesTable = ({ items = [], meta }) => {
           id: "category",
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 

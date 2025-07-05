@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,11 +12,7 @@ import toast from "react-hot-toast";
 export default function HandleColorEdit({ item }) {
   const [open, setOpen] = useState(false);
 
-  const handleEdit = async (
-    e: React.FormEvent<HTMLFormElement>,
-    id: string
-  ) => {
-    console.log(id);
+  const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -29,7 +26,7 @@ export default function HandleColorEdit({ item }) {
         method: "PATCH",
         body: { name, hexCode },
       });
-      console.log(res);
+
       if (res.success) {
         toast.success(res.message || "Edit successfully", { id: "edit-user" });
         await revalidateTags(["color"]);
@@ -38,8 +35,8 @@ export default function HandleColorEdit({ item }) {
       } else {
         toast.error(res.message || "failed edit data", { id: "edit-user" });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 
@@ -55,10 +52,7 @@ export default function HandleColorEdit({ item }) {
         }
         className="max-w-lg"
       >
-        <form
-          onSubmit={(e) => handleEdit(e, item?._id.toString())}
-          className="grid gap-3"
-        >
+        <form onSubmit={(e) => handleEdit(e)} className="grid gap-3">
           <h1 className="text-lg font-semibold">Edit Color</h1>
           <Label>Name</Label>
           <Input

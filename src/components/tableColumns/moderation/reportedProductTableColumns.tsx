@@ -80,7 +80,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
-      console.log(item);
+
       return (
         <div className="flex justify-center">
           <DropdownMenu>

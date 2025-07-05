@@ -65,8 +65,6 @@ const ChildSubCategories = ({
   //       body: { name },
   //     });
 
-  //     console.log(res);
-
   //     if (res.success) {
   //       toast.success(res.message || "Create child-sub-category successfully", {
   //         id: "child-category",

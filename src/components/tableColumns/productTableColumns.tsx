@@ -34,23 +34,14 @@ const handleDelete = async (id: string) => {
 };
 
 // handle status update
-const handleStatusUpdate = async (status: string, id: string) => {
-  console.log(status, id);
-  toast.loading("Update...", { id: "status" });
-
+const handleStatusUpdate = async (id: string) => {
   try {
-    const res = await myFetch(`/product/update-status/${id}`, {
+    const res = await myFetch(`/product/block/${id}`, {
       method: "PATCH",
-      body: { status },
     });
-
-    console.log(res);
 
     if (res?.success) {
       revalidateTags(["products"]);
-      toast.success(res?.message || "Product update successfully", {
-        id: "status",
-      });
     } else {
       toast.error(res?.message || "Failed to update product", {
         id: "status",
@@ -145,19 +136,17 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: () => <div className="px-8">Actions</div>,
     cell: ({ row }) => {
       const item = row.original;
-      const isBlocked = item.status === "Blocked";
-      const newStatus = isBlocked ? "Active" : "Blocked";
+
       return (
         <div className="flex items-center justify-evenly gap-1">
-          {/* update */}
           <Button
             variant="ghost"
             size="icon"
-            aria-label={isBlocked ? "Unblock product" : "Block product"}
-            className="text-red-500"
-            onClick={() => item?._id && handleStatusUpdate(newStatus, item._id)}
+            aria-label="product"
+            className={`${item?.isBlocked && "text-red-500"}`}
+            onClick={() => handleStatusUpdate(item._id)}
           >
-            {isBlocked ? <Lock /> : <Unlock />}
+            {item?.isBlocked ? <Lock /> : <Unlock />}
           </Button>
           <DeleteModal
             triggerBtn={
