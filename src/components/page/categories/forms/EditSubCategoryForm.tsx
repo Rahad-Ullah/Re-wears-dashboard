@@ -44,8 +44,13 @@ export default function EditSubCategoryForm({ item }) {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // update api
+    const fileInput = form.querySelector(
+      'input[name="icon"]'
+    ) as HTMLInputElement;
 
+    if (!fileInput?.files?.length) {
+      formData.delete("icon");
+    }
     try {
       const res = await myFetch(`/sub-category/${id}`, {
         method: "PATCH",
@@ -57,6 +62,7 @@ export default function EditSubCategoryForm({ item }) {
       if (res.success) {
         toast.success(res.message || "Edit successfully", { id: "sub" });
         await revalidateTags(["sub-category"]);
+        setOpen(false);
       } else {
         toast.error(res.message || "failed edit data", { id: "sub" });
       }
@@ -113,7 +119,10 @@ export default function EditSubCategoryForm({ item }) {
               preview.style.display = "block";
             }
           }}
+          // Make image optional, not required
+          required={false}
         />
+
         <Button className="ml-auto px-6">Save</Button>
       </form>
     </Modal>
