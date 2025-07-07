@@ -24,9 +24,11 @@ yarn dev
 ### Create the `.env.local` file and set environment variables following these:
 
 ```javascript
-SERVER_HOST="10.0.70.50"
-SERVER_URL="http://10.0.70.50:5003"
-BASE_URL="http://10.0.70.50:5003/api/v1"
+SERVER_HOST = "10.0.70.188";
+SERVER_URL = "http://10.0.70.188:6001";
+BASE_URL = "http://10.0.70.188:6001/api/v1";
+NEXT_PUBLIC_IMAGE_URL = "http://10.0.70.188:6001";
+NEXT_PUBLIC_WEBSITE_URL = "http://10.0.80.47:3003";
 ```
 
 ## Protect your routes by middleware after backend integration
