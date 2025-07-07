@@ -24,10 +24,10 @@ const nextConfig: NextConfig = {
         pathname: "**",
       },
       {
-        // Allow images from 10.0.80.47
+        // Allow images from server ip
         protocol: "http",
         hostname: config.serverHost,
-        port: "6001",
+        port: "5000",
         pathname: "**", // Allow all paths from this host
       },
     ],
