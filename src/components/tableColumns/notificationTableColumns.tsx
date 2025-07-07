@@ -1,10 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
-import Modal from "../modals/Modal";
-import { Textarea } from "../ui/textarea";
+import MessageSendModal from "../page/messaging/MessageSendModal";
 
 // table column definition
 const notificationTableColumns: ColumnDef<IUser>[] = [
@@ -12,8 +10,7 @@ const notificationTableColumns: ColumnDef<IUser>[] = [
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      const item = row.original as IUser;
-      return <p className="px-2">{item?._id}</p>;
+      return <p className="px-2">{row.index + 1}</p>;
     },
   },
   {
@@ -36,35 +33,17 @@ const notificationTableColumns: ColumnDef<IUser>[] = [
       return <p className="px-2">{item?.email}</p>;
     },
   },
-  {
-    accessorKey: "location",
-    header: () => <div>Location</div>,
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      return <p className="px-2">{item?.location}</p>;
-    },
-  },
+
   {
     id: "actions",
     enableHiding: false,
     header: () => <div className="px-8 text-center">Action</div>,
-    cell: () => {
+    cell: ({ row }) => {
+      const item = row.original as IUser;
       return (
         <div className="flex items-center justify-evenly gap-1">
-          <Modal
-            dialogTrigger={
-              <Button size={"sm"} className="text-sm">
-                Send
-              </Button>
-            }
-            className="max-w-lg"
-          >
-            <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Send Notification</h1>
-              <Textarea rows={4} placeholder="Write here..." />
-              <Button className="ml-auto px-6">Send</Button>
-            </div>
-          </Modal>
+          {/* component name here */}
+          <MessageSendModal item={item} />
         </div>
       );
     },

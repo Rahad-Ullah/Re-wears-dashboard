@@ -11,12 +11,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 
 const ReportsCard: React.FC = () => {
   const [reportType, setReportType] = useState("sales");
-  const [exportFormat, setExportFormat] = useState("csv");
   const [startDate, setStartDate] = useState("2023-01-01");
   const [endDate, setEndDate] = useState("2023-09-30");
 
@@ -97,27 +94,6 @@ const ReportsCard: React.FC = () => {
               />
             </div>
           </div>
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
-            Export Format
-          </label>
-          <RadioGroup
-            value={exportFormat}
-            defaultValue="pdf"
-            onValueChange={(value) => setExportFormat(value)}
-            className="flex items-center gap-4"
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem className="size-6" value="pdf" id="pdf" />
-              <Label htmlFor="pdf">PDF</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem className="size-6" value="csv" id="csv" />
-              <Label htmlFor="csv">aCSV</Label>
-            </div>
-          </RadioGroup>
         </div>
       </div>
 

@@ -33,9 +33,13 @@ import {
 import { templateCategory } from "@/constants/notification";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import toast from "react-hot-toast";
+import { myFetch } from "@/utils/myFetch";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 
 const TemplateTable = ({ items = [], filters, meta }) => {
   const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -43,6 +47,7 @@ const TemplateTable = ({ items = [], filters, meta }) => {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [selectedCategory, setSelectedCategory] = React.useState("");
 
   const table = useReactTable<IUser>({
     data: items || [],
@@ -63,6 +68,40 @@ const TemplateTable = ({ items = [], filters, meta }) => {
       // pagination: { pageIndex: 0, pageSize: 10 },
     },
   });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const messageData = {
+      name: data.get("name"),
+      category: selectedCategory,
+      message: data.get("message"),
+    };
+
+    try {
+      const res = await myFetch("/templates/create", {
+        method: "POST",
+        body: messageData,
+      });
+
+      if (res?.message) {
+        toast.success("Template Create sucessfully");
+        await revalidateTags(["Templates"]);
+        form.reset();
+        setOpen(false);
+      } else {
+        toast.error(res.message || "Failed to create template");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
 
   return (
     <div className="w-full bg-white rounded-xl h-full">
@@ -99,6 +138,8 @@ const TemplateTable = ({ items = [], filters, meta }) => {
           </Select>
 
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add
@@ -106,14 +147,14 @@ const TemplateTable = ({ items = [], filters, meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form onSubmit={handleSubmit} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Template</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter template name" />
+              <Input name="name" placeholder="Enter template name" />
 
               <Label>Category</Label>
-              <Select>
-                <SelectTrigger>
+              <Select onValueChange={setSelectedCategory}>
+                <SelectTrigger name="category">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -126,12 +167,16 @@ const TemplateTable = ({ items = [], filters, meta }) => {
               </Select>
 
               <Label>Message</Label>
-              <Textarea rows={4} placeholder="Write message..." />
+              <Textarea
+                name="message"
+                rows={4}
+                placeholder="Write message..."
+              />
 
               <div className="flex items-center gap-4 justify-end">
                 <Button className="">Add Now</Button>
               </div>
-            </div>
+            </form>
           </Modal>
         </div>
       </section>

@@ -4,16 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IReport } from "@/types/report";
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleCheckBig, Eye, FileSearch, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import Link from "next/link";
+import StatusUpdate from "./statusUpdate/StatusUpdate";
 
 // table column definition
 const reportedMessageTableColumns: ColumnDef<IReport>[] = [
@@ -26,11 +23,11 @@ const reportedMessageTableColumns: ColumnDef<IReport>[] = [
     },
   },
   {
-    accessorKey: "message",
-    header: "Message",
+    accessorKey: "name",
+    header: "Product Name",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.content}</p>;
+      return <p className="px-2">{item?.reason}</p>;
     },
   },
   {
@@ -38,7 +35,7 @@ const reportedMessageTableColumns: ColumnDef<IReport>[] = [
     header: "Reporter",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.reporter}</p>;
+      return <p className="px-2">{item?.reporter?.email}</p>;
     },
   },
   {
@@ -54,7 +51,7 @@ const reportedMessageTableColumns: ColumnDef<IReport>[] = [
     header: () => <div>Date</div>,
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.date?.split("T")[0]}</p>;
+      return <p className="px-2">{item?.createdAt?.split("T")[0]}</p>;
     },
   },
   {
@@ -82,9 +79,7 @@ const reportedMessageTableColumns: ColumnDef<IReport>[] = [
     enableHiding: false,
     header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
-      const item = row.original;
-      console.log(item);
-
+      const item = row.original as IReport;
       return (
         <div className="flex justify-center">
           <DropdownMenu>
@@ -95,22 +90,11 @@ const reportedMessageTableColumns: ColumnDef<IReport>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <Link
-                href={`https://re-wears-rahad-ullah.vercel.app/inbox`}
-                target="_blank"
-              >
-                <DropdownMenuItem>
-                  <Eye /> View message
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <FileSearch /> Mark as In Review
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CircleCheckBig /> Mark as Resolved
-              </DropdownMenuItem>
+              <StatusUpdate
+                item={item}
+                review="In Review"
+                resolved="Resolved"
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

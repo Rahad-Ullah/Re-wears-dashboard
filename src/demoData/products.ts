@@ -169,12 +169,4 @@ export const demoProductsData = [
   },
 ];
 
-export const productCategories = [
-  "Clothing",
-  "Footwear",
-  "Accessories",
-  "Bags",
-  "Watches",
-  "Jewelry",
-  "Sportswear",
-];
+export const productCategories = ["MEN", "WOMEN", "KIDS", "BEAUTY/GROOMING"];

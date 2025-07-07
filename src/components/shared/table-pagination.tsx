@@ -3,7 +3,6 @@ import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -16,45 +15,41 @@ const TablePagination = ({ table, meta }) => {
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-4 pt-4">
-      {/* <div className="md:absolute text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div> */}
       <div className="flex justify-center flex-1">
         <Pagination className="text-[#A7A7A7]">
-          <PaginationContent className="">
-            {/* previous button */}
+          <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
                 onClick={() =>
-                  updateSearchParams("page", page > 1 ? `${page - 1}` : page)
+                  updateSearchParams("page", page > 1 ? `${page - 1}` : "1")
                 }
                 className={page <= 1 ? "cursor-not-allowed opacity-50" : ""}
               />
             </PaginationItem>
-            {/* page buttons */}
-            {Array.from({ length: meta?.totalPage }).map((_, index) => (
-              <PaginationItem key={index}>
+
+            {getPageNumbers(page, meta?.totalPage).map((pageNumber) => (
+              <PaginationItem key={pageNumber}>
                 <PaginationLink
-                  onClick={() =>
-                    updateSearchParams("page", (index + 1).toString())
-                  }
-                  isActive={page == index + 1}
+                  onClick={() => updateSearchParams("page", `${pageNumber}`)}
+                  className={`transition-colors duration-500 ${
+                    page === pageNumber
+                      ? "bg-[#9D987B] text-white"
+                      : "text-gray-400"
+                  }`}
                 >
-                  {index + 1}
+                  {pageNumber}
                 </PaginationLink>
               </PaginationItem>
             ))}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            {/* next button */}
+
             <PaginationItem>
               <PaginationNext
                 onClick={() =>
                   updateSearchParams(
                     "page",
-                    page < meta?.totalPage ? `${page + 1}` : page
+                    page < meta?.totalPage
+                      ? `${page + 1}`
+                      : `${meta?.totalPage}`
                   )
                 }
                 className={
@@ -70,3 +65,23 @@ const TablePagination = ({ table, meta }) => {
 };
 
 export default TablePagination;
+
+function getPageNumbers(currentPage, totalPages, windowSize = 8) {
+  const half = Math.floor(windowSize / 2);
+  let start = Math.max(1, currentPage - half);
+  let end = Math.min(totalPages, currentPage + half);
+
+  if (end - start + 1 < windowSize) {
+    if (start === 1) {
+      end = Math.min(totalPages, end + (windowSize - (end - start + 1)));
+    } else if (end === totalPages) {
+      start = Math.max(1, start - (windowSize - (end - start + 1)));
+    }
+  }
+
+  const pages: number[] = [];
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  return pages;
+}

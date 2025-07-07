@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -21,9 +22,13 @@ import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import brandTableColumns from "@/components/tableColumns/brandTableColumns";
+import { myFetch } from "@/utils/myFetch";
+import toast from "react-hot-toast";
+import { revalidateTags } from "@/helpers/revalidateHelper";
 
 const BrandTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -51,6 +56,36 @@ const BrandTable = ({ items = [], meta }) => {
     },
   });
 
+  // create brand
+  const handleCreateBrand = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+
+    // update api
+
+    try {
+      const res = await myFetch(`/type/create`, {
+        method: "POST",
+        body: { name, type: "brand" },
+      });
+
+      if (res.success) {
+        toast.success(res.message || "Create brand successfully", {
+          id: "brand",
+        });
+        await revalidateTags(["material"]);
+        setOpen(false);
+        form.reset();
+      } else {
+        toast.error(res.message || "failed edit data", { id: "brand" });
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
+  };
+
   return (
     <div className="w-full bg-white rounded-xl h-full">
       {/* table top option bar */}
@@ -58,6 +93,8 @@ const BrandTable = ({ items = [], meta }) => {
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New
@@ -65,12 +102,14 @@ const BrandTable = ({ items = [], meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
+            <form onSubmit={handleCreateBrand} className="grid gap-3">
               <h1 className="text-lg font-semibold">Add Brand</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" />
-              <Button className="ml-auto px-6">Add</Button>
-            </div>
+              <Input name="name" placeholder="Enter name" />
+              <Button type="submit" className="ml-auto px-6">
+                Add
+              </Button>
+            </form>
           </Modal>
         </div>
       </section>

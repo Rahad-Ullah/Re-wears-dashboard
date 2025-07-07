@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-const AddAdminForm = () => {
+const AddAdminForm = ({ setOpen }) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof addAdminFormSchema>>({
     resolver: zodResolver(addAdminFormSchema),
@@ -36,6 +36,8 @@ const AddAdminForm = () => {
       if (res?.success) {
         toast.success("admin create successfully");
         await revalidateTags(["Admins"]);
+        form.reset();
+        setOpen(false);
       } else {
         toast.error(res.message || "admin create failed");
       }

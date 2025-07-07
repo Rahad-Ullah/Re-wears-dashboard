@@ -57,7 +57,7 @@ const ChangePasswordTab = () => {
         method: "POST",
         body: values,
       });
-      console.log(res);
+
       if (res.success) {
         toast.success("Password updated successfully!", {
           id: "change-password",

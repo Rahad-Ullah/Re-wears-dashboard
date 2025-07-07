@@ -1,5 +1,6 @@
 "use client";
 
+import { IMAGE_URL } from "@/config/env-config";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
@@ -19,7 +20,16 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const item = row.original as IProduct;
       return (
-        <Image src={item?.photos[0]} alt={item?.title} width={30} height={30} />
+        <Image
+          src={
+            item?.productImage[0]?.startsWith("https")
+              ? item?.productImage[0]
+              : `${IMAGE_URL}${item?.productImage[0]}`
+          }
+          alt={item?.name}
+          width={30}
+          height={30}
+        />
       );
     },
   },
@@ -28,7 +38,7 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
     header: "Title",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return <p className="px-2">{item?.title}</p>;
+      return <p className="px-2">{item?.brand?.name}</p>;
     },
   },
   {
@@ -36,7 +46,7 @@ const userProductsColumns: ColumnDef<IProduct>[] = [
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      return <p className="px-2">{item?.category}</p>;
+      return <p className="px-2">{item?.name}</p>;
     },
   },
   {

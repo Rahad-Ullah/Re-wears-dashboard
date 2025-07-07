@@ -5,15 +5,18 @@ import CategoryChart from "@/components/page/analytics/charts/CategoryChart";
 import SalesVolumeChart from "@/components/page/analytics/charts/SalesVolumeChart";
 import UserGrowthChart from "@/components/page/analytics/charts/UserGrowthChart";
 import { Card } from "@/components/ui/card";
+import { myFetch } from "@/utils/myFetch";
 import { DollarSign, ShoppingCart, TrendingUp, Users } from "lucide-react";
 
-const AnalyticsPage = () => {
+const AnalyticsPage = async () => {
+  const getData = await myFetch("/dashboard/statestic");
+  const cardData = getData?.data;
   return (
     <Card className="h-full p-5 animate-fadeIn flex flex-col gap-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           title="Total Users"
-          value="24,521"
+          value={cardData?.totalUser || 0}
           change="+12.5%"
           isPositive={true}
           icon={<Users className="h-6 w-6" />}
@@ -21,7 +24,7 @@ const AnalyticsPage = () => {
         />
         <StatCard
           title="Active Users"
-          value="18,432"
+          value={cardData?.activeUser || 0}
           change="+8.2%"
           isPositive={true}
           icon={<TrendingUp className="h-6 w-6" />}
@@ -29,7 +32,7 @@ const AnalyticsPage = () => {
         />
         <StatCard
           title="Total Products"
-          value="8,741"
+          value={cardData?.totalProduct || 0}
           change="+5.1%"
           isPositive={true}
           icon={<ShoppingCart className="h-6 w-6" />}
@@ -37,7 +40,7 @@ const AnalyticsPage = () => {
         />
         <StatCard
           title="Total Revenue"
-          value="$1.2M"
+          value={cardData?.totalRevenue || 0}
           change="+18.3%"
           isPositive={true}
           icon={<DollarSign className="h-6 w-6" />}

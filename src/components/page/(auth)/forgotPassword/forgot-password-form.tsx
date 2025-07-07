@@ -38,7 +38,7 @@ export function ForgotPasswordForm({
         method: "POST",
         body: payload,
       });
-      console.log(res);
+
       if (res.success) {
         toast.success("OTP sent to your email", {
           id: "forgot-password-toast",
@@ -50,7 +50,9 @@ export function ForgotPasswordForm({
         });
       }
     } catch (error: unknown) {
-      console.log("Error fetching data:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Error fetching data"
+      );
     }
   };
 

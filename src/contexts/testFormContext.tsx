@@ -32,7 +32,7 @@ export const TestFormProvider = ({ children }) => {
   const [formData, setFormData] = useState(initialFormData);
   const [step, setStep] = useState(1);
 
-  // console.log(formData);
+  // (formData);
 
   return (
     <FormContext.Provider

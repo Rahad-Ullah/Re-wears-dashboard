@@ -5,11 +5,11 @@ import { IUser } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Lock, LockOpen, Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
-import Modal from "../modals/Modal";
 import UserDetails from "../page/users/userDetails/UserDetails";
 import { myFetch } from "@/utils/myFetch";
 import toast from "react-hot-toast";
 import { revalidateTags } from "@/helpers/revalidateHelper";
+import Modal from "../modals/Modal";
 
 // handle block
 const toggleBlock = async (id: string) => {
@@ -26,8 +26,8 @@ const toggleBlock = async (id: string) => {
     } else {
       toast.error(res.message || "Something went wrong", { id: "block-user" });
     }
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
+    toast.error((error as Error)?.message);
   }
 };
 
@@ -46,8 +46,8 @@ const handleDelete = async (id: string) => {
     } else {
       toast.error(res.message || "Something went wrong", { id: "delete-user" });
     }
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
+    toast.error((error as Error)?.message);
   }
 };
 
@@ -64,7 +64,7 @@ const columns: ColumnDef<IUser>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
-      // console.log(row, "juyel");
+      // (row, "juyel");
       const item = row.original as IUser;
       return (
         <p className="px-2">
@@ -73,14 +73,14 @@ const columns: ColumnDef<IUser>[] = [
       );
     },
   },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-    cell: ({ row }) => {
-      const item = row.original as IUser;
-      return <p className="px-2">{item?.gender}</p>;
-    },
-  },
+  // {
+  //   accessorKey: "gender",
+  //   header: "Gender",
+  //   cell: ({ row }) => {
+  //     const item = row.original as IUser;
+  //     return <p className="px-2">{item?.gender}</p>;
+  //   },
+  // },
   {
     accessorKey: "email",
     header: "Email",
@@ -112,7 +112,7 @@ const columns: ColumnDef<IUser>[] = [
                 <Eye />
               </Button>
             }
-            className="max-w-[100vw] lg:max-w-[80vw]"
+            className="w-[80vw]"
           >
             <UserDetails user={item} />
           </Modal>

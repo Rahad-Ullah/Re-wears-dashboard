@@ -5,6 +5,7 @@ import {
   MessagesSquare,
   Settings,
   Shield,
+  Tag,
   Users,
   UsersRound,
 } from "lucide-react";
@@ -33,6 +34,11 @@ export const sidebarMenu = {
       icon: Users,
     },
     {
+      title: "Categories",
+      url: "/categories",
+      icon: Tag,
+    },
+    {
       title: "Moderation",
       url: "/moderation",
       icon: Shield,
@@ -43,8 +49,8 @@ export const sidebarMenu = {
       icon: MessagesSquare,
     },
     {
-      title: "Support",
-      url: "/support",
+      title: "Supports",
+      url: "/supports",
       icon: Handshake,
     },
   ],

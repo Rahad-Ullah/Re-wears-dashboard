@@ -2,31 +2,48 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash } from "lucide-react";
-import Modal from "../modals/Modal";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
 import { IColor } from "@/types/color";
+import toast from "react-hot-toast";
+import { myFetch } from "@/utils/myFetch";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import ThreeHandleEdit from "../page/settings/handlerForms/ThreeHandleEdit";
 
 // handle delete item
-const handleDelete = async () => {
-  // perform backend api here...
+const handleDelete = async (id: string) => {
+  toast.loading("Processing...", { id: "delete-user" });
+
+  try {
+    const res = await myFetch(`/type/material/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.success) {
+      revalidateTags(["material"]);
+      toast.success(res.message || "Deleted successfully", {
+        id: "delete-user",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", { id: "delete-user" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // table column definition
-const colorTableColumns: ColumnDef<IColor>[] = [
+const materialTableColumns: ColumnDef<IColor>[] = [
   {
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      const item = row.original as IColor;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          # {row.index + 1}
         </Button>
       );
     },
@@ -43,48 +60,7 @@ const colorTableColumns: ColumnDef<IColor>[] = [
       );
     },
   },
-  {
-    accessorKey: "color",
-    header: "Color",
-    cell: ({ row }) => {
-      const item = row.original as IColor;
-      const color = item.hexCode;
-      console.log(color);
-      return (
-        <div
-          className={`size-8 mx-2 rounded-full border`}
-          style={{ backgroundColor: item?.hexCode }}
-        ></div>
-      );
-    },
-  },
-  {
-    accessorKey: "hexCode",
-    header: "Hex Code",
-    cell: ({ row }) => {
-      const item = row.original as IColor;
-      return (
-        <span className="capitalize font-medium justify-start px-2 hover:bg-transparent">
-          {item?.hexCode}
-        </span>
-      );
-    },
-  },
-  {
-    accessorKey: "totalAssignedItems",
-    header: "Assinged Products",
-    cell: ({ row }) => {
-      const item = row.original as IColor;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.totalAssignedItems}
-        </Button>
-      );
-    },
-  },
+
   {
     accessorKey: "created",
     header: () => <div>Created</div>,
@@ -124,23 +100,7 @@ const colorTableColumns: ColumnDef<IColor>[] = [
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-primary">
-                <Pencil />
-              </Button>
-            }
-            className="max-w-lg"
-          >
-            <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Edit Color</h1>
-              <Label>Name</Label>
-              <Input placeholder="Enter name" defaultValue={item?.name} />
-              <Label>Hex Code</Label>
-              <Input placeholder="#50C878" defaultValue={item?.hexCode} />
-              <Button className="ml-auto px-6">Save</Button>
-            </div>
-          </Modal>
+          <ThreeHandleEdit item={item} type="/type/material" />
           {/* delete */}
           <DeleteModal
             triggerBtn={
@@ -158,4 +118,4 @@ const colorTableColumns: ColumnDef<IColor>[] = [
   },
 ];
 
-export default colorTableColumns;
+export default materialTableColumns;

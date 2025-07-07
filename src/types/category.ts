@@ -5,4 +5,7 @@ export interface ICategory {
   totalAssignedItems: number;
   createdAt: string;
   updatedAt: string;
+  subCategories: {
+    icon: string;
+  };
 }

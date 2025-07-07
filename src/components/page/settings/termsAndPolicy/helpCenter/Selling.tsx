@@ -2,19 +2,47 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import useGetSettingData from "@/hooks/useGetSettingData";
+import { myFetch } from "@/utils/myFetch";
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import toast from "react-hot-toast";
 
 // Dynamically import JoditEditor with SSR disabled
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Selling = () => {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  const { content, setContent } = useGetSettingData("/cms/selling");
 
-  const handleUpdate = () => {
-    console.log("Updated Content:", content);
-    // Add your update logic here
+  const handleUpdate = async () => {
+    const termsData = {
+      type: "selling",
+      content,
+    };
+    try {
+      toast.loading("Processing", { id: "selling-data-get" });
+
+      const res = await myFetch("/cms", {
+        method: "PUT",
+        body: termsData,
+      });
+
+      if (res?.success) {
+        toast.success(res.message || "Created successfully", {
+          id: "selling-data-get",
+        });
+        await revalidateTags(["selling"]);
+      } else {
+        toast.error(res?.message || "Failed to create data. Try again.", {
+          id: "selling-data-get",
+        });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      toast.error("Something went wrong.", { id: "selling-data-get" });
+    }
   };
 
   return (

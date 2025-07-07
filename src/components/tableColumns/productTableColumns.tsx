@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types/product";
 import { ColumnDef } from "@tanstack/react-table";
-import { Lock, LockOpen, Trash } from "lucide-react";
+import { Lock, Trash, Unlock } from "lucide-react";
 import Image from "next/image";
-import Modal from "../modals/Modal";
 import DeleteModal from "../modals/DeleteModal";
-import BlockProductForm from "../forms/product/BlockProduct";
 import { myFetch } from "@/utils/myFetch";
 import { revalidateTags } from "@/helpers/revalidateHelper";
 import toast from "react-hot-toast";
 import { IMAGE_URL } from "@/config/env-config";
-console.log(process.env.SERVER_URL);
 
 // handleDelete
 const handleDelete = async (id: string) => {
@@ -20,6 +17,7 @@ const handleDelete = async (id: string) => {
     const res = await myFetch(`/product/${id}`, {
       method: "DELETE",
     });
+
     if (res?.success) {
       revalidateTags(["products"]);
       toast.success(res?.message || "Product deleted successfully", {
@@ -28,6 +26,25 @@ const handleDelete = async (id: string) => {
     } else {
       toast.error(res?.message || "Failed to delete product", {
         id: "delete-product",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// handle status update
+const handleStatusUpdate = async (id: string) => {
+  try {
+    const res = await myFetch(`/product/block/${id}`, {
+      method: "PATCH",
+    });
+
+    if (res?.success) {
+      revalidateTags(["products"]);
+    } else {
+      toast.error(res?.message || "Failed to update product", {
+        id: "status",
       });
     }
   } catch (error) {
@@ -46,19 +63,23 @@ const productTableColumns: ColumnDef<IProduct>[] = [
   },
   {
     accessorKey: "photo",
-    header: "",
+    header: "Icon",
     cell: ({ row }) => {
       const item = row.original as IProduct;
 
-      // return (
-      //   <Image
-      //     src={`${IMAGE_URL}${item?.productImage[0]}` || ""}
-      //     alt="Product Image"
-      //     width={50}
-      //     height={50}
-      //     className="object-cover w-12 h-12 rounded-md"
-      //   />
-      // );
+      return (
+        <Image
+          src={
+            item?.productImage[0]
+              ? `${IMAGE_URL}${item?.productImage[0]}`
+              : "/other.jpg"
+          }
+          alt="Product Image"
+          width={50}
+          height={50}
+          className="object-cover w-12 h-12 rounded-md"
+        />
+      );
     },
   },
   {
@@ -82,7 +103,7 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as IProduct;
-      // return <p className="px-2">{item?.category}</p>;
+      return <p className="px-2">{item?.category?.category?.name}</p>;
     },
   },
   {
@@ -115,32 +136,18 @@ const productTableColumns: ColumnDef<IProduct>[] = [
     header: () => <div className="px-8">Actions</div>,
     cell: ({ row }) => {
       const item = row.original;
+
       return (
         <div className="flex items-center justify-evenly gap-1">
-          {item.status === "Blocked" ? (
-            <Button variant={"ghost"} size={"icon"} className="text-red-500">
-              <Lock />
-            </Button>
-          ) : (
-            // edit modal
-            <Modal
-              dialogTrigger={
-                <Button
-                  variant={"ghost"}
-                  size={"icon"}
-                  className="text-zinc-400"
-                >
-                  <LockOpen />
-                </Button>
-              }
-              dialogTitle={<p>Block Product</p>}
-              className="max-w-[100vw] lg:max-w-lg"
-            >
-              <BlockProductForm product={item} />
-            </Modal>
-          )}
-
-          {/* delete */}
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="product"
+            className={`${item?.isBlocked && "text-red-500"}`}
+            onClick={() => handleStatusUpdate(item._id)}
+          >
+            {item?.isBlocked ? <Lock /> : <Unlock />}
+          </Button>
           <DeleteModal
             triggerBtn={
               <Button variant={"ghost"} size={"icon"} className="text-red-500">

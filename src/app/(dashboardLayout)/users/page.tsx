@@ -22,6 +22,7 @@ const UsersPage = async ({ searchParams }) => {
   const res = await myFetch(`/users?${queryParams.toString()}`, {
     tags: ["users"],
   });
+
   // filter out super admin and minus him
   const filteredData = res?.data?.filter((item) => item?.role === "USER");
 
@@ -29,7 +30,7 @@ const UsersPage = async ({ searchParams }) => {
     <>
       <UsersTable
         users={filteredData}
-        meta={res?.pagination as never}
+        meta={res?.pagination}
         filters={{ location, gender, searchTerm }}
       />
     </>

@@ -11,11 +11,20 @@ type ModalProps = {
   children?: React.ReactNode;
   dialogTitle?: React.ReactNode;
   className?: string;
+  open?: boolean; // ✅ controlled open
+  onOpenChange?: (open: boolean) => void; // ✅ controlled
 };
 
-const Modal = ({ dialogTrigger, dialogTitle, children, className }: ModalProps) => {
+const Modal = ({
+  dialogTrigger,
+  dialogTitle,
+  children,
+  className,
+  open,
+  onOpenChange,
+}: ModalProps) => {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
       <DialogContent
         className={`

@@ -2,16 +2,34 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash } from "lucide-react";
-import Modal from "../modals/Modal";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Trash } from "lucide-react";
 import DeleteModal from "../modals/DeleteModal";
 import { IBrand } from "@/types/brand";
+import { myFetch } from "@/utils/myFetch";
+import toast from "react-hot-toast";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import ThreeHandleEdit from "../page/settings/handlerForms/ThreeHandleEdit";
 
 // handle delete item
-const handleDelete = async () => {
-  // perform backend api here...
+const handleDelete = async (id: string) => {
+  toast.loading("Processing...", { id: "delete-user" });
+
+  try {
+    const res = await myFetch(`/type/brand/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.success) {
+      revalidateTags(["brand"]);
+      toast.success(res.message || "Deleted successfully", {
+        id: "delete-user",
+      });
+    } else {
+      toast.error(res.message || "Something went wrong", { id: "delete-user" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // table column definition
@@ -20,13 +38,12 @@ const brandTableColumns: ColumnDef<IBrand>[] = [
     accessorKey: "id",
     header: "Sl. No",
     cell: ({ row }) => {
-      const item = row.original as IBrand;
       return (
         <Button
           variant={"ghost"}
           className="capitalize w-full justify-start hover:bg-transparent"
         >
-          #{item._id}
+          # {row.index + 1}
         </Button>
       );
     },
@@ -43,21 +60,21 @@ const brandTableColumns: ColumnDef<IBrand>[] = [
       );
     },
   },
-  {
-    accessorKey: "totalAssignedItems",
-    header: "Assinged Products",
-    cell: ({ row }) => {
-      const item = row.original as IBrand;
-      return (
-        <Button
-          variant={"ghost"}
-          className="w-full justify-start hover:bg-transparent"
-        >
-          {item.totalAssignedItems}
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "totalAssignedItems",
+  //   header: "Assinged Products",
+  //   cell: ({ row }) => {
+  //     const item = row.original as IBrand;
+  //     return (
+  //       <Button
+  //         variant={"ghost"}
+  //         className="w-full justify-start hover:bg-transparent"
+  //       >
+  //         {item.totalAssignedItems}
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "created",
     header: () => <div>Created</div>,
@@ -97,21 +114,7 @@ const brandTableColumns: ColumnDef<IBrand>[] = [
       return (
         <div className="flex items-center justify-center gap-2">
           {/* edit */}
-          <Modal
-            dialogTrigger={
-              <Button variant={"ghost"} size={"icon"} className="text-primary">
-                <Pencil />
-              </Button>
-            }
-            className="max-w-lg"
-          >
-            <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Edit Brand</h1>
-              <Label>Name</Label>
-              <Input placeholder="Enter name" defaultValue={item?.name} />
-              <Button className="ml-auto px-6">Save</Button>
-            </div>
-          </Modal>
+          <ThreeHandleEdit item={item} type="/type/brand" />
           {/* delete */}
           <DeleteModal
             triggerBtn={

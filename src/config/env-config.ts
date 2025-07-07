@@ -10,4 +10,5 @@ export const config = {
 };
 
 export const BASE_URL = process.env.BASE_URL;
-export const IMAGE_URL = process.env.SERVER_URL;
+export const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
+export const WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;

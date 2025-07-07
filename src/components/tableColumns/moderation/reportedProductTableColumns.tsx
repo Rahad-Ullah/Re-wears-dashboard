@@ -4,16 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IReport } from "@/types/report";
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleCheckBig, Eye, FileSearch, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import Link from "next/link";
+import StatusUpdate from "./statusUpdate/StatusUpdate";
 
 // table column definition
 const reportedProductTableColumns: ColumnDef<IReport>[] = [
@@ -30,7 +27,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: "Product Name",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.content}</p>;
+      return <p className="px-2">{item?.reason}</p>;
     },
   },
   {
@@ -38,7 +35,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: "Reporter",
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.reporter}</p>;
+      return <p className="px-2">{item?.reporter?.email}</p>;
     },
   },
   {
@@ -54,7 +51,7 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: () => <div>Date</div>,
     cell: ({ row }) => {
       const item = row.original as IReport;
-      return <p className="px-2">{item?.date?.split("T")[0]}</p>;
+      return <p className="px-2">{item?.createdAt?.split("T")[0]}</p>;
     },
   },
   {
@@ -83,7 +80,6 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
     header: () => <div className="px-8 text-center">Action</div>,
     cell: ({ row }) => {
       const item = row.original;
-      console.log(item);
 
       return (
         <div className="flex justify-center">
@@ -95,22 +91,12 @@ const reportedProductTableColumns: ColumnDef<IReport>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <Link
-                href={`https://re-wears-rahad-ullah.vercel.app/product-details`}
-                target="_blank"
-              >
-                <DropdownMenuItem>
-                  <Eye /> View product
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <FileSearch /> Mark as In Review
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CircleCheckBig /> Mark as Resolved
-              </DropdownMenuItem>
+              {/* todo here */}
+              <StatusUpdate
+                item={item}
+                review="In Review"
+                resolved="Resolved"
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

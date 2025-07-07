@@ -29,7 +29,6 @@ import {
 import { ticketStatuses } from "@/constants/support";
 
 const SupportTable = ({ tickets = [], filters, meta }) => {
-  console.log(tickets, "tickets data");
   const updateMultiSearchParams = useUpdateMultiSearchParams();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -65,10 +64,10 @@ const SupportTable = ({ tickets = [], filters, meta }) => {
         {/* left side filters */}
         <div className="flex flex-wrap items-center gap-4">
           <FilterTabItem filter={{ priority: "" }}>All</FilterTabItem>
-          <FilterTabItem filter={{ priority: "Urgent" }}>Urgent</FilterTabItem>
-          <FilterTabItem filter={{ priority: "High" }}>High</FilterTabItem>
-          <FilterTabItem filter={{ priority: "Medium" }}>Medium</FilterTabItem>
-          <FilterTabItem filter={{ priority: "Low" }}>Low</FilterTabItem>
+          <FilterTabItem filter={{ priority: "URGENT" }}>Urgent</FilterTabItem>
+          <FilterTabItem filter={{ priority: "HIGH" }}>High</FilterTabItem>
+          <FilterTabItem filter={{ priority: "MEDIUM" }}>Medium</FilterTabItem>
+          <FilterTabItem filter={{ priority: "LOW" }}>Low</FilterTabItem>
         </div>
         {/* right side filters */}
         <div className="flex flex-wrap items-center gap-4">

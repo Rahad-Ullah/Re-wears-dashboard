@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -15,16 +15,21 @@ import {
 } from "@tanstack/react-table";
 import DashboardTable from "@/components/shared/table";
 import TablePagination from "@/components/shared/table-pagination";
-import categoryTableColumns from "@/components/tableColumns/categoryTableColumns";
-import { ICategory } from "@/types/category";
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { IColor } from "@/types/color";
+import colorTableColumns from "@/components/tableColumns/materialTableColumns";
+import { myFetch } from "@/utils/myFetch";
+import toast from "react-hot-toast";
+import { revalidateTags } from "@/helpers/revalidateHelper";
+import materialTableColumns from "@/components/tableColumns/materialTableColumns";
 
-const CategoryTable = ({ items = [], meta }) => {
+const MaterialTable = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
+  const [open, setOpen] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -33,9 +38,9 @@ const CategoryTable = ({ items = [], meta }) => {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const table = useReactTable<ICategory>({
+  const table = useReactTable<IColor>({
     data: items || [],
-    columns: categoryTableColumns as ColumnDef<ICategory>[],
+    columns: materialTableColumns as ColumnDef<IColor>[],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -52,6 +57,36 @@ const CategoryTable = ({ items = [], meta }) => {
     },
   });
 
+  // create material
+  const handleCreateMaterial = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+
+    // update api
+
+    try {
+      const res = await myFetch(`/type/create`, {
+        method: "POST",
+        body: { name, type: "material" },
+      });
+
+      if (res.success) {
+        toast.success(res.message || "Create material successfully", {
+          id: "material",
+        });
+        await revalidateTags(["material"]);
+        setOpen(false);
+        form.reset();
+      } else {
+        toast.error(res.message || "failed create data", { id: "material" });
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
+  };
+
   return (
     <div className="w-full bg-white rounded-xl h-full">
       {/* table top option bar */}
@@ -59,6 +94,8 @@ const CategoryTable = ({ items = [], meta }) => {
         <div></div>
         <div>
           <Modal
+            open={open}
+            onOpenChange={setOpen}
             dialogTrigger={
               <Button>
                 <Plus /> Add New
@@ -66,48 +103,26 @@ const CategoryTable = ({ items = [], meta }) => {
             }
             className="max-w-lg"
           >
-            <div className="grid gap-3">
-              <h1 className="text-lg font-semibold">Add Category</h1>
+            <form onSubmit={handleCreateMaterial} className="grid gap-3">
+              <h1 className="text-lg font-semibold">Add Color</h1>
               <Label>Name</Label>
-              <Input placeholder="Enter name" />
-              <Label>Icon</Label>
-              <Input
-                type="file"
-                placeholder="Upload icon"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    const preview = document.getElementById(
-                      "icon-preview"
-                    ) as HTMLImageElement;
-                    preview.src = URL.createObjectURL(file);
-                    preview.style.display = "block";
-                  }
-                }}
-              />
-              <img
-                id="icon-preview"
-                alt="Icon Preview"
-                style={{
-                  display: "none",
-                  marginTop: "10px",
-                  maxWidth: "100px",
-                  maxHeight: "100px",
-                }}
-              />
-              <Button className="ml-auto px-6">Add</Button>
-            </div>
+              <Input name="name" placeholder="Enter color name" />
+
+              <Button type="submit" className="ml-auto px-6">
+                Add
+              </Button>
+            </form>
           </Modal>
         </div>
       </section>
 
       {/* table and pagination*/}
       <section>
-        <DashboardTable table={table} columns={categoryTableColumns} />
+        <DashboardTable table={table} columns={colorTableColumns} />
         <TablePagination table={table} meta={meta} />
       </section>
     </div>
   );
 };
 
-export default CategoryTable;
+export default MaterialTable;
