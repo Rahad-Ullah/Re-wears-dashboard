@@ -23,7 +23,7 @@ const ChildSubCategories = ({
   filters,
   meta,
 }) => {
-  console.log(filters, subCategoriesData);
+
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -53,32 +53,6 @@ const ChildSubCategories = ({
     },
   });
 
-  // const handleChildCategories = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const form = e.currentTarget;
-  //   const formData = new FormData(form);
-  //   const name = formData.get("name");
-
-  //   try {
-  //     const res = await myFetch(`/child-sub-category`, {
-  //       method: "POST",
-  //       body: { name },
-  //     });
-
-  //     if (res.success) {
-  //       toast.success(res.message || "Create child-sub-category successfully", {
-  //         id: "child-category",
-  //       });
-  //       await revalidateTags(["child-category"]);
-  //     } else {
-  //       toast.error(res.message || "failed child category data", {
-  //         id: "child-category",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div className="w-full bg-white rounded-xl h-full">

@@ -57,7 +57,6 @@ export default function EditSubCategoryForm({ item }) {
         body: formData,
       });
 
-      console.log(res);
 
       if (res.success) {
         toast.success(res.message || "Edit successfully", { id: "sub" });

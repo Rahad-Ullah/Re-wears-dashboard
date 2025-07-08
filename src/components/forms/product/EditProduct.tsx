@@ -31,16 +31,11 @@ const EditProductForm = () => {
     // defaultValues: { ...product },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof editProductFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form  className="grid gap-4">
         <FormField
           control={form.control}
           name="title"

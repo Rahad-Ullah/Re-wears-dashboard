@@ -2,6 +2,7 @@ import {
   Blocks,
   ChartNoAxesCombined,
   Handshake,
+  Link,
   MessagesSquare,
   Settings,
   Shield,
@@ -60,5 +61,10 @@ export const sidebarMenu = {
       url: "/settings",
       icon: Settings,
     },
+    {
+      name:"Social Links",
+      url:"social-links",
+      icon:Link
+    }
   ],
 };

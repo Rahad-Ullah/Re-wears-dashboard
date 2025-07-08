@@ -26,12 +26,7 @@ const BlockProductForm = () => {
     // defaultValues: { ...product },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof blockProductFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+
 
   return (
     <Modal
@@ -46,7 +41,7 @@ const BlockProductForm = () => {
       className="max-w-[100vw] lg:max-w-lg"
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+        <form  className="grid gap-4">
           <FormField
             control={form.control}
             name="message"
