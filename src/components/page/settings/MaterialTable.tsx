@@ -104,7 +104,7 @@ const MaterialTable = ({ items = [], meta }) => {
             className="max-w-lg"
           >
             <form onSubmit={handleCreateMaterial} className="grid gap-3">
-              <h1 className="text-lg font-semibold">Add Color</h1>
+              <h1 className="text-lg font-semibold">Add Material</h1>
               <Label>Name</Label>
               <Input name="name" placeholder="Enter color name" />
 
