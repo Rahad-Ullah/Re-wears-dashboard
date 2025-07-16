@@ -4,9 +4,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const config = {
-  serverHost: process.env.SERVER_HOST || "10.0.80.47",
-  serverURL: process.env.SERVER_URL || "http://10.0.80.47:5005",
-  baseURL: process.env.BASE_URL || "http://10.0.80.47:5005/api/v1",
+  serverHost: process.env.SERVER_HOST || "97.74.87.118",
+  serverURL: process.env.SERVER_URL || "https://api.re-wears.com",
+  baseURL: process.env.BASE_URL || "https://api.re-wears.com/api/v1",
 };
 
 export const BASE_URL = process.env.BASE_URL;
