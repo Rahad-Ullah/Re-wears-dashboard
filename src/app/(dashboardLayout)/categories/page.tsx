@@ -10,8 +10,7 @@ import { demoColorsData } from "@/demoData/colors";
 import { myFetch } from "@/utils/myFetch";
 
 const CategoriesPage = async ({ searchParams }) => {
-  const { tab, nestedTab, status, category, searchTerm, page } =
-    await searchParams;
+  const { tab, nestedTab, searchTerm, page } = await searchParams;
 
   // // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
@@ -66,7 +65,6 @@ const CategoriesPage = async ({ searchParams }) => {
         <TabsContent value="sizes">
           <ChildSubCategories
             items={childSubCategoriesRes?.data}
-            filters={{ status, category }}
             meta={childSubCategoriesRes?.pagination}
           />
         </TabsContent>

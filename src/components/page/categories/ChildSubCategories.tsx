@@ -17,13 +17,7 @@ import TablePagination from "@/components/shared/table-pagination";
 import { ICategory } from "@/types/category";
 import childSubCategoriesColumns from "@/components/tableColumns/categoriesTable/ChildSubCategoriesColumns";
 
-const ChildSubCategories = ({
-  items = [],
-  subCategoriesData = [],
-  filters,
-  meta,
-}) => {
-
+const ChildSubCategories = ({ items = [], meta }) => {
   // const updateMultiSearchParams = useUpdateMultiSearchParams();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -52,7 +46,6 @@ const ChildSubCategories = ({
       rowSelection,
     },
   });
-
 
   return (
     <div className="w-full bg-white rounded-xl h-full">
