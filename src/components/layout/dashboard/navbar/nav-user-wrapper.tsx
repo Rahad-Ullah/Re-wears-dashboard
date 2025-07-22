@@ -6,6 +6,8 @@ const NavUserWrapper = async () => {
     tags: ["user-profile"],
   });
 
+  // const name = red
+
   return <NavUser user={res.data} />;
 };
 

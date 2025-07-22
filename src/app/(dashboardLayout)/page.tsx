@@ -17,7 +17,6 @@ const AnalyticsPage = async () => {
         <StatCard
           title="Total Users"
           value={cardData?.totalUser || 0}
-          change="+12.5%"
           isPositive={true}
           icon={<Users className="h-6 w-6" />}
           color="blue"
@@ -25,7 +24,6 @@ const AnalyticsPage = async () => {
         <StatCard
           title="Active Users"
           value={cardData?.activeUser || 0}
-          change="+8.2%"
           isPositive={true}
           icon={<TrendingUp className="h-6 w-6" />}
           color="green"
@@ -33,7 +31,6 @@ const AnalyticsPage = async () => {
         <StatCard
           title="Total Products"
           value={cardData?.totalProduct || 0}
-          change="+5.1%"
           isPositive={true}
           icon={<ShoppingCart className="h-6 w-6" />}
           color="purple"
@@ -41,7 +38,6 @@ const AnalyticsPage = async () => {
         <StatCard
           title="Total Revenue"
           value={cardData?.totalRevenue || 0}
-          change="+18.3%"
           isPositive={true}
           icon={<DollarSign className="h-6 w-6" />}
           color="amber"

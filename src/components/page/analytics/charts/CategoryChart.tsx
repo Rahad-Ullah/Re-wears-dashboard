@@ -1,46 +1,50 @@
 "use client";
 
-import { TrendingUp, TrendingDown, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
+const categories = [
+  {
+    name: "Clothing",
+    count: 2345,
+    percentage: 28,
+    trending: true,
+    growth: "+12%",
+  },
+  {
+    name: "Cosmetics",
+    count: 1890,
+    percentage: 22,
+    trending: true,
+    growth: "+8%",
+  },
+  {
+    name: "Shoes",
+    count: 1024,
+    percentage: 12,
+    trending: true,
+    growth: "+5%",
+  },
+  {
+    name: "Jewelry",
+    count: 936,
+    percentage: 11,
+    trending: true,
+    growth: "+4%",
+  },
+  {
+    name: "Toys",
+    count: 752,
+    percentage: 9,
+    trending: true,
+    growth: "+3%",
+  },
+];
+
+type TimeCount = "today" | "week" | "month";
 
 const CategoryChart = () => {
   // Mock data for categories
-  const categories = [
-    {
-      name: "Clothing",
-      count: 2345,
-      percentage: 28,
-      trending: true,
-      growth: "+12%",
-    },
-    {
-      name: "Cosmetics",
-      count: 1890,
-      percentage: 22,
-      trending: true,
-      growth: "+8%",
-    },
-    {
-      name: "Shoes",
-      count: 1024,
-      percentage: 12,
-      trending: true,
-      growth: "+5%",
-    },
-    {
-      name: "Jewelry",
-      count: 936,
-      percentage: 11,
-      trending: true,
-      growth: "+4%",
-    },
-    {
-      name: "Toys",
-      count: 752,
-      percentage: 9,
-      trending: true,
-      growth: "+3%",
-    },
-  ];
+  const [selectDate, setSelectDate] = useState<TimeCount>("today");
 
   // Filter categories based on trending
   const displayedCategories = categories?.slice(0, 5);
@@ -52,8 +56,12 @@ const CategoryChart = () => {
           Trending Categories
         </h2>
         <div className="relative">
-          <select className="bg-white border rounded-md pr-8 pl-3 py-1 text-sm text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-primary">
-            <option value="day">Today</option>
+          <select
+            onChange={(e) => setSelectDate(e.target.value as TimeCount)}
+            value={selectDate}
+            className="bg-white border rounded-md pr-8 pl-3 py-1 text-sm text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+          >
+            <option value="today">Today</option>
             <option value="week">This Week</option>
             <option value="month">This Month</option>
           </select>
@@ -69,7 +77,7 @@ const CategoryChart = () => {
             <div key={index} className="px-4 py-3 bg-gray-50 rounded-lg">
               <div className="flex justify-between items-center gap-4">
                 <h3 className="font-medium text-gray-800">{category.name}</h3>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <span
                     className={`text-sm font-medium ${
                       category.trending ? "text-green-600" : "text-red-600"
@@ -82,7 +90,7 @@ const CategoryChart = () => {
                   ) : (
                     <TrendingDown className="h-4 w-4 ml-1 text-red-600" />
                   )}
-                </div>
+                </div> */}
               </div>
 
               <div className="flex items-center gap-4">

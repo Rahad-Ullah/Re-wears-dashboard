@@ -56,6 +56,7 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
     header: "Category",
     cell: ({ row }) => {
       const item = row.original as ISize;
+
       return (
         <span className="capitalize font-medium w-full justify-start px-2 hover:bg-transparent">
           {item?.subCategory?.category?.name}
@@ -80,6 +81,7 @@ const childSubCategoriesColumns: ColumnDef<ISize>[] = [
     header: "Child Category",
     cell: ({ row }) => {
       const item = row.original as ISize;
+
       return (
         <span className="capitalize font-medium w-full justify-start px-2 hover:bg-transparent">
           {item?.name}

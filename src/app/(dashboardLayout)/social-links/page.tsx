@@ -3,7 +3,7 @@ import { myFetch } from "@/utils/myFetch";
 
 async function page() {
   const res = await myFetch("/social");
-  console.log(res);
+
   return (
     <>
       <SocialLinks socialData={res?.data} />

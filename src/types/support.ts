@@ -7,6 +7,7 @@ export interface ISupportTicket {
   _id: number;
   name: string;
   subject: string;
+  email: string;
   message: string;
   priority: TicketPriority;
   status: TicketStatus;

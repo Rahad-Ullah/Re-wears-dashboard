@@ -51,7 +51,13 @@ export default function UpdateStatus({ item }) {
             <strong>User:</strong> {item?.name}
           </h2>
           <p className="font-medium">
-            <strong>Message:</strong> <br /> {item?.message}
+            <strong>Email:</strong> {item?.email}
+          </p>
+          <p className="font-medium">
+            <strong>Message:</strong> {item?.message}
+          </p>
+          <p className="font-medium">
+            <strong>Subject:</strong> {item?.subject}
           </p>
           <div className="flex items-center gap-4 justify-end mt-2">
             {item?.status === "OPEN" && (

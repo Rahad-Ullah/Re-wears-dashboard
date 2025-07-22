@@ -8,17 +8,17 @@ const ActiveUsersCard: React.FC = () => {
 
   // Mock data for active users
   const userData = {
-    total: 18432,
-    loggedIn: 16210,
-    listed: 8945,
-    sold: 5632,
-    bought: 7854,
+    total: 7,
+    loggedIn: 9,
+    listed: 12,
+    sold: 5,
+    bought: 10,
   };
 
   // Calculate percentages for the chart
   const totalActiveUsers = userData.total;
   const calculatePercentage = (value: number) =>
-    Math.round((value / totalActiveUsers) * 100);
+    Math.round((value / totalActiveUsers) * 50);
 
   const loggedInPercentage = calculatePercentage(userData.loggedIn);
   const listedPercentage = calculatePercentage(userData.listed);
@@ -48,9 +48,6 @@ const ActiveUsersCard: React.FC = () => {
       <div className="flex items-center justify-between mb-5">
         <div className="text-3xl font-bold text-gray-900">
           {userData.total.toLocaleString()}
-        </div>
-        <div className="text-sm font-medium text-green-600 bg-green-100 rounded-full px-3 py-1">
-          +8.2% from last {period}
         </div>
       </div>
 

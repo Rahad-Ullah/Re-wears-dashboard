@@ -32,40 +32,6 @@ const UserGrowthChart = () => {
       totalUsers: 0,
     })) || [];
 
-  // Mock data for the chart
-  // const chartData = {
-  //   daily: [
-  //     { date: "Mon", newUsers: 120, totalUsers: 23800 },
-  //     { date: "Tue", newUsers: 145, totalUsers: 23945 },
-  //     { date: "Wed", newUsers: 132, totalUsers: 24077 },
-  //     { date: "Thu", newUsers: 158, totalUsers: 24235 },
-  //     { date: "Fri", newUsers: 142, totalUsers: 24377 },
-  //     { date: "Sat", newUsers: 98, totalUsers: 24475 },
-  //     { date: "Sun", newUsers: 46, totalUsers: 24521 },
-  //   ],
-  //   weekly: [
-  //     { date: "Week 1", newUsers: 520, totalUsers: 22100 },
-  //     { date: "Week 2", newUsers: 630, totalUsers: 22730 },
-  //     { date: "Week 3", newUsers: 542, totalUsers: 23272 },
-  //     { date: "Week 4", newUsers: 789, totalUsers: 24061 },
-  //     { date: "Week 5", newUsers: 460, totalUsers: 24521 },
-  //   ],
-  //   monthly: [
-  //     { date: "Jan", newUsers: 1200, totalUsers: 15000 },
-  //     { date: "Feb", newUsers: 1450, totalUsers: 16450 },
-  //     { date: "Mar", newUsers: 1320, totalUsers: 17770 },
-  //     { date: "Apr", newUsers: 980, totalUsers: 18750 },
-  //     { date: "May", newUsers: 1580, totalUsers: 20330 },
-  //     { date: "Jun", newUsers: 1150, totalUsers: 21480 },
-  //     { date: "Jul", newUsers: 1420, totalUsers: 22900 },
-  //     { date: "Aug", newUsers: 890, totalUsers: 23790 },
-  //     { date: "Sep", newUsers: 731, totalUsers: 24521 },
-  //     { date: "Oct", newUsers: 1020, totalUsers: 25541 },
-  //     { date: "Nov", newUsers: 1100, totalUsers: 26641 },
-  //     { date: "Dec", newUsers: 1250, totalUsers: 27891 },
-  //   ],
-  // };
-
   // const currentData = chartData[timeFrame];
   const currentData = monthly || [];
 
@@ -86,7 +52,7 @@ const UserGrowthChart = () => {
           <select
             value={timeFrame}
             onChange={(e) => setTimeFrame(e.target.value as TimeFrame)}
-            className="bg-white border rounded-md pr-8 pl-3 py-1 text-sm text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-white border rounded-md pr-8 pl-3 py-1 text-sm text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
           >
             <option value="daily">Daily</option>
             <option value="weakly">Weekly</option>

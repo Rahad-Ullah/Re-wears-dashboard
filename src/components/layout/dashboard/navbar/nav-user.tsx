@@ -55,7 +55,7 @@ export function NavUser({
                   {user?.firstName} {user?.lastName}
                 </span>
                 <span className="truncate text-xs text-primary">
-                  {user?.role}
+                  {user?.role === "SUPER_ADMIN" && "SUPER ADMIN"}
                 </span>
               </div>
             </SidebarMenuButton>

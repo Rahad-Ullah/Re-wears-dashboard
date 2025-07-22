@@ -38,8 +38,8 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
     },
   },
   {
-    accessorKey: "subject",
-    header: "Subject",
+    accessorKey: "email",
+    header: "Email",
     cell: ({ row }) => {
       const item = row.original as ISupportTicket;
       return (
@@ -47,7 +47,7 @@ const supportTableColumns: ColumnDef<ISupportTicket>[] = [
           variant={"ghost"}
           className="w-full justify-start hover:bg-transparent"
         >
-          {item.subject}
+          {item.email}
         </Button>
       );
     },
