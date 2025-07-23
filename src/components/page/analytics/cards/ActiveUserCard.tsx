@@ -1,29 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { myFetch } from "@/utils/myFetch";
+
+type DateSelect = "daily" | "weekly" | "monthly";
+
+type TrendingDataType = {
+  totalUser: number;
+  category: number | string;
+  listedItems: number;
+  soldItems: number;
+  activeUserObject?: {
+    activeUser?: number;
+    activeUserPercentage?: number;
+  };
+};
 
 const ActiveUsersCard: React.FC = () => {
-  const [period, setPeriod] = useState("week");
+  const [selectDate, setSelectDate] = useState<DateSelect>("daily");
+  const [trendingData, setTrendingData] = useState<TrendingDataType | null>(
+    null
+  );
 
-  // Mock data for active users
-  const userData = {
-    total: 7,
-    loggedIn: 9,
-    listed: 12,
-    sold: 5,
-    bought: 10,
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await myFetch(
+          `/dashboard/activitys?period=${selectDate}`
+        );
+        console.log(response);
+        setTrendingData(response.data);
+      } catch (error) {
+        console.error("Error fetching trending data:", error);
+      }
+    };
 
-  // Calculate percentages for the chart
-  const totalActiveUsers = userData.total;
-  const calculatePercentage = (value: number) =>
-    Math.round((value / totalActiveUsers) * 50);
+    fetchData();
+  }, [selectDate]);
 
-  const loggedInPercentage = calculatePercentage(userData.loggedIn);
-  const listedPercentage = calculatePercentage(userData.listed);
-  const soldPercentage = calculatePercentage(userData.sold);
-  const boughtPercentage = calculatePercentage(userData.bought);
+  const activePercentage =
+    trendingData?.activeUserObject?.activeUserPercentage ?? 0;
 
   return (
     <div className="bg-white p-6 rounded-lg border transition duration-200 hover:shadow-md">
@@ -31,13 +48,13 @@ const ActiveUsersCard: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-800">Active Users</h2>
         <div className="relative">
           <select
-            value={period}
-            onChange={(e) => setPeriod(e.target.value)}
+            value={selectDate}
+            onChange={(e) => setSelectDate(e.target.value as DateSelect)}
             className="bg-white border rounded-md pr-8 pl-3 py-1 text-sm text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="day">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
+            <option value="daily">Today</option>
+            <option value="weekly">This Week</option>
+            <option value="monthly">This Month</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <ChevronDown className="h-4 w-4" />
@@ -47,68 +64,60 @@ const ActiveUsersCard: React.FC = () => {
 
       <div className="flex items-center justify-between mb-5">
         <div className="text-3xl font-bold text-gray-900">
-          {userData.total.toLocaleString()}
+          {trendingData?.totalUser ?? 0}
         </div>
       </div>
 
       <div className="space-y-4">
+        {/* Logged In Users */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Logged In</span>
             <span className="font-medium">
-              {userData.loggedIn.toLocaleString()} ({loggedInPercentage}%)
+              {trendingData?.activeUserObject?.activeUser ?? 0} (
+              {activePercentage}%)
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
               className="bg-primary h-2.5 rounded-full"
-              style={{ width: `${loggedInPercentage}%` }}
+              style={{ width: `${activePercentage}%` }}
             ></div>
           </div>
         </div>
 
+        {/* Listed Items */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Listed Items</span>
             <span className="font-medium">
-              {userData.listed.toLocaleString()} ({listedPercentage}%)
+              {trendingData?.listedItems ?? 0}
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-primary h-2.5 rounded-full"
-              style={{ width: `${listedPercentage}%` }}
-            ></div>
+            <div className="bg-primary h-2.5 rounded-full"></div>
           </div>
         </div>
 
+        {/* Sold Items */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Sold Items</span>
-            <span className="font-medium">
-              {userData.sold.toLocaleString()} ({soldPercentage}%)
-            </span>
+            <span className="font-medium">{trendingData?.soldItems ?? 0}</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-primary h-2.5 rounded-full"
-              style={{ width: `${soldPercentage}%` }}
-            ></div>
+            <div className="bg-primary h-2.5 rounded-full"></div>
           </div>
         </div>
 
+        {/* Category */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Bought Items</span>
-            <span className="font-medium">
-              {userData.bought.toLocaleString()} ({boughtPercentage}%)
-            </span>
+            <span className="text-gray-600">Category Items</span>
+            <span className="font-medium">{trendingData?.category}</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-primary h-2.5 rounded-full"
-              style={{ width: `${boughtPercentage}%` }}
-            ></div>
+            <div className="bg-primary h-2.5 rounded-full"></div>
           </div>
         </div>
       </div>
