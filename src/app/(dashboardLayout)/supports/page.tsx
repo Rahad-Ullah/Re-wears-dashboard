@@ -2,11 +2,12 @@ import SupportTable from "@/components/page/support/SupportTable";
 import { Card } from "@/components/ui/card";
 import { myFetch } from "@/utils/myFetch";
 const SupportPage = async ({ searchParams }) => {
-  const { priority, status } = await searchParams;
+  const { priority, status, searchTerm } = await searchParams;
 
   const queryParams = new URLSearchParams({
     ...(priority && { priority }),
     ...(status && { status }),
+    ...(searchTerm && { searchTerm }),
   });
 
   // support overview data

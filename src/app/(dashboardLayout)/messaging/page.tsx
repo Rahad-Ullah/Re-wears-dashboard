@@ -6,12 +6,13 @@ import { myFetch } from "@/utils/myFetch";
 import { Bell, LayoutPanelTop } from "lucide-react";
 
 const MessagingPage = async ({ searchParams }) => {
-  const { userType, status, category } = await searchParams;
+  const { userType, status, category, searchTerm } = await searchParams;
 
   const queryParams = new URLSearchParams({
     ...(userType && { userType }),
     ...(status && { status }),
     ...(category && { category }),
+    ...(searchTerm && { searchTerm }),
   });
 
   const users = await myFetch(`/order/users?${queryParams.toString()}`);

@@ -8,12 +8,13 @@ import { CircleAlert, MessageCircleWarning, UserX } from "lucide-react";
 import Link from "next/link";
 
 const ModerationPage = async ({ searchParams }) => {
-  const { status, page, type } = await searchParams;
+  const { status, page, type, searchTerm } = await searchParams;
 
   const queryParams = new URLSearchParams({
     ...(status && { status }),
     ...(page && { page }),
     ...(type && { type }),
+    ...(searchTerm && { searchTerm }),
   });
 
   const res = await myFetch(`/reports?${queryParams.toString()}`, {

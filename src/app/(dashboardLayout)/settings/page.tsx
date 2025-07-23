@@ -10,15 +10,15 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { myFetch } from "@/utils/myFetch";
 
 const SettingPage = async ({ searchParams }) => {
-  const { tab, nestedTab } = await searchParams;
+  const { tab, nestedTab, searchTerm } = await searchParams;
 
   // Build query parameters for the backend request
-  // const queryParams = new URLSearchParams({
-  //   ...(searchTerm && { searchTerm }),
-  // });
+  const queryParams = new URLSearchParams({
+    ...(searchTerm && { searchTerm }),
+  });
 
   // Fetch data from the backend when backend is ready
-  const brandData = await myFetch(`/type/list/brand`, {
+  const brandData = await myFetch(`/type/list/brand?${queryParams}`, {
     tags: ["brand"],
   });
 
@@ -29,7 +29,7 @@ const SettingPage = async ({ searchParams }) => {
     tags: ["material"],
   });
 
-  const colorData = await myFetch("/color", {
+  const colorData = await myFetch(`/color`, {
     tags: ["color"],
   });
 

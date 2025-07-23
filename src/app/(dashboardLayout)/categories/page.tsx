@@ -18,7 +18,7 @@ const CategoriesPage = async ({ searchParams }) => {
     ...(page && { page }),
   });
 
-  const categories = await myFetch("/category", {
+  const categories = await myFetch(`/category?${queryParams}`, {
     tags: ["category"],
     cache: "no-store",
   });
