@@ -29,7 +29,7 @@ const ActiveUsersCard: React.FC = () => {
         const response = await myFetch(
           `/dashboard/activitys?period=${selectDate}`
         );
-        console.log(response);
+
         setTrendingData(response.data);
       } catch (error) {
         console.error("Error fetching trending data:", error);

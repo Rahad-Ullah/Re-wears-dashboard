@@ -3,43 +3,6 @@
 import { myFetch } from "@/utils/myFetch";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-const categories = [
-  {
-    name: "Clothing",
-    count: 2345,
-    percentage: 28,
-    trending: true,
-    growth: "+12%",
-  },
-  {
-    name: "Cosmetics",
-    count: 1890,
-    percentage: 22,
-    trending: true,
-    growth: "+8%",
-  },
-  {
-    name: "Shoes",
-    count: 1024,
-    percentage: 12,
-    trending: true,
-    growth: "+5%",
-  },
-  {
-    name: "Jewelry",
-    count: 936,
-    percentage: 11,
-    trending: true,
-    growth: "+4%",
-  },
-  {
-    name: "Toys",
-    count: 752,
-    percentage: 9,
-    trending: true,
-    growth: "+3%",
-  },
-];
 
 type TimeCount = "daily" | "weekly" | "monthly";
 type TrendingDataType = {
@@ -67,9 +30,6 @@ const CategoryChart = () => {
 
     fetchData();
   }, [selectDate]);
-
-  // Filter categories based on trending
-  const displayedCategories = categories?.slice(0, 5);
 
   return (
     <div className="bg-white p-6 rounded-lg border transition duration-200 hover:shadow-md">
