@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
-
 const SalesVolumeChart: React.FC = () => {
-  const [category, setCategory] = useState("all");
+  // const [category, setCategory] = useState("all");
 
   // Mock data for sales volume0.
   const salesData = [
