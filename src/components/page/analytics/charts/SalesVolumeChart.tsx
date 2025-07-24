@@ -30,7 +30,7 @@ const SalesVolumeChart: React.FC = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg border transition duration-200 hover:shadow-md">
-      <div className="flex justify-between items-center mb-6">
+      {/* <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-semibold text-gray-800">Sales Volume</h2>
         <div className="relative">
           <select
@@ -49,9 +49,9 @@ const SalesVolumeChart: React.FC = () => {
             <ChevronDown className="h-4 w-4" />
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="flex items-center justify-between mb-5">
+      {/* <div className="flex items-center justify-between mb-5">
         <div>
           <div className="text-3xl font-bold text-gray-900">
             ${(totalRevenue / 1000).toFixed(1)}k
@@ -61,7 +61,7 @@ const SalesVolumeChart: React.FC = () => {
         <div className="text-sm font-medium text-green-600 bg-green-100 rounded-full px-3 py-1">
           +18.3% YoY
         </div>
-      </div>
+      </div> */}
 
       <div className="h-80 flex flex-col">
         <div className="flex-1 relative">
